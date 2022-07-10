@@ -8,18 +8,18 @@ import java.time.LocalDateTime
 import kotlin.properties.Delegates
 
 
-enum class GameType
+enum class GameType(val value: String)
 {
-    NUMBERS,
-    WORDS,
-    CARDS,
+    NUMBERS("numbers"),
+    WORDS("words"),
+    CARDS("cards"),
 }
 
-enum class GameStatus
+enum class GameStatus(val value: String)
 {
-    NOT_STARTED,
-    JUST_STARTED,
-    FINISHED,
+    NOT_STARTED("not_started"),
+    JUST_STARTED("just_started"),
+    FINISHED("finished"),
 }
 
 @DatabaseTable(tableName = "game")
