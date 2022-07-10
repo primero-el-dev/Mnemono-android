@@ -3,12 +3,12 @@ package com.primeroeldev.mnemono.validation
 import kotlin.reflect.KProperty1
 
 
-fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>): (Any) -> Map<String, String>
+fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>): (Any) -> MutableMap<String, String>
 {
-    return { value: Any ->
-        var errors: MutableMap<String, String> = MutableMap()
+    return fun(value: Any): MutableMap<String, String> {
+        var errors: MutableMap<String, String> = mutableMapOf()
 
-        for (field in this.fields) {
+        for (field in validators.keys) {
             val prop = readInstanceProperty(value, field)
 
             for ((error, validator) in validators.get(field)!!) {
@@ -19,10 +19,9 @@ fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>
             }
         }
 
-        return (Map<String, String>) errors
+        return errors
     }
 }
-
 
 @Suppress("UNCHECKED_CAST")
 fun <R> readInstanceProperty(instance: Any, propertyName: String): R {
@@ -54,14 +53,14 @@ fun maxLength(length: Int): (String) -> Boolean
     return { value: String -> value.length <= length }
 }
 
-fun min(min: Float): (Float) -> Boolean
+fun min(min: Double): (Double) -> Boolean
 {
-    return { value: Float -> min <= value }
+    return { value: Double -> min <= value }
 }
 
-fun max(max: Float): (Float) -> Boolean
+fun max(max: Double): (Double) -> Boolean
 {
-    return { value: Float -> max >= value }
+    return { value: Double -> max >= value }
 }
 
 fun pattern(regex: String): (String) -> Boolean
