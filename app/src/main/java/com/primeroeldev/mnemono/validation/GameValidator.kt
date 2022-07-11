@@ -6,7 +6,7 @@ import com.primeroeldev.mnemono.entity.GameType
 
 val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
     "status" to arrayOf(
-        Pair("game.validation.status.notEmpty", { v: Any -> notEmpty(v) }),
+        Pair("game.validation.status.notEmpty", ::notEmpty),
         Pair("game.validation.status.inArray", { v: Any -> v is GameStatus }),
     ),
     "correctAnswersCount" to arrayOf(
@@ -18,9 +18,9 @@ val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
         Pair("game.validation.allAnswersCount.max", { v: Any -> max(99999999999.0)(v as Double) }),
     ),
     "type" to arrayOf(
-        Pair("game.validation.type.notEmpty", { v: Any -> notEmpty(v) }),
+        Pair("game.validation.type.notEmpty", ::notEmpty),
         Pair("game.validation.type.inArray", { v: Any -> v is GameType }),
     ),
 )
 
-val getErrorsFor = getErrorsOf(validators)
+val getErrorsOfGame = getErrorsOf(validators)

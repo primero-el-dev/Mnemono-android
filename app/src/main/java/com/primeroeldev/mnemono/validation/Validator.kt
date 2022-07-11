@@ -6,10 +6,10 @@ import kotlin.reflect.KProperty1
 fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>): (Any) -> MutableMap<String, String>
 {
     return fun(value: Any): MutableMap<String, String> {
-        var errors: MutableMap<String, String> = mutableMapOf()
+        val errors: MutableMap<String, String> = mutableMapOf()
 
         for (field in validators.keys) {
-            val prop = readInstanceProperty(value, field)
+            val prop = readInstanceProperty<Any>(value, field)
 
             for ((error, validator) in validators.get(field)!!) {
                 if (!validator(prop)) {
