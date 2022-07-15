@@ -1,7 +1,7 @@
 package com.primeroeldev.mnemono.validation
 
-import com.primeroeldev.mnemono.entity.GameStatus
-import com.primeroeldev.mnemono.entity.GameType
+import com.primeroeldev.mnemono.game.GameStatus
+import com.primeroeldev.mnemono.game.GameType
 
 
 val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
