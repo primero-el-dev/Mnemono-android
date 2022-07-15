@@ -115,7 +115,7 @@ abstract class Repository public constructor (
         return (this.entityClass.annotations.find { it -> it is DatabaseTable } as? DatabaseTable)?.tableName
     }
 
-    private fun getIdColumn(): String?
+    private fun getIdColumn(): String
     {
         return this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseId>() != null }
     }
