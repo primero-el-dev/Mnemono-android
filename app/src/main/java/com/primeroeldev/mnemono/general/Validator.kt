@@ -1,6 +1,6 @@
 package com.primeroeldev.mnemono.validation
 
-import kotlin.reflect.KProperty1
+import com.primeroeldev.mnemono.general.readInstanceProperty
 
 
 fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>): (Any) -> MutableMap<String, String>
@@ -21,14 +21,6 @@ fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>
 
         return errors
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-fun <R> readInstanceProperty(instance: Any, propertyName: String): R {
-    val property = instance::class.members
-        .first { it.name == propertyName } as KProperty1<Any, *>
-
-    return property.get(instance) as R
 }
 
 fun isType(type: String): (Any) -> Boolean

@@ -10,8 +10,6 @@ import com.primeroeldev.mnemono.validation.getErrorsOfGame
 import java.time.LocalDateTime
 import java.util.*
 
-fun String.toCamelCase() =
-    split('_').joinToString("", transform = String::uppercase)
 
 class MainActivity : AppCompatActivity()
 {

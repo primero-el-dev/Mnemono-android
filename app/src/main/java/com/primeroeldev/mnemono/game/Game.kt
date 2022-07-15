@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
 import com.primeroeldev.mnemono.general.EntityInterface
 import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
+import com.primeroeldev.mnemono.general.annotation.DatabaseId
 import java.time.LocalDateTime
 
 
@@ -29,7 +30,7 @@ class Game : EntityInterface
         const val TABLE_NAME = "game"
     }
 
-    @DatabaseColumn(id = true)
+    @DatabaseId
     override var id: Int? = null
 
     @DatabaseColumn(canBeNull = false)
