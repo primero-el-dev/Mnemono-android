@@ -73,14 +73,30 @@ abstract class Repository public constructor (
         return success
     }
 
-    fun update(entity: EntityInterface): Int
+    fun updateBy(entity: EntityInterface, where: String, whereArgs: Array<String>): Int
     {
         val db = this.writableDatabase
-        val idColumn = this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseId>() != null }
         val contentValues: ContentValues = this.getContentValues(entity)
+
+        val success = db.update(this.getTableName(), contentValues, where, whereArgs)
+        db.close()
+
+        return success
+    }
+
+    fun update(entity: EntityInterface): Int
+    {
+        val idColumn = this.getIdColumn()
         val whereArgs: Array<String> = arrayOf(readInstanceProperty(entity, idColumn))
 
-        val success = db.update(this.getTableName(), contentValues, "${idColumn} = ?", whereArgs)
+        return this.updateBy(entity, "${idColumn} = ?", whereArgs)
+    }
+
+    fun deleteBy(where: String, whereArgs: Array<String>): Int
+    {
+        val db = this.writableDatabase
+
+        val success = db.delete(this.getTableName(), where, whereArgs)
         db.close()
 
         return success
@@ -88,19 +104,20 @@ abstract class Repository public constructor (
 
     fun delete(entity: EntityInterface): Int
     {
-        val db = this.writableDatabase
-        val idColumn = this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseId>() != null }
+        val idColumn = this.getIdColumn()
         val whereArgs: Array<String> = arrayOf(readInstanceProperty(entity, idColumn))
 
-        val success = db.delete(this.getTableName(), "${idColumn} = ?", whereArgs)
-        db.close()
-
-        return success
+        return this.deleteBy("${idColumn} = ?", whereArgs)
     }
 
     private fun getTableName(): String?
     {
         return (this.entityClass.annotations.find { it -> it is DatabaseTable } as? DatabaseTable)?.tableName
+    }
+
+    private fun getIdColumn(): String?
+    {
+        return this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseId>() != null }
     }
 
     private fun getContentValues(entity: EntityInterface): ContentValues
