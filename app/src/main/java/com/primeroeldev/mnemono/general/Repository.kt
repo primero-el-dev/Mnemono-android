@@ -10,12 +10,13 @@ import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
 import com.primeroeldev.mnemono.general.annotation.DatabaseId
 import com.primeroeldev.mnemono.general.annotation.DatabaseTable
 import kotlin.collections.ArrayList
+import kotlin.reflect.KClass
 
 
 abstract class Repository public constructor (
     context: Context?,
     factory: SQLiteDatabase.CursorFactory?,
-    private val entityClass: Class,
+    private val entityClass: KClass<Any>,
 ) : SQLiteOpenHelper (context, DATABASE_NAME, factory, DATABASE_VERSION)
 {
     companion object
@@ -81,13 +82,11 @@ abstract class Repository public constructor (
     {
         val db = this.readableDatabase
         var selection: String = ""
-        var selectionAgrs: ArrayList<String>
+        var selectionAgrs: ArrayList<String> = ArrayList()
 
         for ((wherePart, value) in criteria) {
-            val arg = when (value::class.simpleName) {
-                "String" -> "'${value}'",
-                else -> value.toString()
-            }
+            val arg = if (value is String) value
+                else value.toString()
             selectionAgrs.add(arg)
 
             if (wherePart.matches("^\w+$".toRegex())) {
