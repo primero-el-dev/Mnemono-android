@@ -17,13 +17,5 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val game = Game()
-        game.id = 1
-        game.type = GameType.WORDS
-        game.createdAt = LocalDateTime.now()
-        game.duration = LocalDateTime.now()
     }
-
-    fun
 }
