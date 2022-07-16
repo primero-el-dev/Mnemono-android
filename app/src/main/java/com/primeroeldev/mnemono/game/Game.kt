@@ -20,6 +20,18 @@ class Game : EntityInterface
         const val NOT_STARTED_STATUS = "not_started"
         const val JUST_STARTED_STATUS = "just_started"
         const val FINISHED_STATUS = "finished"
+
+        fun getTypes(): Array<String> = arrayOf(
+            NUMBERS_TYPE,
+            WORDS_TYPE,
+            CARDS_TYPE,
+        )
+
+        fun getStatuses(): Array<String> = arrayOf(
+            NOT_STARTED_STATUS,
+            JUST_STARTED_STATUS,
+            FINISHED_STATUS,
+        )
     }
 
     @DatabaseId

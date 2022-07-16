@@ -1,13 +1,12 @@
 package com.primeroeldev.mnemono.validation
 
-import com.primeroeldev.mnemono.game.GameStatus
-import com.primeroeldev.mnemono.game.GameType
+import com.primeroeldev.mnemono.game.Game
 
 
 val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
     "status" to arrayOf(
         Pair("game.validation.status.notEmpty", ::notEmpty),
-        Pair("game.validation.status.inArray", { v: Any -> v is GameStatus }),
+        Pair("game.validation.status.inArray", { v: Any -> v is String && Game.getStatuses().contains(v) }),
     ),
     "correctAnswersCount" to arrayOf(
         Pair("game.validation.correctAnswersCount.min", { v: Any -> min(0.0)(v as Double) }),
@@ -19,7 +18,7 @@ val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
     ),
     "type" to arrayOf(
         Pair("game.validation.type.notEmpty", ::notEmpty),
-        Pair("game.validation.type.inArray", { v: Any -> v is GameType }),
+        Pair("game.validation.type.inArray", { v: Any -> v is String && Game.getTypes().contains(v) }),
     ),
 )
 
