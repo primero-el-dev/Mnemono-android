@@ -32,17 +32,16 @@ abstract class Repository public constructor (
         for (field in this.entityClass.java.declaredFields) {
             val columnData = field.annotations.find { it -> it is DatabaseColumn } as? DatabaseColumn
                 ?: continue
-            val dataType = columnData?.dataType
-            val length = columnData?.length.toString()
-            val default = if (columnData?.defaultValue === null
-                || (columnData.defaultValue as Double) == 0.0
-                || columnData?.defaultValue == "")
+            val dataType = columnData.dataType
+            val length = columnData.length.toString()
+            val default = if ((columnData.defaultValue as Double) == 0.0
+                || columnData.defaultValue == "")
                     ""
                     else "DEFAULT ${columnData.defaultValue}"
-            val nullPart = if (columnData?.canBeNull == true) "NULL" else "NOT NULL"
+            val nullPart = if (columnData.canBeNull == true) "NULL" else "NOT NULL"
 
             sqlParts.add(
-                if (columnData?.id == true)
+                if (columnData.id == true)
                     "${field.name} ${dataType}(${length}) ${nullPart} ${default}"
                     else "${field.name} ${dataType}(${length}) PRIMARY KEY"
             )
