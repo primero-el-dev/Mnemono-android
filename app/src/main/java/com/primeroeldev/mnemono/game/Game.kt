@@ -1,40 +1,32 @@
 package com.primeroeldev.mnemono.game
 
-import com.j256.ormlite.field.DataType
-import com.j256.ormlite.field.DatabaseField
-import com.j256.ormlite.table.DatabaseTable
 import com.primeroeldev.mnemono.general.EntityInterface
 import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
 import com.primeroeldev.mnemono.general.annotation.DatabaseId
+import com.primeroeldev.mnemono.general.annotation.DatabaseTable
 import java.time.LocalDateTime
 
-
-enum class GameType(val value: String)
-{
-    NUMBERS("numbers"),
-    WORDS("words"),
-    CARDS("cards"),
-}
-
-enum class GameStatus(val value: String)
-{
-    NOT_STARTED("not_started"),
-    JUST_STARTED("just_started"),
-    FINISHED("finished"),
-}
 
 @DatabaseTable(tableName = Game.TABLE_NAME)
 class Game : EntityInterface
 {
     companion object {
         const val TABLE_NAME = "game"
+
+        const val NUMBERS_TYPE = "numbers"
+        const val WORDS_TYPE = "words"
+        const val CARDS_TYPE = "cards"
+
+        const val NOT_STARTED_STATUS = "not_started"
+        const val JUST_STARTED_STATUS = "just_started"
+        const val FINISHED_STATUS = "finished"
     }
 
     @DatabaseId
     override var id: Int? = null
 
     @DatabaseColumn(canBeNull = false)
-    var status: GameStatus = GameStatus.NOT_STARTED
+    var status: String = NOT_STARTED_STATUS
 
     @DatabaseColumn(dataType = "TINYINT", canBeNull = false)
     var includedInStatistics: Boolean = false
@@ -46,7 +38,7 @@ class Game : EntityInterface
     var allAnswersCount: Int = 0
 
     @DatabaseColumn(canBeNull = false)
-    lateinit var type: GameType
+    lateinit var type: String
 
     @DatabaseColumn(dataType = "TIME_STAMP", canBeNull = false)
     lateinit var createdAt: LocalDateTime
