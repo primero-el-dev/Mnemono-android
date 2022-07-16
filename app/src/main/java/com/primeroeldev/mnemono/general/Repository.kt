@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
 import com.primeroeldev.mnemono.general.annotation.DatabaseId
 import com.primeroeldev.mnemono.general.annotation.DatabaseTable
+import java.lang.reflect.Field
 import kotlin.collections.ArrayList
 import kotlin.reflect.KClass
 
@@ -16,7 +17,7 @@ import kotlin.reflect.KClass
 abstract class Repository public constructor (
     context: Context?,
     factory: SQLiteDatabase.CursorFactory?,
-    private val entityClass: KClass<Any>,
+    private val entityClass: Class<Any>,
 ) : SQLiteOpenHelper (context, DATABASE_NAME, factory, DATABASE_VERSION)
 {
     companion object
@@ -30,7 +31,7 @@ abstract class Repository public constructor (
         val table = this.getTableName()
         val sqlParts: ArrayList<String> = ArrayList<String>()
 
-        for (field in this.entityClass.java.declaredFields) {
+        for (field in this.entityClass::class.java.declaredFields) {
             val columnData = field.annotations.find { it -> it is DatabaseColumn } as? DatabaseColumn
                 ?: continue
             val dataType = columnData.dataType
@@ -60,7 +61,7 @@ abstract class Repository public constructor (
         this.onCreate(db)
     }
 
-    fun findAll(): ArrayList<EntityInterface>
+    fun findAll(): ArrayList<Class<Any>>
     {
         val db = this.readableDatabase
         val query = "SELECT * FROM ${this.getTableName()}"
@@ -78,10 +79,10 @@ abstract class Repository public constructor (
         }
     }
 
-    fun findBy(criteria: ArrayList<Pair<String, Any?>>): ArrayList<EntityInterface>
+    fun findBy(criteria: ArrayList<Pair<String, Any?>>): ArrayList<Class<Any>>
     {
         val db = this.readableDatabase
-        var selection: String = ""
+        var selection = ""
         var selectionAgrs: ArrayList<String> = ArrayList()
 
         for ((wherePart, value) in criteria) {
@@ -89,7 +90,7 @@ abstract class Repository public constructor (
                 else value.toString()
             selectionAgrs.add(arg)
 
-            if (wherePart.matches("^\w+$".toRegex())) {
+            if (wherePart.matches("""^\w+$""".toRegex())) {
                 selection += " " + wherePart + " = ?"
             }
             else {
@@ -117,7 +118,7 @@ abstract class Repository public constructor (
         }
     }
 
-    fun findOneBy(criteria: ArrayList<Pair<String, Any?>>): EntityInterface?
+    fun findOneBy(criteria: ArrayList<Pair<String, Any?>>): Class<Any>?
     {
         val entities = this.findBy(criteria)
 
@@ -129,10 +130,12 @@ abstract class Repository public constructor (
         }
     }
 
-    fun find(id: Int): EntityInterface?
+    fun find(id: Int): Class<Any>?
     {
         val criteria: ArrayList<Pair<String, Any?>> = ArrayList()
-        criteria.add(Pair(this.getIdColumn(), id))
+        if (this.getIdColumn() != null) {
+            criteria.add(Pair(this.getIdColumn() as String, id))
+        }
 
         return this.findOneBy(criteria)
     }
@@ -162,6 +165,9 @@ abstract class Repository public constructor (
     fun update(entity: EntityInterface): Int
     {
         val idColumn = this.getIdColumn()
+        if (idColumn == null) {
+            return 0
+        }
         val whereArgs: Array<String> = arrayOf(readInstanceProperty(entity, idColumn))
 
         return this.updateBy(entity, "${idColumn} = ?", whereArgs)
@@ -180,7 +186,7 @@ abstract class Repository public constructor (
     fun delete(entity: EntityInterface): Int
     {
         val idColumn = this.getIdColumn()
-        val whereArgs: Array<String> = arrayOf(readInstanceProperty(entity, idColumn))
+        val whereArgs: Array<String> = arrayOf(readInstanceProperty(entity, idColumn as String))
 
         return this.deleteBy("${idColumn} = ?", whereArgs)
     }
@@ -190,14 +196,20 @@ abstract class Repository public constructor (
         return (this.entityClass.annotations.find { it -> it is DatabaseTable } as? DatabaseTable)?.tableName
     }
 
-    private fun getIdColumn(): String
+    private fun getIdColumn(): String?
     {
-        return this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseId>() != null }
+        return this.entityClass::class.java.fields
+            .filter { it.getAnnotation(DatabaseId::class.java) != null }
+            .map { it.name }
+            .first()
     }
 
     private fun getMappedFields(): ArrayList<String>
     {
-        return this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseColumn>() != null }
+        return this.entityClass::class.java.fields
+            .filter { it.getAnnotation(DatabaseColumn::class.java) != null }
+            .map { it.name }
+                as ArrayList
     }
 
     private fun getContentValues(entity: EntityInterface): ContentValues
@@ -206,15 +218,27 @@ abstract class Repository public constructor (
         val columns = this.getMappedFields()
 
         for (column in columns) {
-            contentValues.put(column, readInstanceProperty(entity, column))
+            val value = readInstanceProperty<Any>(entity, column)
+            if (value == null) {
+                contentValues.putNull(column)
+            }
+            else {
+                when (value::class.simpleName) {
+                    "String" -> contentValues.put(column, value as String)
+                    "Int" -> contentValues.put(column, value as Int)
+                    "Double" -> contentValues.put(column, value as Double)
+                    "Long" -> contentValues.put(column, value as Long)
+                    else -> contentValues.put(column, value as String)
+                }
+            }
         }
 
         return contentValues
     }
 
-    private fun getEntitiesFromCursor(cursor: Cursor): ArrayList<EntityInterface>
+    private fun getEntitiesFromCursor(cursor: Cursor): ArrayList<Class<Any>>
     {
-        val entities: ArrayList<EntityInterface> = ArrayList()
+        val entities: ArrayList<Class<Any>> = ArrayList()
 
         if (!cursor.moveToFirst()) {
             return ArrayList()
@@ -228,14 +252,17 @@ abstract class Repository public constructor (
     }
 
     @SuppressLint("Range")
-    private fun rowToEntity(cursor: Cursor): EntityInterface
+    private fun rowToEntity(cursor: Cursor): Class<Any>
     {
         val idColumn = this.getIdColumn()
         val fields = this.getMappedFields()
-        val entity = this.entityClass()
-        fields.add(idColumn)
+        val entity = this.entityClass
 
-        for (field in this.entityClass.java.declaredFields) {
+        if (idColumn != null) {
+            fields.add(idColumn)
+        }
+
+        for (field in this.entityClass.declaredFields) {
             val columnData = field.annotations.find { it -> it is DatabaseColumn } as? DatabaseColumn
                 ?: continue
             val index = cursor.getColumnIndex(field.name)
@@ -245,7 +272,7 @@ abstract class Repository public constructor (
                 else -> cursor.getString(index)
             }
             
-            writeInstanceProperty(entity, field, value)
+            writeInstanceProperty(entity, field.name, value)
         }
 
         return entity
