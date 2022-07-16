@@ -1,7 +1,9 @@
 package com.primeroeldev.mnemono.general
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
@@ -29,6 +31,7 @@ abstract class Repository public constructor (
 
         for (field in this.entityClass.java.declaredFields) {
             val columnData = field.annotations.find { it -> it is DatabaseColumn } as? DatabaseColumn
+                ?: continue
             val dataType = columnData?.dataType
             val length = columnData?.length.toString()
             val default = if (columnData?.defaultValue === null
@@ -57,9 +60,83 @@ abstract class Repository public constructor (
         this.onCreate(db)
     }
 
+    fun findAll(): ArrayList<EntityInterface>
+    {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM ${this.getTableName()}"
+
+        try {
+            val cursor = db.rawQuery(query, null)
+
+            return this.getEntitiesFromCursor(cursor)
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(query)
+
+            return ArrayList()
+        }
+    }
+
+    fun findBy(criteria: ArrayList<Pair<String, Any?>>): ArrayList<EntityInterface>
+    {
+        val db = this.readableDatabase
+        var selection: String = ""
+        var selectionAgrs: ArrayList<String>
+
+        for ((wherePart, value) in criteria) {
+            val arg = when (value::class.simpleName) {
+                "String" -> "'${value}'",
+                else -> value.toString()
+            }
+            selectionAgrs.add(arg)
+
+            if (wherePart.matches("^\w+$".toRegex())) {
+                selection += " " + wherePart + " = ?"
+            }
+            else {
+                selection += " " + wherePart
+            }
+        }
+
+        try {
+            val cursor = db.query(
+                this.getTableName(),
+                this.getMappedFields().toTypedArray(),
+                selection,
+                selectionAgrs.toTypedArray(),
+                "",
+                "",
+                ""
+            )
+
+            return this.getEntitiesFromCursor(cursor)
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+
+            return ArrayList()
+        }
+    }
+
+    fun findOneBy(criteria: ArrayList<Pair<String, Any?>>): EntityInterface?
+    {
+        val entities = this.findBy(criteria)
+
+        if (entities.isEmpty()) {
+            return null
+        }
+        else {
+            return entities.first()
+        }
+    }
+
     fun find(id: Int): EntityInterface?
     {
-        val query = "SELECT * FROM ${this.getTableName()}"
+        val criteria: ArrayList<Pair<String, Any?>> = ArrayList()
+        criteria.add(Pair(this.getIdColumn(), id))
+
+        return this.findOneBy(criteria)
     }
 
     fun insert(entity: EntityInterface): Long
@@ -120,10 +197,15 @@ abstract class Repository public constructor (
         return this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseId>() != null }
     }
 
+    private fun getMappedFields(): ArrayList<String>
+    {
+        return this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseColumn>() != null }
+    }
+
     private fun getContentValues(entity: EntityInterface): ContentValues
     {
         val contentValues = ContentValues()
-        val columns = this.entityClass::class.members.filter { it -> it.findAnnotation<DatabaseColumn>() != null }
+        val columns = this.getMappedFields()
 
         for (column in columns) {
             contentValues.put(column, readInstanceProperty(entity, column))
@@ -132,7 +214,42 @@ abstract class Repository public constructor (
         return contentValues
     }
 
-//    fun findBy(data: Any[]): EntityInterface[]
-//
-//    fun findOneBy(data: Any[]): EntityInterface[]
+    private fun getEntitiesFromCursor(cursor: Cursor): ArrayList<EntityInterface>
+    {
+        val entities: ArrayList<EntityInterface> = ArrayList()
+
+        if (!cursor.moveToFirst()) {
+            return ArrayList()
+        }
+
+        do {
+            entities.add(this.rowToEntity(cursor))
+        } while (cursor.moveToNext())
+
+        return entities
+    }
+
+    @SuppressLint("Range")
+    private fun rowToEntity(cursor: Cursor): EntityInterface
+    {
+        val idColumn = this.getIdColumn()
+        val fields = this.getMappedFields()
+        val entity = this.entityClass()
+        fields.add(idColumn)
+
+        for (field in this.entityClass.java.declaredFields) {
+            val columnData = field.annotations.find { it -> it is DatabaseColumn } as? DatabaseColumn
+                ?: continue
+            val index = cursor.getColumnIndex(field.name)
+            val value = when (columnData.dataType) {
+                "INTEGER" -> cursor.getInt(index)
+                "REAL" -> cursor.getDouble(index)
+                else -> cursor.getString(index)
+            }
+            
+            writeInstanceProperty(entity, field, value)
+        }
+
+        return entity
+    }
 }

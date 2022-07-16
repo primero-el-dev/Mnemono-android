@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy
 @Retention(RetentionPolicy.RUNTIME)
 annotation class DatabaseColumn(
     val columnName: String = "",
-    val dataType: String = "VARCHAR",
+    val dataType: String = "TEXT",
     val defaultValue: String = "",
     val length: Int = 0,
     val canBeNull: Boolean = true,
