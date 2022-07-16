@@ -1,9 +1,6 @@
 package com.primeroeldev.mnemono.general
 
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KProperty
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KVisibility
+import kotlin.reflect.*
 
 
 @Suppress("UNCHECKED_CAST")
