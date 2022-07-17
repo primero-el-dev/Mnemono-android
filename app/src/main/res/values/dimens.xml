@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="font_size_medium">24sp</dimen>
+
+    <dimen name="vertical_margin_small">8dp</dimen>
+    <dimen name="vertical_margin_big">20dp</dimen>
+
+    <dimen name="horizontal_margin_small">12dp</dimen>
+    <dimen name="horizontal_margin_big">32dp</dimen>
+</resources>

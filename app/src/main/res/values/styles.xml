@@ -1,0 +1,34 @@
+<resources>
+    <style name="DefaultElement" parent="ThemeOverlay.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <style name="InnerLinearLayout" parent="ThemeOverlay.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/vertical_margin_big</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Header" parent="ThemeOverlay.AppCompat">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?android:colorPrimary</item>
+    </style>
+
+    <style name="MainLayout" parent="ThemeOverlay.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">@dimen/horizontal_margin_big</item>
+        <item name="android:layout_marginEnd">@dimen/horizontal_margin_big</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>
