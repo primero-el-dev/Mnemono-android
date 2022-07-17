@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Mnemono</string>
+    <string name="button_start_game">Start new game</string>
+    <string name="button_statistics">Statistics</string>
+    <string name="button_games_played">Games played</string>
 </resources>

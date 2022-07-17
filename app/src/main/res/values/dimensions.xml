@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="button_font">20sp</dimen>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="vertical_margin">8dp</dimen>
+</resources>
