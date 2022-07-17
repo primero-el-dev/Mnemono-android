@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MainLayout"
+    tools:context=".activity.GameStartActivity">
+
+    <TextView
+        style="@style/Header"
+        android:text="@string/game_start_header" />
+
+    <LinearLayout style="@style/InnerLinearLayout">
+
+        <TextView
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big"
+            android:text="@string/spinner_game_type_header" />
+
+        <Spinner
+            android:id="@+id/spinner_game_type"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:drawSelectorOnTop="true" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout">
+
+        <TextView
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big"
+            android:text="@string/edit_text_game_items_count_header" />
+
+        <EditText
+            android:id="@+id/edit_text_game_items_count"
+            android:inputType="number"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout">
+
+        <TextView
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big"
+            android:text="@string/edit_text_game_duration_header" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <NumberPicker
+                android:id="@+id/number_picker_game_duration_hours"
+                android:layout_marginEnd="@dimen/horizontal_margin_big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <NumberPicker
+                android:id="@+id/number_picker_game_duration_minutes"
+                android:layout_marginEnd="@dimen/horizontal_margin_big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <NumberPicker
+                android:id="@+id/number_picker_game_duration_seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+<!--        <TimePicker-->
+<!--            android:id="@+id/edit_text_game_duration"-->
+<!--            android:timePickerMode="spinner"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="@dimen/font_size_medium"-->
+<!--            android:layout_marginTop="@dimen/vertical_margin_small" />-->
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout" >
+
+        <CheckBox
+            android:id="@+id/check_box_game_included_in_statistics"
+            style="@style/DefaultElement"
+            android:text="@string/check_box_game_included_in_statistics"
+            android:layout_marginTop="@dimen/vertical_margin_small" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout" >
+
+        <Button
+            android:id="@+id/buttonStatistics"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:text="@string/button_game_play" />
+
+    </LinearLayout>
+
+</LinearLayout>

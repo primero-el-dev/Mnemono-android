@@ -3,4 +3,14 @@
     <string name="button_start_game">Start new game</string>
     <string name="button_statistics">Statistics</string>
     <string name="button_games_played">Games played</string>
+    <string name="title_activity_game_start">GameStartActivity</string>
+
+    <!-- GameStartActivity -->
+    <string name="game_start_header">Start game</string>
+    <string name="spinner_game_type_header">Select type</string>
+    <string name="edit_text_game_items_count_header">Items count</string>
+    <string name="edit_text_game_duration_header">Duration</string>
+    <string name="check_box_game_included_in_statistics">Included in statistics</string>
+    <string name="button_game_play">Play</string>
+
 </resources>
