@@ -5,20 +5,24 @@ import com.primeroeldev.mnemono.game.Game
 
 val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
     "status" to arrayOf(
-        Pair("game.validation.status.notEmpty", ::notEmpty),
-        Pair("game.validation.status.inArray", { v: Any -> v is String && Game.getStatuses().contains(v) }),
+        Pair("game_validation_status_notEmpty", ::notEmpty),
+        Pair("game_validation_status_inArray", { v: Any -> v is String && Game.getStatuses().contains(v) }),
     ),
     "correctAnswersCount" to arrayOf(
-        Pair("game.validation.correctAnswersCount.min", { v: Any -> min(0.0)(v as Double) }),
-        Pair("game.validation.correctAnswersCount.max", { v: Any -> max(99999999999.0)(v as Double) }),
+        Pair("game_validation_correctAnswersCount_min", { v: Any -> min(0.0)(v as Double) }),
+        Pair("game_validation_correctAnswersCount_max", { v: Any -> max(99999999999.0)(v as Double) }),
     ),
     "allAnswersCount" to arrayOf(
-        Pair("game.validation.allAnswersCount.min", { v: Any -> min(0.0)(v as Double) }),
-        Pair("game.validation.allAnswersCount.max", { v: Any -> max(99999999999.0)(v as Double) }),
+        Pair("game_validation_allAnswersCount_min", { v: Any -> min(0.0)(v as Double) }),
+        Pair("game_validation_allAnswersCount_max", { v: Any -> max(99999999999.0)(v as Double) }),
     ),
     "type" to arrayOf(
-        Pair("game.validation.type.notEmpty", ::notEmpty),
-        Pair("game.validation.type.inArray", { v: Any -> v is String && Game.getTypes().contains(v) }),
+        Pair("game_validation_type_notEmpty", ::notEmpty),
+        Pair("game_validation_type_inArray", { v: Any -> v is String && Game.getTypes().contains(v) }),
+    ),
+    "durationInSeconds" to arrayOf(
+        Pair("game_validation_durationInSeconds_min", ::notEmpty),
+        Pair("game_validation_durationInSeconds_max", { v: Any -> v is Int && v < 24*3600 }),
     ),
 )
 

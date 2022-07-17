@@ -9,8 +9,16 @@
     <string name="game_start_header">Start game</string>
     <string name="spinner_game_type_header">Select type</string>
     <string name="edit_text_game_items_count_header">Items count</string>
+    <string name="edit_text_game_items_count_accessibility_label">Items count</string>
     <string name="edit_text_game_duration_header">Duration</string>
     <string name="check_box_game_included_in_statistics">Included in statistics</string>
     <string name="button_game_play">Play</string>
+
+    <string name="game_validation_allAnswersCount_min">Too little items to play</string>
+    <string name="game_validation_allAnswersCount_max">Too much items to play</string>
+    <string name="game_validation_type_notEmpty">Type is required</string>
+    <string name="game_validation_type_inArray">Wrong type</string>
+    <string name="game_validation_durationInSeconds_min">Duration too short</string>
+    <string name="game_validation_durationInSeconds_max">Duration too long</string>
 
 </resources>

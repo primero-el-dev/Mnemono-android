@@ -145,10 +145,10 @@ abstract class Repository public constructor (
         val db = this.writableDatabase
         val contentValues: ContentValues = this.getContentValues(entity)
 
-        val success = db.insert(this.getTableName(), null, contentValues)
+        val id = db.insert(this.getTableName(), null, contentValues)
         db.close()
 
-        return success
+        return id
     }
 
     fun updateBy(entity: EntityInterface, where: String, whereArgs: Array<String>): Int

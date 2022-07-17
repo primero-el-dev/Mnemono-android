@@ -40,21 +40,21 @@ class Game : EntityInterface
     @DatabaseColumn(canBeNull = false)
     var status: String = NOT_STARTED_STATUS
 
-    @DatabaseColumn(dataType = "TINYINT", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", canBeNull = false)
     var includedInStatistics: Boolean = false
 
-    @DatabaseColumn(dataType = "INT", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", canBeNull = false)
     var correctAnswersCount: Int = 0
 
-    @DatabaseColumn(dataType = "INT", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", canBeNull = false)
     var allAnswersCount: Int = 0
+
+    @DatabaseColumn(dataType = "INTEGER")
+    var durationInSeconds: Int = 0
 
     @DatabaseColumn(canBeNull = false)
     lateinit var type: String
 
-    @DatabaseColumn(dataType = "TIME_STAMP", canBeNull = false)
+    @DatabaseColumn(dataType = "TEXT", canBeNull = false)
     lateinit var createdAt: LocalDateTime
-
-    @DatabaseColumn(dataType = "TIME_STAMP")
-    lateinit var duration: LocalDateTime
 }
