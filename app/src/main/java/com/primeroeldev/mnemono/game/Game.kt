@@ -37,24 +37,24 @@ class Game : EntityInterface
     @DatabaseId
     override var id: Int? = null
 
-    @DatabaseColumn(canBeNull = false)
+    @DatabaseColumn(canBeNull = false, length = 255)
     var status: String = NOT_STARTED_STATUS
 
-    @DatabaseColumn(dataType = "INTEGER", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", length = 1, canBeNull = false)
     var includedInStatistics: Boolean = false
 
-    @DatabaseColumn(dataType = "INTEGER", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
     var correctAnswersCount: Int = 0
 
-    @DatabaseColumn(dataType = "INTEGER", canBeNull = false)
-    var allAnswersCount: Int = 0
+    @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
+    var allAnswersCount: Int? = 0
 
-    @DatabaseColumn(dataType = "INTEGER")
+    @DatabaseColumn(dataType = "INTEGER", length = 11)
     var durationInSeconds: Int = 0
 
-    @DatabaseColumn(canBeNull = false)
+    @DatabaseColumn(length = 255, canBeNull = false)
     lateinit var type: String
 
-    @DatabaseColumn(dataType = "TEXT", canBeNull = false)
+    @DatabaseColumn(dataType = "TEXT", length = 255, canBeNull = false)
     lateinit var createdAt: LocalDateTime
 }

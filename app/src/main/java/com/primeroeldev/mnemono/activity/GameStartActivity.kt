@@ -27,23 +27,23 @@ class GameStartActivity : AppCompatActivity()
         val game = Game()
         game.type = (findViewById(R.id.spinner_game_type) as Spinner).getSelectedItem().toString()
         game.status = Game.NOT_STARTED_STATUS
-        game.allAnswersCount = Integer.parseInt((findViewById(R.id.edit_text_game_items_count) as EditText).text.toString())
+        game.allAnswersCount = (findViewById(R.id.edit_text_game_items_count) as EditText).text.toString().toIntOrNull() ?: 0
         game.includedInStatistics = (findViewById(R.id.check_box_game_included_in_statistics) as CheckBox).isChecked
         game.durationInSeconds = this.getDurationInSeconds()
 
         val errors = getErrorsOfGame(game)
 
-        if (errors.isEmpty()) {
-            val gameId = GameRepository(applicationContext, null).insert(game)
+//        if (errors.isEmpty()) {
+//            val gameId = GameRepository(applicationContext, null).insert(game)
 
-            val intent = Intent(this, GamePlayActivity::class.java)
-            intent.putExtra("gameId", gameId)
-            startActivity(intent)
-        }
+//            val intent = Intent(this, GamePlayActivity::class.java)
+//            intent.putExtra("gameId", gameId)
+//            startActivity(intent)
+//        }
 
-        for ((_, error) in errors) {
-            Toast.makeText(applicationContext, getResources().getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
-        }
+//        for ((_, error) in errors) {
+//            Toast.makeText(applicationContext, getResources().getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
+//        }
     }
 
     private fun initGameTypeSpinner(): Unit
