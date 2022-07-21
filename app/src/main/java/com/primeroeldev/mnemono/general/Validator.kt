@@ -31,15 +31,11 @@ fun getErrorsOf(validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>>
         for (field in validators.keys) {
             val prop = readInstanceProperty<Any>(value, field)
 
-            for ((error, validator) in validators.get(field)!!) {
-                if (prop.let { validator(it) } != true) {
+            for ((error, validator) in validators[field]!!) {
+                if (!validator(prop)) {
                     errors.put(field, error)
                     break
                 }
-//                if (!validator(prop)) {
-//                    errors.put(field, error)
-//                    break
-//                }
             }
         }
 

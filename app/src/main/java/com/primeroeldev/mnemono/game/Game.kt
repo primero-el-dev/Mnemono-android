@@ -10,8 +10,12 @@ import java.time.LocalDateTime
 @DatabaseTable(tableName = Game.TABLE_NAME)
 class Game : EntityInterface
 {
-    companion object {
+    companion object
+    {
         const val TABLE_NAME = "game"
+
+        /** 1 day minus 1 second */
+        const val MAX_DURATION = 86399
 
         const val NUMBERS_TYPE = "numbers"
         const val WORDS_TYPE = "words"
@@ -47,9 +51,9 @@ class Game : EntityInterface
     var correctAnswersCount: Int = 0
 
     @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
-    var allAnswersCount: Int? = 0
+    var allAnswersCount: Int = 0
 
-    @DatabaseColumn(dataType = "INTEGER", length = 11)
+    @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
     var durationInSeconds: Int = 0
 
     @DatabaseColumn(length = 255, canBeNull = false)

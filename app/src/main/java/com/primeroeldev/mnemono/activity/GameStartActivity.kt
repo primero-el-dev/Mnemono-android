@@ -33,17 +33,17 @@ class GameStartActivity : AppCompatActivity()
 
         val errors = getErrorsOfGame(game)
 
-//        if (errors.isEmpty()) {
-//            val gameId = GameRepository(applicationContext, null).insert(game)
+        if (errors.isEmpty()) {
+            val gameId = GameRepository(applicationContext, null).insert(game)
 
-//            val intent = Intent(this, GamePlayActivity::class.java)
-//            intent.putExtra("gameId", gameId)
-//            startActivity(intent)
-//        }
+            val intent = Intent(this, GamePlayActivity::class.java)
+            intent.putExtra("gameId", gameId)
+            startActivity(intent)
+        }
 
-//        for ((_, error) in errors) {
-//            Toast.makeText(applicationContext, getResources().getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
-//        }
+        for ((_, error) in errors) {
+            Toast.makeText(applicationContext, getResources().getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initGameTypeSpinner(): Unit
@@ -74,8 +74,8 @@ class GameStartActivity : AppCompatActivity()
 
     private fun getDurationInSeconds(): Int
     {
-        return (findViewById(R.id.number_picker_game_duration_hours) as NumberPicker).value * 3600
+        return ((findViewById(R.id.number_picker_game_duration_hours) as NumberPicker).value * 3600
             + (findViewById(R.id.number_picker_game_duration_minutes) as NumberPicker).value * 60
-            + (findViewById(R.id.number_picker_game_duration_seconds) as NumberPicker).value
+            + (findViewById(R.id.number_picker_game_duration_seconds) as NumberPicker).value)
     }
 }
