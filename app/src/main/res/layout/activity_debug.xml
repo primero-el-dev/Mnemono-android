@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MainLayout"
-    tools:context=".activity.GamePlayActivity">
+    tools:context=".activity.DebugActivity">
 
     <TextView
         style="@style/Header"
-        android:text="@string/game_start_header" />
+        android:text="Debug" />
 
     <LinearLayout style="@style/InnerLinearLayout">
 
@@ -17,7 +17,7 @@
             android:text="@string/edit_text_game_items_count_header" />
 
         <EditText
-            android:id="@+id/edit_text_game_items_count"
+            android:id="@+id/debug_input"
             android:inputType="number"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
@@ -28,21 +28,9 @@
     <LinearLayout style="@style/InnerLinearLayout">
 
         <TextView
-            android:id="@+id/game_play_timer"
+            android:id="@+id/debug_text"
             style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_big"
-            android:text="00:00:00" />
-
-    </LinearLayout>
-
-    <LinearLayout style="@style/InnerLinearLayout" >
-
-        <Button
-            android:id="@+id/button_game_start_submit"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small"
-            android:onClick="submit"
-            android:text="@string/button_game_play" />
+            android:layout_marginTop="@dimen/vertical_margin_big" />
 
     </LinearLayout>
 

@@ -68,14 +68,6 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-<!--        <TimePicker-->
-<!--            android:id="@+id/edit_text_game_duration"-->
-<!--            android:timePickerMode="spinner"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="@dimen/font_size_medium"-->
-<!--            android:layout_marginTop="@dimen/vertical_margin_small" />-->
-
     </LinearLayout>
 
     <LinearLayout style="@style/InnerLinearLayout" >

@@ -39,13 +39,13 @@ class Game : EntityInterface
     }
 
     @DatabaseId
-    override var id: Int? = null
+    override var _id: Int? = null
 
     @DatabaseColumn(canBeNull = false, length = 255)
     var status: String = NOT_STARTED_STATUS
 
     @DatabaseColumn(dataType = "INTEGER", length = 1, canBeNull = false)
-    var includedInStatistics: Boolean = false
+    var includedInStatistics: Int = 1
 
     @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
     var correctAnswersCount: Int = 0
@@ -60,5 +60,5 @@ class Game : EntityInterface
     lateinit var type: String
 
     @DatabaseColumn(dataType = "TEXT", length = 255, canBeNull = false)
-    lateinit var createdAt: LocalDateTime
+    lateinit var createdAt: String
 }

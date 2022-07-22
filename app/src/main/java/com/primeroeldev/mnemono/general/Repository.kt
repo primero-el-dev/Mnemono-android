@@ -7,9 +7,11 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.primeroeldev.mnemono.game.Game
 import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
 import com.primeroeldev.mnemono.general.annotation.DatabaseId
 import com.primeroeldev.mnemono.general.annotation.DatabaseTable
+import com.primeroeldev.mnemono.validation.notEmpty
 import java.lang.reflect.Field
 import kotlin.collections.ArrayList
 import kotlin.reflect.KClass
@@ -63,25 +65,16 @@ abstract class Repository (
     {
         val db = this.readableDatabase
         val query = "SELECT * FROM ${this.getTableName()}"
+        val cursor = db.rawQuery(query, null)
 
-        try {
-            val cursor = db.rawQuery(query, null)
-
-            return this.getEntitiesFromCursor(cursor)
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-            db.execSQL(query)
-
-            return ArrayList()
-        }
+        return this.getEntitiesFromCursor(cursor)
     }
 
     fun findBy(criteria: ArrayList<Pair<String, Any?>>): ArrayList<EntityInterface>
     {
         val db = this.readableDatabase
-        var selection = ""
-        var selectionAgrs: ArrayList<String> = ArrayList()
+        var selections: ArrayList<String> = ArrayList()
+        val selectionAgrs: ArrayList<String> = ArrayList()
 
         for ((wherePart, value) in criteria) {
             val arg = if (value is String) value
@@ -89,18 +82,18 @@ abstract class Repository (
             selectionAgrs.add(arg)
 
             if (wherePart.matches("""^\w+$""".toRegex())) {
-                selection += " " + wherePart + " = ?"
+                selections.add("$wherePart = ?")
             }
             else {
-                selection += " " + wherePart
+                selections.add(wherePart)
             }
         }
 
-        try {
+//        try {
             val cursor = db.query(
                 this.getTableName(),
                 this.getMappedFields().toTypedArray(),
-                selection,
+                selections.joinToString(" AND "),
                 selectionAgrs.toTypedArray(),
                 "",
                 "",
@@ -108,27 +101,20 @@ abstract class Repository (
             )
 
             return this.getEntitiesFromCursor(cursor)
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-
-            return ArrayList()
-        }
+//        }
+//        catch (e: Exception) {
+//            e.printStackTrace()
+//
+//            return ArrayList()
+//        }
     }
 
     fun findOneBy(criteria: ArrayList<Pair<String, Any?>>): EntityInterface?
     {
-        val entities = this.findBy(criteria)
-
-        if (entities.isEmpty()) {
-            return null
-        }
-        else {
-            return entities.first()
-        }
+        return this.findBy(criteria).firstOrNull()
     }
 
-    fun find(id: Int): Any?
+    fun find(id: Long): Any?
     {
         val criteria: ArrayList<Pair<String, Any?>> = ArrayList()
         if (this.getIdColumn() != null) {
@@ -136,6 +122,16 @@ abstract class Repository (
         }
 
         return this.findOneBy(criteria)
+    }
+
+    fun count(): Int
+    {
+        return this.findAll().size
+    }
+
+    fun countBy(criteria: ArrayList<Pair<String, Any?>>): Int
+    {
+        return this.findBy(criteria).size
     }
 
     fun insert(entity: EntityInterface): Long
@@ -193,7 +189,7 @@ abstract class Repository (
 
     private fun getTableName(): String?
     {
-        return (this.getClassInstance()::class.annotations.find { it -> it is DatabaseTable } as? DatabaseTable)?.tableName
+        return (this.getClassInstance()::class.annotations.find { it is DatabaseTable } as? DatabaseTable)?.tableName
     }
 
     private fun getIdColumn(): String?
@@ -230,7 +226,7 @@ abstract class Repository (
                     "Double" -> contentValues.put(column, value as Double)
                     "Float" -> contentValues.put(column, value as Float)
                     "Long" -> contentValues.put(column, value as Long)
-                    "Boolean" -> contentValues.put(column, value as Boolean)
+                    "Boolean" -> contentValues.put(column, if (notEmpty(value)) 1 else 0)
                     else -> contentValues.put(column, value as String)
                 }
             }
@@ -258,15 +254,14 @@ abstract class Repository (
     private fun rowToEntity(cursor: Cursor): EntityInterface
     {
         val idColumn = this.getIdColumn()
-        val fields = this.getMappedFields()
         val entity: EntityInterface = this.getClassInstance()
 
         if (idColumn != null) {
-            fields.add(idColumn)
+            writeInstanceProperty(entity, idColumn, cursor.getInt(cursor.getColumnIndex(idColumn)))
         }
 
         for (field in this.getClassInstance()::class.java.declaredFields) {
-            val columnData = field.annotations.find { it -> it is DatabaseColumn } as? DatabaseColumn
+            val columnData = field.annotations.find { it is DatabaseColumn } as? DatabaseColumn
                 ?: continue
             val index = cursor.getColumnIndex(field.name)
             val value = when (columnData.dataType) {
