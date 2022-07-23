@@ -15,12 +15,6 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
-//        GameRepository(applicationContext, null).insert(game)
-//            .reset()
-//            .insert(game)
     }
 
     fun startGame(view: View)

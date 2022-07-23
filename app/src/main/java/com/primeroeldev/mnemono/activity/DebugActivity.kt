@@ -21,32 +21,32 @@ class DebugActivity : AppCompatActivity()
 //        val game = gameRepository.findAll()[2] as? Game
 
 
-        var game: Game? = Game()
-        game?.type = Game.NUMBERS_TYPE
-        game?.status = Game.NOT_STARTED_STATUS
-        game?.correctAnswersCount = 2
-        game?.allAnswersCount = 10
-        game?.includedInStatistics = 1
-        game?.durationInSeconds = 123
-        game?.createdAt = "2022-07-22"
-
-        val gameId = GameRepository(applicationContext, null).insert(game!! as EntityInterface)
-
-        val list: ArrayList<Pair<String, Any?>> = ArrayList()
-        list.add(Pair("type", Game.NUMBERS_TYPE as Any?))
-
-        val deleteArgs: Array<String> = arrayOf(Game.NUMBERS_TYPE)
-//        val deleted = GameRepository(applicationContext, null).deleteBy("type = ?", deleteArgs)
-
-        game = gameRepository.findBy(list)[0] as Game
-
-        if (game != null) {
-            (findViewById(R.id.debug_text) as TextView).text = game._id.toString()
-//            (findViewById(R.id.debug_text) as TextView).text = gameId.toString()
-            (findViewById(R.id.debug_text) as TextView).text = game.type
-        } else {
-            (findViewById(R.id.debug_text) as TextView).text = "NONE FOUND"
-        }
+//        var game: Game? = Game()K
+//        game?.type = Game.CARDS_TYPE
+//        game?.status = Game.NOT_STARTED_STATUS
+//        game?.correctAnswersCount = 2
+//        game?.allAnswersCount = 10
+//        game?.includedInStatistics = 1
+//        game?.durationInSeconds = 123
+//        game?.createdAt = "2022-07-22"
+//
+//        val gameId = GameRepository(applicationContext, null).insert(game!! as EntityInterface)
+//
+//        val list: ArrayList<Pair<String, Any?>> = ArrayList()
+//        list.add(Pair("type", Game.WORDS_TYPE as Any?))
+//
+//        val deleteArgs: Array<String> = arrayOf(Game.CARDS_TYPE)
+//        val deleted = GameRepository(applicationContext, null).updateBy(game, "type = ?", deleteArgs)
+//
+//        game = gameRepository.findOneBy(list) as? Game
+//
+//        if (game != null) {
+//            (findViewById(R.id.debug_text) as TextView).text = game._id.toString()
+////            (findViewById(R.id.debug_text) as TextView).text = gameId.toString()
+////            (findViewById(R.id.debug_text) as TextView).text = game.type
+//        } else {
+//            (findViewById(R.id.debug_text) as TextView).text = "NONE FOUND"
+//        }
 //        (findViewById(R.id.debug_text) as TextView).text = deleted.toString()
     }
 }

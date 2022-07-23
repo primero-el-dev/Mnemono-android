@@ -39,7 +39,7 @@ class Game : EntityInterface
     }
 
     @DatabaseId
-    override var _id: Int? = null
+    override var _id: Long? = null
 
     @DatabaseColumn(canBeNull = false, length = 255)
     var status: String = NOT_STARTED_STATUS
