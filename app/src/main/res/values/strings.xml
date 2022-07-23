@@ -21,4 +21,6 @@
     <string name="game_validation_durationInSeconds_min">Duration too short</string>
     <string name="game_validation_durationInSeconds_max">Duration too long</string>
 
+    <!-- GamePlayActivity -->
+    <string name="game_play_header">Remember</string>
 </resources>

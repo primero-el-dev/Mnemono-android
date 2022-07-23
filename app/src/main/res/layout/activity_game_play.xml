@@ -7,21 +7,42 @@
 
     <TextView
         style="@style/Header"
-        android:text="@string/game_start_header" />
+        android:text="@string/game_play_header" />
 
-    <LinearLayout style="@style/InnerLinearLayout">
+    <LinearLayout style="@style/InnerLinearLayout"
+        android:layout_height="wrap_content" >
 
-        <TextView
+        <ScrollView
             style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_big"
-            android:text="@string/edit_text_game_items_count_header" />
+            android:layout_height="@dimen/game_answers_view_height">
 
-        <EditText
-            android:id="@+id/edit_text_game_items_count"
-            android:inputType="number"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small"
-            android:autofillHints="@string/edit_text_game_items_count_accessibility_label" />
+            <TextView
+                android:id="@+id/game_play_correct_answers"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="Mohandas Karamchand Gandhi (/ˈɡɑːndi, ˈɡændi/;[2] Hindustani: [ˈmoːɦəndaːs ˈkərəmtʃənd ˈɡaːndʱi] (About this soundlisten);
+             2 October 1869 – 30 January 1948) was an Indian activist who was the leader of the Indian independence movement against British colonial rule.[3]
+             Employing nonviolent civil disobedience, Gandhi led India to independence and inspired movements for civil rights and freedom across the world.
+             The honorific Mahātmā (Sanskrit: \high-souled\, \venerable\)[4] was applied to him first in 1914 in South Africa[5] and is now used worldwide.
+            In India, he was also called Bapu, a term that he preferred[6] (Gujarati: endearment for father,[7] papa[7][8]), and Gandhi ji, and is known as the Father of the
+            Nation.[9][10]\nBorn and raised in a Hindu family in coastal Gujarat, western India, and trained in law at the Inner Temple, London, Gandhi first
+            employed nonviolent civil disobedience as an expatriate lawyer in South Africa, in the resident Indian community's struggle for civil rights. After his return
+            to India in 1915, he set about organising peasants,  farmers, and urban labourers to protest against excessive land-tax and discrimination.
+            Assuming leadership of the Indian National Congress in 1921, Gandhi led nationwide campaigns for various social causes and for achieving Swaraj or
+            self-rule.[11]\nGandhi led Indians in challenging the British-imposed salt tax with the 400 km (250 mi) Dandi Salt March in 1930, and
+            later in calling for the British to Quit India in 1942. He was imprisoned for many years, upon many occasions, in both South Africa and India.
+            He lived modestly in a self-sufficient residential community and wore the traditional Indian dhoti
+            and shawl, woven with yarn hand-spun on a charkha. He ate simple vegetarian food, and also undertook long fasts as a means of both
+            self-purification and political protest.\nGandhi's vision of an independent India based on religious pluralism was challenged in
+            the early 1940s by a new Muslim nationalism which was demanding a separate Muslim homeland carved out of India.[12] In August 1947, Britain
+            granted independence, but the British Indian Empire[12] was partitioned into two dominions, a Hindu-majority India and Muslim-majority Pakistan.[13]
+            As many displaced Hindus, Muslims, and Sikhs made their way to their new lands, religious violence broke out, especially in the Punjab and Bengal.
+            Eschewing the official celebration of independence in Delhi, Gandhi visited the affected areas, attempting to provide solace. In the months following,
+            he undertook several fasts unto death to stop religious violence. The last of these, undertaken on 12 January 1948 when he was 78,[14] also had
+            the indirect goal of pressuring India to pay out some cash assets owed to Pakistan.[14] Some Indians thought Gandhi was too accommodating.[14][15]
+            Among them was Nathuram Godse, a Hindu nationalist, who assassinated Gandhi on 30 January 1948 by firing three bullets into his chest.[15" />
+
+        </ScrollView>
 
     </LinearLayout>
 
@@ -41,7 +62,7 @@
             android:id="@+id/button_game_start_submit"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
-            android:onClick="submit"
+            android:onClick="processToAnswer"
             android:text="@string/button_game_play" />
 
     </LinearLayout>

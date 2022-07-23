@@ -6,4 +6,6 @@
 
     <dimen name="horizontal_margin_small">12dp</dimen>
     <dimen name="horizontal_margin_big">32dp</dimen>
+
+    <dimen name="game_answers_view_height">440dp</dimen>
 </resources>
