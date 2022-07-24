@@ -35,7 +35,8 @@
             android:id="@+id/edit_text_game_items_count"
             android:inputType="number"
             style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small" />
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:autofillHints="@string/edit_text_game_items_count_accessibility_label" />
 
     </LinearLayout>
 
@@ -90,9 +91,10 @@
     <LinearLayout style="@style/InnerLinearLayout" >
 
         <Button
-            android:id="@+id/buttonStatistics"
+            android:id="@+id/button_game_start_submit"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="submit"
             android:text="@string/button_game_play" />
 
     </LinearLayout>

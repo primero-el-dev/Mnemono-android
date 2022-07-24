@@ -1,14 +1,17 @@
 package com.primeroeldev.mnemono.general
 
 import kotlin.reflect.*
+import kotlin.reflect.full.declaredMemberProperties
 
 
 @Suppress("UNCHECKED_CAST")
-fun <R> readInstanceProperty(instance: Any, propertyName: String): R {
-    val property = instance::class.members
-        .first { it.name == propertyName } as KProperty1<Any, *>
+fun <R> readInstanceProperty(instance: Any, propertyName: String): R
+{
+    val field = instance::class.java.getDeclaredField(propertyName)
 
-    return property.get(instance) as R
+    field.isAccessible = true
+
+    return field.get(instance) as R
 }
 
 
@@ -16,6 +19,7 @@ fun writeInstanceProperty(instance: Any, property: String, value: Any)
 {
     writeInstanceProperties(instance, listOf(Pair(property, value)))
 }
+
 
 fun writeInstanceProperties(obj: Any, fieldsToChange: List<Pair<String, Any?>>)
 {

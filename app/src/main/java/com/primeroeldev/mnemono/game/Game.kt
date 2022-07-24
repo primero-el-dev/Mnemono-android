@@ -10,8 +10,12 @@ import java.time.LocalDateTime
 @DatabaseTable(tableName = Game.TABLE_NAME)
 class Game : EntityInterface
 {
-    companion object {
+    companion object
+    {
         const val TABLE_NAME = "game"
+
+        /** 1 day minus 1 second */
+        const val MAX_DURATION = 86399
 
         const val NUMBERS_TYPE = "numbers"
         const val WORDS_TYPE = "words"
@@ -37,24 +41,24 @@ class Game : EntityInterface
     @DatabaseId
     override var id: Int? = null
 
-    @DatabaseColumn(canBeNull = false)
+    @DatabaseColumn(canBeNull = false, length = 255)
     var status: String = NOT_STARTED_STATUS
 
-    @DatabaseColumn(dataType = "TINYINT", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", length = 1, canBeNull = false)
     var includedInStatistics: Boolean = false
 
-    @DatabaseColumn(dataType = "INT", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
     var correctAnswersCount: Int = 0
 
-    @DatabaseColumn(dataType = "INT", canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
     var allAnswersCount: Int = 0
 
-    @DatabaseColumn(canBeNull = false)
+    @DatabaseColumn(dataType = "INTEGER", length = 11, canBeNull = false)
+    var durationInSeconds: Int = 0
+
+    @DatabaseColumn(length = 255, canBeNull = false)
     lateinit var type: String
 
-    @DatabaseColumn(dataType = "TIME_STAMP", canBeNull = false)
+    @DatabaseColumn(dataType = "TEXT", length = 255, canBeNull = false)
     lateinit var createdAt: LocalDateTime
-
-    @DatabaseColumn(dataType = "TIME_STAMP")
-    lateinit var duration: LocalDateTime
 }
