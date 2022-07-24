@@ -38,13 +38,13 @@ class GameAnswerActivity : AppCompatActivity()
         this.gameRepository.update(this.game)
         this.gameManager = GamePlayManagerFactory.dispatch(this.game)
 
-        (findViewById(R.id.game_play_answer_hint) as TextView).text = this.gameManager.getAnswerInputHint()
+        findViewById<TextView>(R.id.game_play_answer_hint).text = this.gameManager.getAnswerInputHint()
     }
 
     fun submit(view: View): Unit
     {
         val (checkedAnswers, correctCount) = this.gameManager
-            .checkAnswers(this.correctAnswers, (findViewById(R.id.game_play_provide_answers) as TextView).text.toString())
+            .checkAnswers(this.correctAnswers, findViewById<TextView>(R.id.game_play_provide_answers).text.toString())
 
         this.game.correctAnswersCount = correctCount
         this.game.status = Game.FINISHED_STATUS
