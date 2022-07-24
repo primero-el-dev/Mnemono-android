@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
 
 
 class MainActivity : AppCompatActivity()
@@ -15,6 +13,10 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val a: Pair<String, Int> = Pair("abc", 3)
+
+        val (checkedAnswers, correctCount) = a
     }
 
     fun startGame(view: View)

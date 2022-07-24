@@ -22,27 +22,35 @@ class NumbersGamePlayManager : GamePlayManager
         return answers.chunked(10).joinToString(" ")
     }
 
-    override fun checkAnswers(generated: String, provided: String): Pair<String, Int>
+    override fun checkAnswers(correct: String, provided: String): Pair<String, Int>
     {
         val providedFormatted = provided.replace("\\s+".toRegex(), "")
-        val generatedFormatted = provided.replace("\\s+".toRegex(), "")
+        val correctFormatted = correct.replace("\\s+".toRegex(), "")
         var answers = ""
         var correctCount = 0
-        var index = 1
+        var index = 0
+        val limit = minOf(providedFormatted.length, correctFormatted.length)
 
-        while (index <= providedFormatted.length) {
-            val correct = providedFormatted[index] == generatedFormatted[index]
-            if (correct) {
-                answers += "<font color=\"green\">" + providedFormatted[index] + "</font>"
+        while (index < limit) {
+            answers += if (index % 10 == 0) " " else ""
+
+            val providedChar = providedFormatted[index]
+            val isCorrect = providedChar == correctFormatted[index]
+            if (isCorrect) {
+                answers += providedChar
             }
             else {
-                answers += "<font color=\"red\">" + providedFormatted[index] + "</font>"
+                answers += "<font color=\"red\">$providedChar</font>"
             }
-            answers += if (index % 10 == 0) " " else ""
-            correctCount += correct.toInt()
+            correctCount += isCorrect.toInt()
             index++
         }
 
         return Pair(answers, correctCount)
+    }
+
+    override fun getAnswerInputHint(): String
+    {
+        return "All spaces will be trimmed"
     }
 }

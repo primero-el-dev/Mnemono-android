@@ -17,9 +17,10 @@ class DebugActivity : AppCompatActivity()
 
         val gameRepository = GameRepository(applicationContext, null)
         val count = gameRepository.count()
-//        val game = gameRepository.find(1) as? Game
+        val game = gameRepository.find(3) as? Game
 //        val game = gameRepository.findAll()[2] as? Game
 
+        (findViewById(R.id.debug_text) as TextView).text = game?._id.toString()
 
 //        var game: Game? = Game()K
 //        game?.type = Game.CARDS_TYPE

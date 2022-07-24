@@ -13,13 +13,20 @@ import com.primeroeldev.mnemono.game.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 import com.primeroeldev.mnemono.general.TimeUtil
+import java.time.Clock
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class GamePlayActivity : AppCompatActivity()
 {
     private lateinit var gameManager: GamePlayManager
     private lateinit var answers: String
+    private lateinit var game: Game
+    private lateinit var timer: CountDownTimer
+    private var timeStarted: Long = 0
+    private var gameId: Long = 0
 
-    override fun onCreate(savedInstanceState: Bundle?)
+    override fun onCreate(savedInstanceState: Bundle?): Unit
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_play)
@@ -32,28 +39,51 @@ class GamePlayActivity : AppCompatActivity()
             startActivity(intent)
         }
 
+        this.game = game!!
+
         val answersView = findViewById(R.id.game_play_correct_answers) as TextView
-        this.gameManager = GamePlayManagerFactory.dispatch(game!!)
+        this.gameManager = GamePlayManagerFactory.dispatch(game)
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
         answersView.text = this.gameManager.presentAnswers(this.answers)
-//        answersView.setMovementMethod(newScrollingMovementMethod())
+
+        this.timeStarted = Clock.system(ZoneId.systemDefault()).millis()
 
         val timerView = findViewById(R.id.game_play_timer) as TextView
-        val timer = this.initTimer(game, timerView)
-        timer.start()
+        this.initTimer(game, timerView)
+        this.timer.start()
     }
 
-    fun processToAnswer(view: View): Unit
+    override fun onResume(): Unit
     {
+        super.onResume()
+
+        if (this.timeHasPassed()) {
+            this.processToAnswer()
+        }
+    }
+
+    fun submit(view: View): Unit
+    {
+        this.processToAnswer()
+    }
+
+    private fun processToAnswer(): Unit
+    {
+        this.timer.cancel()
+
         val intent = Intent(this, GameAnswerActivity::class.java)
         intent.putExtra(ParamDictionary.CORRECT_ANSWERS_KEY, this.answers)
+        intent.putExtra(ParamDictionary.GAME_ID_KEY, this.game._id)
+        intent.putExtra(ParamDictionary.REAL_GAME_DURATION_KEY, this.getGameRealDuration())
         startActivity(intent)
     }
 
-    private fun initTimer(game: Game, timerView: TextView): CountDownTimer
+    private fun initTimer(game: Game, timerView: TextView): Unit
     {
-        return object: CountDownTimer(game.durationInSeconds.toLong() * 1000, 1000L)
+        val timer = object: CountDownTimer(game.durationInSeconds.toLong() * 1000, 1000L)
         {
+            lateinit var activity: GamePlayActivity
+
             override fun onTick(millisUntilFinished: Long): Unit
             {
                 if (millisUntilFinished < 30000) {
@@ -64,8 +94,22 @@ class GamePlayActivity : AppCompatActivity()
 
             override fun onFinish(): Unit
             {
-                timerView.text = TimeUtil.longToTimeString(0)
+                this.activity.processToAnswer()
             }
         }
+
+        timer.activity = this
+
+        this.timer = timer
+    }
+
+    private fun timeHasPassed(): Boolean
+    {
+        return (Clock.system(ZoneId.systemDefault()).millis() - timeStarted) >= (this.game.durationInSeconds * 1000)
+    }
+
+    private fun getGameRealDuration(): Int
+    {
+        return minOf(((Clock.system(ZoneId.systemDefault()).millis() - timeStarted) / 1000).toInt(), this.game.durationInSeconds)
     }
 }

@@ -6,5 +6,7 @@ interface GamePlayManager
 
     fun presentAnswers(answers: String): String
 
-    fun checkAnswers(generated: String, provided: String): Pair<String, Int>
+    fun checkAnswers(correct: String, provided: String): Pair<String, Int>
+
+    fun getAnswerInputHint(): String
 }
