@@ -14,7 +14,7 @@
 
         <ScrollView
             style="@style/DefaultElement"
-            android:layout_height="@dimen/game_answers_view_height">
+            android:layout_height="@dimen/game_result_view_height">
 
             <TextView
                 android:id="@+id/game_result_checked_answers"
@@ -29,6 +29,21 @@
 
         <TextView
             android:id="@+id/game_result_correct_count"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big" />
+
+        <TextView
+            android:id="@+id/game_result_type"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big" />
+
+        <TextView
+            android:id="@+id/game_result_status"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big" />
+
+        <TextView
+            android:id="@+id/game_result_included_in_statistics"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_big" />
 

@@ -32,10 +32,8 @@ class GameAnswerActivity : AppCompatActivity()
             val intent = Intent(this, GameStartActivity::class.java)
             startActivity(intent)
         }
-        else {
-            this.game = game
-        }
 
+        this.game = game!!
         this.game.durationInSeconds = this.intent.getIntExtra(ParamDictionary.REAL_GAME_DURATION_KEY, 0)
         this.gameRepository.update(this.game)
         this.gameManager = GamePlayManagerFactory.dispatch(this.game)
@@ -49,6 +47,7 @@ class GameAnswerActivity : AppCompatActivity()
             .checkAnswers(this.correctAnswers, (findViewById(R.id.game_play_provide_answers) as TextView).text.toString())
 
         this.game.correctAnswersCount = correctCount
+        this.game.status = Game.FINISHED_STATUS
         this.gameRepository.update(this.game)
 
         val intent = Intent(this, GameResultActivity::class.java)

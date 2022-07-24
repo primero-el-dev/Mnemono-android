@@ -31,8 +31,9 @@ class GamePlayActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_play)
 
+        val gameRepository = GameRepository(applicationContext, null)
         val gameId = this.intent?.getLongExtra(ParamDictionary.GAME_ID_KEY, 0)!!
-        val game = GameRepository(applicationContext, null).find(gameId) as? Game
+        val game = gameRepository.find(gameId) as? Game
 
         if (gameId == 0L || game == null) {
             val intent = Intent(this, GameStartActivity::class.java)
@@ -40,6 +41,9 @@ class GamePlayActivity : AppCompatActivity()
         }
 
         this.game = game!!
+
+        this.game.status = Game.JUST_STARTED_STATUS
+        gameRepository.update(this.game)
 
         val answersView = findViewById(R.id.game_play_correct_answers) as TextView
         this.gameManager = GamePlayManagerFactory.dispatch(game)

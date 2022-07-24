@@ -5,6 +5,9 @@
     <string name="button_games_played">Games played</string>
     <string name="title_activity_game_start">GameStartActivity</string>
 
+    <!-- GameIndexActivity -->
+    <string name="game_index_header">Games</string>
+
     <!-- GameStartActivity -->
     <string name="game_start_header">Start game</string>
     <string name="spinner_game_type_header">Select type</string>

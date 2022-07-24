@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MainLayout"
+    tools:context=".activity.GameIndexActivity">
+
+    <TextView
+        style="@style/Header"
+        android:text="@string/game_index_header" />
+
+    <LinearLayout style="@style/InnerLinearLayout"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/game_play_answer_hint"
+            style="@style/DefaultElement" />
+
+        <EditText
+            android:id="@+id/game_play_provide_answers"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big"
+            android:layout_height="@dimen/game_answers_view_height"
+            android:scrollbars="vertical"
+            android:background="@drawable/border_small"
+            android:gravity="top"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout" >
+
+        <Button
+            android:id="@+id/button_game_check"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="submit"
+            android:text="@string/button_game_check" />
+
+    </LinearLayout>
+
+</LinearLayout>

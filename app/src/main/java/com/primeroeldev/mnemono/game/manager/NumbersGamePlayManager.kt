@@ -37,7 +37,7 @@ class NumbersGamePlayManager : GamePlayManager
             val providedChar = providedFormatted[index]
             val isCorrect = providedChar == correctFormatted[index]
             if (isCorrect) {
-                answers += providedChar
+                answers += "<font color=\"black\">$providedChar</font>"
             }
             else {
                 answers += "<font color=\"red\">$providedChar</font>"

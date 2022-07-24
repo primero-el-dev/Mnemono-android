@@ -30,6 +30,9 @@ class GameResultActivity : AppCompatActivity()
 
         (findViewById(R.id.game_result_checked_answers) as TextView).text = Html.fromHtml(checkedAnswers)
         (findViewById(R.id.game_result_correct_count) as TextView).text = "${game.correctAnswersCount} / ${game.allAnswersCount} in ${time}"
+        (findViewById(R.id.game_result_type) as TextView).text = "Game type: " + game.type
+        (findViewById(R.id.game_result_status) as TextView).text = "Game status: " + game.status
+        (findViewById(R.id.game_result_included_in_statistics) as TextView).text = "Included in statistics: " + if (game.includedInStatistics == 1) "yes" else "no"
         (findViewById(R.id.game_result_created_at) as TextView).text = game.createdAt
     }
 
