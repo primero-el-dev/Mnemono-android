@@ -26,7 +26,18 @@ class GameResultActivity : AppCompatActivity()
         }
 
         val checkedAnswers = this.intent.getStringExtra(ParamDictionary.CHECKED_ANSWERS_KEY)
-        val time = TimeUtil.longToTimeString(game?.durationInSeconds!!.toLong())
+
+        this.prepareDisplay(checkedAnswers!!, game!!)
+    }
+
+    fun goBack(view: View): Unit
+    {
+        finish()
+    }
+
+    private fun prepareDisplay(checkedAnswers: String, game: Game): Unit
+    {
+        val time = TimeUtil.longToTimeString(game.durationInSeconds.toLong())
 
         (findViewById(R.id.game_result_checked_answers) as TextView).text = Html.fromHtml(checkedAnswers)
         (findViewById(R.id.game_result_correct_count) as TextView).text = "${game.correctAnswersCount} / ${game.allAnswersCount} in ${time}"
@@ -34,10 +45,5 @@ class GameResultActivity : AppCompatActivity()
         (findViewById(R.id.game_result_status) as TextView).text = "Game status: " + game.status
         (findViewById(R.id.game_result_included_in_statistics) as TextView).text = "Included in statistics: " + if (game.includedInStatistics == 1) "yes" else "no"
         (findViewById(R.id.game_result_created_at) as TextView).text = game.createdAt
-    }
-
-    fun goBack(view: View): Unit
-    {
-        finish()
     }
 }
