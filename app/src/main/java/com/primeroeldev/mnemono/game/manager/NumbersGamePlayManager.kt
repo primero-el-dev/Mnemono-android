@@ -24,8 +24,8 @@ class NumbersGamePlayManager : GamePlayManager
 
     override fun checkAnswers(correct: String, provided: String): Pair<String, Int>
     {
-        val providedFormatted = provided.replace("\\s+".toRegex(), "")
-        val correctFormatted = correct.replace("\\s+".toRegex(), "")
+        val providedFormatted = provided.replace("(\\s|[^\\d])+".toRegex(), "")
+        val correctFormatted = correct.replace("(\\s|[^\\d])+".toRegex(), "")
         var answers = ""
         var correctCount = 0
         var index = 0

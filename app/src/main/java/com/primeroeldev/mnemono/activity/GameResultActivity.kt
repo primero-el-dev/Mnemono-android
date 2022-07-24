@@ -30,7 +30,7 @@ class GameResultActivity : AppCompatActivity()
 
         (findViewById(R.id.game_result_checked_answers) as TextView).text = Html.fromHtml(checkedAnswers)
         (findViewById(R.id.game_result_correct_count) as TextView).text = "${game.correctAnswersCount} / ${game.allAnswersCount} in ${time}"
-        (findViewById(R.id.game_result_created_at) as TextView).text = "On " + game.createdAt
+        (findViewById(R.id.game_result_created_at) as TextView).text = game.createdAt
     }
 
     fun goBack(view: View): Unit
