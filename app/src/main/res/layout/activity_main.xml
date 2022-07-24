@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MainLayout"
-    tools:context=".MainActivity" >
+    tools:context=".activity.MainActivity" >
 
     <TextView
         style="@style/Header"
@@ -28,6 +28,13 @@
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:text="@string/button_games_played" />
+
+        <Button
+            android:id="@+id/buttonOpenDebug"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="goToDebug"
+            android:text="Debug" />
 
     </LinearLayout>
 

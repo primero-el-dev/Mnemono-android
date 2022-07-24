@@ -4,6 +4,9 @@ import kotlin.reflect.*
 import kotlin.reflect.full.declaredMemberProperties
 
 
+fun Boolean.toInt() = if (this) 1 else 0
+
+
 @Suppress("UNCHECKED_CAST")
 fun <R> readInstanceProperty(instance: Any, propertyName: String): R
 {

@@ -10,11 +10,11 @@ val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(
     ),
     "correctAnswersCount" to arrayOf(
         Pair("game_validation_correctAnswersCount_min", { v: Any -> min(0)(v as Int) }),
-        Pair("game_validation_correctAnswersCount_max", { v: Any -> max(99999999999L)((v as Int).toLong()) }),
+        Pair("game_validation_correctAnswersCount_max", { v: Any -> max(99999L)((v as Int).toLong()) }),
     ),
     "allAnswersCount" to arrayOf(
         Pair("game_validation_allAnswersCount_min", { v: Any -> min(1)(v as Int) }),
-        Pair("game_validation_allAnswersCount_max", { v: Any -> max(99999999999L)((v as Int).toLong()) }),
+        Pair("game_validation_allAnswersCount_max", { v: Any -> max(99999L)((v as Int).toLong()) }),
     ),
     "type" to arrayOf(
         Pair("game_validation_type_notEmpty", ::notEmpty),

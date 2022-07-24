@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.game.Game
 import com.primeroeldev.mnemono.game.GameRepository
+import com.primeroeldev.mnemono.general.TimeUtil
 import com.primeroeldev.mnemono.validation.getErrorsOfGame
 
 
@@ -28,8 +29,9 @@ class GameStartActivity : AppCompatActivity()
         game.type = (findViewById(R.id.spinner_game_type) as Spinner).getSelectedItem().toString()
         game.status = Game.NOT_STARTED_STATUS
         game.allAnswersCount = (findViewById(R.id.edit_text_game_items_count) as EditText).text.toString().toIntOrNull() ?: 0
-        game.includedInStatistics = (findViewById(R.id.check_box_game_included_in_statistics) as CheckBox).isChecked
+        game.includedInStatistics = if ((findViewById(R.id.check_box_game_included_in_statistics) as CheckBox).isChecked) 1 else 0
         game.durationInSeconds = this.getDurationInSeconds()
+        game.createdAt = TimeUtil.getCurrentDateTimeFormated()
 
         val errors = getErrorsOfGame(game)
 
@@ -37,7 +39,7 @@ class GameStartActivity : AppCompatActivity()
             val gameId = GameRepository(applicationContext, null).insert(game)
 
             val intent = Intent(this, GamePlayActivity::class.java)
-            intent.putExtra("gameId", gameId)
+            intent.putExtra(ParamDictionary.GAME_ID_KEY, gameId)
             startActivity(intent)
         }
 
