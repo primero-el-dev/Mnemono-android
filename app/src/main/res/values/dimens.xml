@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="font_size_small">16sp</dimen>
     <dimen name="font_size_medium">24sp</dimen>
 
     <dimen name="vertical_margin_small">8dp</dimen>
@@ -6,4 +7,7 @@
 
     <dimen name="horizontal_margin_small">12dp</dimen>
     <dimen name="horizontal_margin_big">32dp</dimen>
+
+    <dimen name="game_answers_view_height">380dp</dimen>
+    <dimen name="game_result_view_height">230dp</dimen>
 </resources>

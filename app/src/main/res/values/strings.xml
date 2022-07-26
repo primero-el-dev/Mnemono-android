@@ -5,6 +5,9 @@
     <string name="button_games_played">Games played</string>
     <string name="title_activity_game_start">GameStartActivity</string>
 
+    <!-- GameIndexActivity -->
+    <string name="game_index_header">Games</string>
+
     <!-- GameStartActivity -->
     <string name="game_start_header">Start game</string>
     <string name="spinner_game_type_header">Select type</string>
@@ -21,4 +24,15 @@
     <string name="game_validation_durationInSeconds_min">Duration too short</string>
     <string name="game_validation_durationInSeconds_max">Duration too long</string>
 
+    <!-- GamePlayActivity -->
+    <string name="game_play_header">Remember</string>
+    <string name="button_game_process_to_answer">I\'m ready</string>
+
+    <!-- GameAnswerActivity -->
+    <string name="game_answer_header">Answer</string>
+    <string name="button_game_check">Check</string>
+
+    <!-- GameResultActivity -->
+    <string name="game_result_header">Result</string>
+    <string name="button_game_result_go_back">Go back</string>
 </resources>
