@@ -25,9 +25,9 @@ class GameResultActivity : AppCompatActivity()
             startActivity(intent)
         }
 
-        val checkedAnswers = this.intent.getStringExtra(ParamDictionary.CHECKED_ANSWERS_KEY)
+        val checkedAnswers = this.intent.getStringExtra(ParamDictionary.CHECKED_ANSWERS_KEY) ?: ""
 
-        this.prepareDisplay(checkedAnswers!!, game!!)
+        this.prepareDisplay(checkedAnswers, game!!)
     }
 
     fun goBack(view: View): Unit

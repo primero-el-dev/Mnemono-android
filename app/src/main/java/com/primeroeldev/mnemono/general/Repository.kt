@@ -70,7 +70,7 @@ abstract class Repository (
         return this.getEntitiesFromCursor(cursor)
     }
 
-    fun findBy(criteria: ArrayList<Pair<String, Any?>>): ArrayList<EntityInterface>
+    fun findBy(criteria: ArrayList<Pair<String, Any?>>, order: String = ""): ArrayList<EntityInterface>
     {
         val db = this.readableDatabase
         val selections: ArrayList<String> = ArrayList()
@@ -98,13 +98,13 @@ abstract class Repository (
             selectionAgrs.toTypedArray(),
             "",
             "",
-            ""
+            order
         )
 
         return this.getEntitiesFromCursor(cursor)
     }
 
-    fun findOneBy(criteria: ArrayList<Pair<String, Any?>>): EntityInterface?
+    fun findOneBy(criteria: ArrayList<Pair<String, Any?>>, order: String = ""): EntityInterface?
     {
         return this.findBy(criteria).firstOrNull()
     }
