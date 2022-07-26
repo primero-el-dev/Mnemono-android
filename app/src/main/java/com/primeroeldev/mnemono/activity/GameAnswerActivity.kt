@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 

@@ -1,4 +1,4 @@
-package com.primeroeldev.mnemono.general
+package com.primeroeldev.mnemono.entity
 
 
 interface EntityInterface

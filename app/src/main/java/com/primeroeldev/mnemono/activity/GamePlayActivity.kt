@@ -8,13 +8,12 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 import com.primeroeldev.mnemono.general.TimeUtil
 import java.time.Clock
-import java.time.LocalDateTime
 import java.time.ZoneId
 
 class GamePlayActivity : AppCompatActivity()

@@ -1,6 +1,6 @@
 package com.primeroeldev.mnemono.game.manager
 
-import com.primeroeldev.mnemono.game.Game
+import com.primeroeldev.mnemono.entity.Game
 
 class GamePlayManagerFactory
 {

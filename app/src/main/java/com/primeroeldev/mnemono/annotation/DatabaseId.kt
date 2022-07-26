@@ -1,4 +1,4 @@
-package com.primeroeldev.mnemono.general.annotation
+package com.primeroeldev.mnemono.annotation
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
