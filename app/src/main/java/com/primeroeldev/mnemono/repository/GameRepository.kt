@@ -1,9 +1,9 @@
-package com.primeroeldev.mnemono.game
+package com.primeroeldev.mnemono.repository
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.primeroeldev.mnemono.general.EntityInterface
-import com.primeroeldev.mnemono.general.Repository
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.entity.EntityInterface
 
 class GameRepository(
     context: Context?,

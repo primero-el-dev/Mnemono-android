@@ -1,6 +1,6 @@
 package com.primeroeldev.mnemono.validation
 
-import com.primeroeldev.mnemono.game.Game
+import com.primeroeldev.mnemono.entity.Game
 
 
 val validators: Map<String, Array<Pair<String, ((Any) -> Boolean)>>> = mapOf(

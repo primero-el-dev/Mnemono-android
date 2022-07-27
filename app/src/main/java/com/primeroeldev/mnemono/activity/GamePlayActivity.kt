@@ -8,13 +8,12 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 import com.primeroeldev.mnemono.general.TimeUtil
 import java.time.Clock
-import java.time.LocalDateTime
 import java.time.ZoneId
 
 class GamePlayActivity : AppCompatActivity()
@@ -46,7 +45,7 @@ class GamePlayActivity : AppCompatActivity()
         gameRepository.update(this.game)
 
         val answersView = findViewById<TextView>(R.id.game_play_correct_answers)
-        this.gameManager = GamePlayManagerFactory.dispatch(game)
+        this.gameManager = GamePlayManagerFactory.dispatch(game, applicationContext)
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
         answersView.text = this.gameManager.presentAnswers(this.answers)
 

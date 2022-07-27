@@ -1,6 +1,7 @@
 package com.primeroeldev.mnemono.game.manager
 
-import com.primeroeldev.mnemono.game.Game
+import android.content.Context
+import com.primeroeldev.mnemono.entity.Game
 
 class GamePlayManagerFactory
 {
@@ -9,9 +10,10 @@ class GamePlayManagerFactory
         /**
          * @throws Exception
          */
-        fun dispatch(game: Game): GamePlayManager
+        fun dispatch(game: Game, context: Context): GamePlayManager
         {
             return when (game.type) {
+                Game.WORDS_TYPE -> WordsGamePlayManager(context)
                 Game.NUMBERS_TYPE -> NumbersGamePlayManager()
                 else -> throw Exception("Wrong game type ${game.type}")
             }

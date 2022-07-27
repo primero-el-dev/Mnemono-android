@@ -1,10 +1,8 @@
-package com.primeroeldev.mnemono.game
+package com.primeroeldev.mnemono.entity
 
-import com.primeroeldev.mnemono.general.EntityInterface
-import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
-import com.primeroeldev.mnemono.general.annotation.DatabaseId
-import com.primeroeldev.mnemono.general.annotation.DatabaseTable
-import java.time.LocalDateTime
+import com.primeroeldev.mnemono.annotation.DatabaseColumn
+import com.primeroeldev.mnemono.annotation.DatabaseId
+import com.primeroeldev.mnemono.annotation.DatabaseTable
 
 
 @DatabaseTable(tableName = Game.TABLE_NAME)
