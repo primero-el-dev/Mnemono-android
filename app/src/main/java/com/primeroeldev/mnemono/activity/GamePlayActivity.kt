@@ -45,7 +45,7 @@ class GamePlayActivity : AppCompatActivity()
         gameRepository.update(this.game)
 
         val answersView = findViewById<TextView>(R.id.game_play_correct_answers)
-        this.gameManager = GamePlayManagerFactory.dispatch(game)
+        this.gameManager = GamePlayManagerFactory.dispatch(game, applicationContext)
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
         answersView.text = this.gameManager.presentAnswers(this.answers)
 

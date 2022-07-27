@@ -1,12 +1,14 @@
 package com.primeroeldev.mnemono.repository
 
 import android.content.Context
+import android.content.res.Resources
 import android.database.sqlite.SQLiteDatabase
+import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.EntityInterface
 import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.entity.Word
-import com.primeroeldev.mnemono.game.words
-import java.io.File
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 
 class WordRepository(
@@ -17,6 +19,14 @@ class WordRepository(
     companion object
     {
         const val FIXTURES_PATH = ""
+    }
+
+    fun reset()
+    {
+        val db = this.writableDatabase
+        db?.execSQL("DROP TABLE IF EXISTS ${this.getTableName()}")
+
+        this.onCreate(db)
     }
 
     fun findRandom(count: Int): ArrayList<EntityInterface>
@@ -35,35 +45,26 @@ class WordRepository(
 
     override fun loadFixtures(): Unit
     {
-
-
-
-
+        val file = BufferedReader(InputStreamReader(this.context?.resources?.openRawResource(R.raw.words)))
         val db = this.writableDatabase
         var portion: ArrayList<String> = ArrayList()
         var newToInsert = 0
 
-        File(FIXTURES_PATH).forEachLine {
-            portion.add(it)
+        while (true) {
+            val line = file.readLine() ?: break
+
+            portion.add(line)
             newToInsert++
             if (newToInsert == 100) {
-                val query = "INSERT INTO ${this.getTableName()} (name) VALUES ('${portion.joinToString("','")}')"
+                val query = "INSERT INTO ${this.getTableName()} ('name') VALUES ('${portion.joinToString("'),('")}')"
                 db.execSQL(query)
                 portion = ArrayList()
             }
         }
 
         if (newToInsert > 0) {
-            val query = "INSERT INTO ${this.getTableName()} (name) VALUES ('${portion.joinToString("','")}')"
+            val query = "INSERT INTO ${this.getTableName()} (name) VALUES ('${portion.joinToString("'),('")}')"
             db.execSQL(query)
         }
-
-//        for (wordsChunked in words.chunked(40)) {
-//            if (wordsChunked.size <= 0) {
-//                continue
-//            }
-//            val query = "INSERT INTO ${this.getTableName()} (name) VALUES ('${wordsChunked.joinToString("','")}')"
-//            db.execSQL(query)
-//        }
     }
 }

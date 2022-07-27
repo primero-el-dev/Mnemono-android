@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 
 
 abstract class Repository (
-    context: Context?,
+    protected val context: Context?,
     factory: SQLiteDatabase.CursorFactory?,
     protected val entityClass: String
 ) : SQLiteOpenHelper (context, DATABASE_NAME, factory, DATABASE_VERSION)
@@ -60,6 +60,11 @@ abstract class Repository (
         db?.execSQL("DROP TABLE IF EXISTS ${this.getTableName()}")
 
         this.onCreate(db)
+    }
+
+    open fun loadFixtures(): Unit
+    {
+
     }
 
     fun findAll(): ArrayList<EntityInterface>
@@ -176,11 +181,6 @@ abstract class Repository (
         val whereArgs: Array<String> = arrayOf(String.format("%d", readInstanceProperty(entity, idProperty!!)))
 
         return this.deleteBy("${idProperty} = ?", whereArgs)
-    }
-
-    protected open fun loadFixtures(): Unit
-    {
-
     }
 
     protected open fun getClassInstance(): EntityInterface
