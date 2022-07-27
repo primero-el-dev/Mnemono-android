@@ -12,25 +12,26 @@
     <LinearLayout style="@style/InnerLinearLayout" >
 
         <Button
-            android:id="@+id/buttonStartGame"
+            android:id="@+id/button_start_game"
             style="@style/DefaultElement"
             android:onClick="startGame"
             android:text="@string/button_start_game" />
 
         <Button
-            android:id="@+id/buttonStatistics"
+            android:id="@+id/button_statistics"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:text="@string/button_statistics" />
 
         <Button
-            android:id="@+id/buttonGamesPlayed"
+            android:id="@+id/button_games_list"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="listGames"
             android:text="@string/button_games_played" />
 
         <Button
-            android:id="@+id/buttonOpenDebug"
+            android:id="@+id/button_open_debug"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:onClick="goToDebug"

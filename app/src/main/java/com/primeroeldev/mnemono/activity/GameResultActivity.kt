@@ -25,19 +25,25 @@ class GameResultActivity : AppCompatActivity()
             startActivity(intent)
         }
 
-        val checkedAnswers = this.intent.getStringExtra(ParamDictionary.CHECKED_ANSWERS_KEY)
-        val time = TimeUtil.longToTimeString(game?.durationInSeconds!!.toLong())
+        val checkedAnswers = this.intent.getStringExtra(ParamDictionary.CHECKED_ANSWERS_KEY) ?: ""
 
-        (findViewById(R.id.game_result_checked_answers) as TextView).text = Html.fromHtml(checkedAnswers)
-        (findViewById(R.id.game_result_correct_count) as TextView).text = "${game.correctAnswersCount} / ${game.allAnswersCount} in ${time}"
-        (findViewById(R.id.game_result_type) as TextView).text = "Game type: " + game.type
-        (findViewById(R.id.game_result_status) as TextView).text = "Game status: " + game.status
-        (findViewById(R.id.game_result_included_in_statistics) as TextView).text = "Included in statistics: " + if (game.includedInStatistics == 1) "yes" else "no"
-        (findViewById(R.id.game_result_created_at) as TextView).text = game.createdAt
+        this.prepareDisplay(checkedAnswers, game!!)
     }
 
     fun goBack(view: View): Unit
     {
         finish()
+    }
+
+    private fun prepareDisplay(checkedAnswers: String, game: Game): Unit
+    {
+        val time = TimeUtil.longToTimeString(game.durationInSeconds.toLong())
+
+        findViewById<TextView>(R.id.game_result_checked_answers).text = Html.fromHtml(checkedAnswers)
+        findViewById<TextView>(R.id.game_result_correct_count).text = "${game.correctAnswersCount} / ${game.allAnswersCount} in ${time}"
+        findViewById<TextView>(R.id.game_result_type).text = "Game type: " + game.type
+        findViewById<TextView>(R.id.game_result_status).text = "Game status: " + game.status
+        findViewById<TextView>(R.id.game_result_included_in_statistics).text = "Included in statistics: " + if (game.includedInStatistics == 1) "yes" else "no"
+        findViewById<TextView>(R.id.game_result_created_at).text = game.createdAt
     }
 }

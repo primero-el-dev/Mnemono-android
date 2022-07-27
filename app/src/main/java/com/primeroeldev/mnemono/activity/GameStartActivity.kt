@@ -26,10 +26,10 @@ class GameStartActivity : AppCompatActivity()
     fun submit(view: View): Unit
     {
         val game = Game()
-        game.type = (findViewById(R.id.spinner_game_type) as Spinner).getSelectedItem().toString()
+        game.type = findViewById<Spinner>(R.id.spinner_game_type).getSelectedItem().toString()
         game.status = Game.NOT_STARTED_STATUS
-        game.allAnswersCount = (findViewById(R.id.edit_text_game_items_count) as EditText).text.toString().toIntOrNull() ?: 0
-        game.includedInStatistics = if ((findViewById(R.id.check_box_game_included_in_statistics) as CheckBox).isChecked) 1 else 0
+        game.allAnswersCount = findViewById<EditText>(R.id.edit_text_game_items_count).text.toString().toIntOrNull() ?: 0
+        game.includedInStatistics = if (findViewById<CheckBox>(R.id.check_box_game_included_in_statistics).isChecked) 1 else 0
         game.durationInSeconds = this.getDurationInSeconds()
         game.createdAt = TimeUtil.getCurrentDateTimeFormated()
 
@@ -76,8 +76,8 @@ class GameStartActivity : AppCompatActivity()
 
     private fun getDurationInSeconds(): Int
     {
-        return ((findViewById(R.id.number_picker_game_duration_hours) as NumberPicker).value * 3600
-            + (findViewById(R.id.number_picker_game_duration_minutes) as NumberPicker).value * 60
-            + (findViewById(R.id.number_picker_game_duration_seconds) as NumberPicker).value)
+        return (findViewById<NumberPicker>(R.id.number_picker_game_duration_hours).value * 3600
+            + findViewById<NumberPicker>(R.id.number_picker_game_duration_minutes).value * 60
+            + findViewById<NumberPicker>(R.id.number_picker_game_duration_seconds).value)
     }
 }

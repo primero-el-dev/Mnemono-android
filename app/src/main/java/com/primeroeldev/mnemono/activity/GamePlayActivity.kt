@@ -45,14 +45,14 @@ class GamePlayActivity : AppCompatActivity()
         this.game.status = Game.JUST_STARTED_STATUS
         gameRepository.update(this.game)
 
-        val answersView = findViewById(R.id.game_play_correct_answers) as TextView
+        val answersView = findViewById<TextView>(R.id.game_play_correct_answers)
         this.gameManager = GamePlayManagerFactory.dispatch(game)
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
         answersView.text = this.gameManager.presentAnswers(this.answers)
 
         this.timeStarted = Clock.system(ZoneId.systemDefault()).millis()
 
-        val timerView = findViewById(R.id.game_play_timer) as TextView
+        val timerView = findViewById<TextView>(R.id.game_play_timer)
         this.initTimer(game, timerView)
         this.timer.start()
     }
