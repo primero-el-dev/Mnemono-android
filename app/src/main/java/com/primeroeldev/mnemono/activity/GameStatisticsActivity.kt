@@ -196,7 +196,7 @@ class GameStatisticsActivity : AppCompatActivity()
         barChart.xAxis.granularity = 1f
         barChart.xAxis.setDrawLabels(true)
         barChart.xAxis.valueFormatter = DateValueFormatter()
-        barChart.xAxis.spaceMax = 2f
+        barChart.xAxis.spaceMax = 4f
         barChart.legend.textSize = this.textSize
         barChart.legend.formSize = this.textSize
         barChart.legend.yEntrySpace = this.textSize
