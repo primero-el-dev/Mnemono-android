@@ -23,7 +23,10 @@ class DebugActivity : AppCompatActivity()
 
         val wordRepository = WordRepository(applicationContext, null)
 
-        (findViewById(R.id.debug_text) as TextView).text = (wordRepository.findRandom(1).first() as Word).name
+        (findViewById(R.id.debug_text) as TextView).text = gameRepository
+            .findAll()
+            .map { "${(it as Game).correctAnswersCount}/${it.allAnswersCount}" }
+            .reduce { a, b -> a + " " + b }
 
 //        var game: Game? = Game()K
 //        game?.type = Game.CARDS_TYPE

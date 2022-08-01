@@ -34,3 +34,26 @@ fun writeInstanceProperties(obj: Any, fieldsToChange: List<Pair<String, Any?>>)
             .forEach { prop -> prop.setter.call(obj, propertyValue) }
     }
 }
+
+
+fun String.safeSubstring(startIndex: Int, endIndex: Int): String
+{
+    var start = minOf(startIndex, endIndex)
+    var end = maxOf(startIndex, endIndex)
+
+    if (start < 0) {
+        start = 0
+    }
+    else if (start > this.length) {
+        start = this.length
+    }
+
+    if (end < 0) {
+        end = 0
+    }
+    else if (end > this.length) {
+        end = this.length
+    }
+
+    return this.substring(start, end)
+}

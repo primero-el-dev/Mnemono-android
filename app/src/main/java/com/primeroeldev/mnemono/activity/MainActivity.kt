@@ -22,6 +22,13 @@ class MainActivity : AppCompatActivity()
         startActivity(intent)
     }
 
+    fun statistics(view: View): Unit
+    {
+        val intent = Intent(this, GameStatisticsActivity::class.java)
+
+        startActivity(intent)
+    }
+
     fun listGames(view: View): Unit
     {
         val intent = Intent(this, GameIndexActivity::class.java)

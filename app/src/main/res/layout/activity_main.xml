@@ -21,6 +21,7 @@
             android:id="@+id/button_statistics"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="statistics"
             android:text="@string/button_statistics" />
 
         <Button

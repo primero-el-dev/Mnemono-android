@@ -35,4 +35,10 @@
     <!-- GameResultActivity -->
     <string name="game_result_header">Result</string>
     <string name="button_game_result_go_back">Go back</string>
+
+    <!-- GameStatisticsActivity -->
+    <string name="game_statistics_header">Statistics</string>
+    <string name="game_statistics_text_view_date_started_from">From date</string>
+    <string name="game_statistics_text_view_date_started_to">To date</string>
+    <string name="game_statistics_text_view_group_by">Group by</string>
 </resources>
