@@ -1,12 +1,13 @@
 package com.primeroeldev.mnemono.activity
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend.LegendVerticalAlignment
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.primeroeldev.mnemono.R
@@ -22,7 +23,7 @@ class GameStatisticsActivity : AppCompatActivity()
     private val GROUP_BY_YEAR = "Year"
     private val GROUP_BY_MONTH = "Month"
     private val GROUP_BY_DAY = "Day"
-    private val textSize = 18f
+    private val TEXT_SIZE = 18f
     private lateinit var gameRepository: GameRepository
     private lateinit var startedFromDatePicker: DatePicker
     private lateinit var startedToDatePicker: DatePicker
@@ -99,10 +100,12 @@ class GameStatisticsActivity : AppCompatActivity()
         val startedTo = this.getFormattedDatePickerValue(this.startedToDatePicker)
         val groupBy = findViewById<Spinner>(R.id.spinner_game_group_by).selectedItem.toString()
 
+        // Get needed games data
         val where: ArrayList<Pair<String, Any?>> = ArrayList()
         where.add(Pair("createdAt >= ?", startedFrom))
         where.add(Pair("createdAt <= ?", startedTo))
         where.add(Pair("includedInStatistics = ?", 1))
+        where.add(Pair("status = ?", Game.FINISHED_STATUS))
 
         val games = this.gameRepository
             .findBy(where)
@@ -111,16 +114,30 @@ class GameStatisticsActivity : AppCompatActivity()
         val wordsGames = this.groupGames(games.filter { it.type == Game.WORDS_TYPE } as ArrayList, groupBy)
         val numbersGames = this.groupGames(games.filter { it.type == Game.NUMBERS_TYPE } as ArrayList, groupBy)
 
-        val testView = findViewById<TextView>(R.id.test)
-        testView.text = "${wordsGames.values.map { it.createdAt }.joinToString(", ")}"
-//        testView.text = "${(games.filter { it.type == Game.WORDS_TYPE } as ArrayList).map { it.createdAt }.joinToString(", ")}"
-//        testView.text = this.getFormattedDatePickerValue(this.startedFromDatePicker)
+        // Init charts
+        findViewById<TextView>(R.id.words_percent_correct_header).text = "Words games percent win"
+        this.initCorrectAnswersPercentChart(
+            R.id.words_percent_correct_chart,
+            wordsGames
+        )
 
-        findViewById<TextView>(R.id.words_percent_correct_header).text = "Words percent win"
-        this.initCorrectAnswersPercentChart(R.id.words_percent_correct_chart, wordsGames)
+        findViewById<TextView>(R.id.numbers_percent_correct_header).text = "Numbers games percent win"
+        this.initCorrectAnswersPercentChart(
+            R.id.numbers_percent_correct_chart,
+            numbersGames
+        )
 
-        findViewById<TextView>(R.id.numbers_percent_correct_header).text = "Numbers percent win"
-        this.initCorrectAnswersPercentChart(R.id.numbers_percent_correct_chart, numbersGames)
+        findViewById<TextView>(R.id.words_answer_period_header).text = "Time per answer in words game"
+        this.initCorrectAnswersTimePeriodChart(
+            R.id.words_answer_period_chart,
+            wordsGames
+        )
+
+        findViewById<TextView>(R.id.numbers_answer_period_header).text = "Time per answer in numbers game"
+        this.initCorrectAnswersTimePeriodChart(
+            R.id.numbers_answer_period_chart,
+            numbersGames
+        )
     }
 
     /**
@@ -154,57 +171,109 @@ class GameStatisticsActivity : AppCompatActivity()
     {
         first.correctAnswersCount += second.correctAnswersCount
         first.allAnswersCount += second.allAnswersCount
+        first.durationInSeconds += second.durationInSeconds
 
         return first
     }
 
     private fun initCorrectAnswersPercentChart(chartId: Int, games: Map<String, Game>): Unit
     {
-        val entries: ArrayList<BarEntry> = ArrayList()
-        for (entry in games.entries.iterator()) {
-            val game = games[entry.key]!!
-            entries.add(BarEntry(this.dateToFloat(entry.key), (
-                100
-                * game.correctAnswersCount.toFloat()
-                / game.allAnswersCount.toFloat()))
-            )
-        }
+        val entries = this.createEntries(
+            games,
+            { game: Game -> 100 * game.correctAnswersCount.toFloat() / game.allAnswersCount.toFloat() }
+        )
 
-        val barChart = findViewById<BarChart>(chartId)
+        val lineChart = findViewById<LineChart>(chartId)
         val winPercentMean = calculateCorrectAnswersPercentMean(games.values.toList())
 
-        val dataSet = BarDataSet(entries, "Percent correct (${winPercentMean}% mean)")
-        dataSet.color = Color.BLACK
+        val dataSet = LineDataSet(entries, "Percent correct (${winPercentMean}% mean)")
+
+        this.initLineChart(lineChart, dataSet)
+    }
+
+    private fun initCorrectAnswersTimePeriodChart(chartId: Int, games: Map<String, Game>): Unit
+    {
+        val entries = this.createEntries(
+            games,
+            { game: Game -> game.correctAnswersCount.toFloat() / game.durationInSeconds.toFloat() }
+        )
+
+        val lineChart = findViewById<LineChart>(chartId)
+        val winPercentMean = calculateMeanTimePerCorrectAnswers(games.values.toList())
+
+        val dataSet = LineDataSet(entries, "Time per correct answer in seconds (${winPercentMean}s mean)")
+
+        this.initLineChart(lineChart, dataSet)
+    }
+
+    private fun createEntries(games: Map<String, Game>, lambda: (Game) -> Float): ArrayList<Entry>
+    {
+        val entries: ArrayList<Entry> = ArrayList()
+        for (entry in games.entries.iterator()) {
+            val game = games[entry.key]!!
+            entries.add(Entry(
+                this.dateToFloat(entry.key),
+                lambda(game)
+            ))
+        }
+
+        return entries
+    }
+
+    private fun initLineChart(lineChart: LineChart, dataSet: LineDataSet): Unit
+    {
+        dataSet.lineWidth = 6f
+        dataSet.circleRadius = 8f
+
+        val color = resources.getColor(
+            com.google.android.material.R.color.design_default_color_primary,
+            theme
+        )
+        dataSet.color = color
         dataSet.valueTextSize = 0f
 
-        val lineData = BarData(dataSet)
+        val lineData = LineData(dataSet)
         val description = Description()
         description.text = ""
-        barChart.setData(lineData)
-        barChart.invalidate()
-        barChart.description = description
-        barChart.axisLeft.axisMinimum = 0f
-        barChart.axisLeft.axisMaximum = 100f
-        barChart.axisLeft.granularity = 25f
-        barChart.axisLeft.textSize = this.textSize
-        barChart.axisLeft.axisLineWidth = 2f
-        barChart.axisLeft.xOffset = 10f
-        barChart.axisRight.isEnabled = false
-        barChart.xAxis.textSize = this.textSize
-        barChart.xAxis.gridLineWidth = 0f
-        barChart.xAxis.yOffset = 2f
-        barChart.xAxis.granularity = 1f
-        barChart.xAxis.setDrawLabels(true)
-        barChart.xAxis.valueFormatter = DateValueFormatter()
-        barChart.xAxis.spaceMax = 4f
-        barChart.legend.textSize = this.textSize
-        barChart.legend.formSize = this.textSize
-        barChart.legend.yEntrySpace = this.textSize
+        lineChart.description = description
+        lineChart.data = lineData
+        lineChart.invalidate()
+        lineChart.setVisibleXRangeMinimum(4f)
+        lineChart.setVisibleXRangeMaximum(5f)
+
+        lineChart.axisLeft.axisMinimum = 0f
+        lineChart.axisLeft.axisMaximum = 100f
+        lineChart.axisLeft.granularity = 25f
+        lineChart.axisLeft.textSize = this.TEXT_SIZE
+        lineChart.axisLeft.axisLineWidth = 2f
+        lineChart.axisLeft.xOffset = 10f
+        lineChart.axisLeft.zeroLineWidth = 4f
+        lineChart.axisLeft.gridLineWidth = 1f
+        lineChart.axisRight.isEnabled = false
+
+        lineChart.xAxis.textSize = this.TEXT_SIZE
+        lineChart.xAxis.gridLineWidth = 0f
+        lineChart.xAxis.yOffset = 10f
+        lineChart.xAxis.granularity = 1f
+        lineChart.xAxis.setDrawLabels(true)
+        lineChart.xAxis.valueFormatter = DateValueFormatter()
+        lineChart.xAxis.spaceMin = 0f
+        lineChart.xAxis.spaceMax = 0f
+        lineChart.xAxis.setDrawAxisLine(true)
+        lineChart.xAxis.labelRotationAngle = -20f
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        lineChart.extraBottomOffset = 40f
+
+        lineChart.legend.textSize = this.TEXT_SIZE
+        lineChart.legend.formSize = this.TEXT_SIZE
+        lineChart.legend.yEntrySpace = this.TEXT_SIZE
+        lineChart.legend.verticalAlignment = LegendVerticalAlignment.TOP
+        lineChart.legend.yOffset = 15f
     }
 
     private fun dateToFloat(date: String): Float
     {
-        return date.replace("\\-|\\:|\\s".toRegex(), "").toFloat()
+        return date.replace("\\-|\\:|\\s".toRegex(), "").safeSubstring(2, 8).toFloat()
     }
 
     private fun calculateCorrectAnswersPercentMean(games: List<Game>): Float
@@ -218,6 +287,17 @@ class GameStatisticsActivity : AppCompatActivity()
 
         return (mean * 1000).roundToInt().toFloat() / 10
     }
+
+    private fun calculateMeanTimePerCorrectAnswers(games: List<Game>): Float
+    {
+        if (games.isEmpty()) {
+            return 0f
+        }
+
+        return games
+            .map { it.correctAnswersCount.toFloat() / it.durationInSeconds.toFloat() }
+            .reduce { a, b -> a + b } / games.size
+    }
 }
 
 
@@ -228,23 +308,14 @@ class DateValueFormatter : ValueFormatter()
         val v = value.toLong().toString()
         var result = ""
 
+        if (v.length >= 2) {
+            result += "20" + v.safeSubstring(0, 2)
+        }
         if (v.length >= 4) {
-            result += v.safeSubstring(0, 4)
+            result += "-" + v.safeSubstring(2, 4)
         }
         if (v.length >= 6) {
             result += "-" + v.safeSubstring(4, 6)
-        }
-        if (v.length >= 8) {
-            result += "-" + v.safeSubstring(6, 8)
-        }
-        if (v.length >= 10) {
-            result += " " + v.safeSubstring(8, 10)
-        }
-        if (v.length >= 12) {
-            result += ":" + v.safeSubstring(10, 12)
-        }
-        if (v.length >= 14) {
-            result += ":" + v.safeSubstring(12, 14)
         }
 
         return result
