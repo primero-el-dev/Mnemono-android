@@ -10,7 +10,8 @@
         <entry key="app/src/main/res/layout/activity_game_index.xml" value="0.31511746680286007" />
         <entry key="app/src/main/res/layout/activity_game_play.xml" value="0.4" />
         <entry key="app/src/main/res/layout/activity_game_result.xml" value="0.31511746680286007" />
-        <entry key="app/src/main/res/layout/activity_game_start.xml" value="0.5234521575984991" />
+        <entry key="app/src/main/res/layout/activity_game_start.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_game_statistics.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.4" />
       </map>
     </option>

@@ -3,7 +3,6 @@ package com.primeroeldev.mnemono.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 
@@ -19,6 +18,13 @@ class MainActivity : AppCompatActivity()
     fun startGame(view: View): Unit
     {
         val intent = Intent(this, GameStartActivity::class.java)
+
+        startActivity(intent)
+    }
+
+    fun statistics(view: View): Unit
+    {
+        val intent = Intent(this, GameStatisticsActivity::class.java)
 
         startActivity(intent)
     }

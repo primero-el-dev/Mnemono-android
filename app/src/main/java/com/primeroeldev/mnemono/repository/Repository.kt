@@ -1,4 +1,4 @@
-package com.primeroeldev.mnemono.general
+package com.primeroeldev.mnemono.repository
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -6,27 +6,26 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.general.annotation.DatabaseColumn
-import com.primeroeldev.mnemono.general.annotation.DatabaseId
-import com.primeroeldev.mnemono.general.annotation.DatabaseTable
+import com.primeroeldev.mnemono.annotation.DatabaseColumn
+import com.primeroeldev.mnemono.annotation.DatabaseId
+import com.primeroeldev.mnemono.annotation.DatabaseTable
+import com.primeroeldev.mnemono.entity.EntityInterface
+import com.primeroeldev.mnemono.general.readInstanceProperty
+import com.primeroeldev.mnemono.general.writeInstanceProperty
 import com.primeroeldev.mnemono.validation.notEmpty
-import java.lang.reflect.Field
 import kotlin.collections.ArrayList
-import kotlin.reflect.KClass
 
 
 abstract class Repository (
-    context: Context?,
+    protected val context: Context?,
     factory: SQLiteDatabase.CursorFactory?,
-    private val entityClass: String
+    protected val entityClass: String
 ) : SQLiteOpenHelper (context, DATABASE_NAME, factory, DATABASE_VERSION)
 {
     companion object
     {
-        private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "mnemono.db"
+        protected const val DATABASE_VERSION = 1
+        protected const val DATABASE_NAME = "mnemono.db"
     }
 
     override fun onCreate(db: SQLiteDatabase?): Unit
@@ -52,6 +51,8 @@ abstract class Repository (
         val query = "CREATE TABLE ${this.getTableName()} (${sqlParts.toArray().joinToString(", ")})"
 
         db?.execSQL(query)
+
+        this.loadFixtures()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int): Unit
@@ -59,6 +60,11 @@ abstract class Repository (
         db?.execSQL("DROP TABLE IF EXISTS ${this.getTableName()}")
 
         this.onCreate(db)
+    }
+
+    open fun loadFixtures(): Unit
+    {
+
     }
 
     fun findAll(): ArrayList<EntityInterface>
@@ -182,12 +188,12 @@ abstract class Repository (
         return Class.forName(this.entityClass).kotlin.objectInstance as EntityInterface
     }
 
-    private fun getTableName(): String?
+    protected fun getTableName(): String?
     {
         return (this.getClassInstance()::class.annotations.find { it is DatabaseTable } as? DatabaseTable)?.tableName
     }
 
-    private fun getIdProperty(): String?
+    protected fun getIdProperty(): String?
     {
         return this.getClassInstance()::class.java.declaredFields
             .filter { it.getAnnotation(DatabaseId::class.java) != null }
@@ -195,7 +201,7 @@ abstract class Repository (
             .first()
     }
 
-    private fun getMappedFields(): ArrayList<String>
+    protected fun getMappedFields(): ArrayList<String>
     {
         return this.getClassInstance()::class.java.declaredFields
             .filter { it.getAnnotation(DatabaseColumn::class.java) != null }
@@ -203,7 +209,7 @@ abstract class Repository (
                 as ArrayList
     }
 
-    private fun getContentValues(entity: EntityInterface): ContentValues
+    protected fun getContentValues(entity: EntityInterface): ContentValues
     {
         val contentValues = ContentValues()
         val columns = this.getMappedFields()
@@ -230,18 +236,13 @@ abstract class Repository (
         return contentValues
     }
 
-    private fun getEntitiesFromCursor(cursor: Cursor): ArrayList<EntityInterface>
+    protected fun getEntitiesFromCursor(cursor: Cursor): ArrayList<EntityInterface>
     {
         val entities: ArrayList<EntityInterface> = ArrayList()
 
         if (!cursor.moveToFirst()) {
             return ArrayList()
         }
-
-//        entities.add(this.rowToEntity(cursor))
-//        while (cursor.moveToNext()) {
-//            entities.add(this.rowToEntity(cursor))
-//        }
 
         do {
             entities.add(this.rowToEntity(cursor))
@@ -251,7 +252,7 @@ abstract class Repository (
     }
 
     @SuppressLint("Range")
-    private fun rowToEntity(cursor: Cursor): EntityInterface
+    protected fun rowToEntity(cursor: Cursor): EntityInterface
     {
         val idProperty = this.getIdProperty()
         val entity: EntityInterface = this.getClassInstance()

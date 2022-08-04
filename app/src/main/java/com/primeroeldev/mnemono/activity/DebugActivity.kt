@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
-import com.primeroeldev.mnemono.general.EntityInterface
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.entity.Word
+import com.primeroeldev.mnemono.repository.GameRepository
+import com.primeroeldev.mnemono.repository.WordRepository
 
 class DebugActivity : AppCompatActivity()
 {
@@ -20,7 +21,12 @@ class DebugActivity : AppCompatActivity()
         val game = gameRepository.find(3) as? Game
 //        val game = gameRepository.findAll()[2] as? Game
 
-        (findViewById(R.id.debug_text) as TextView).text = game?._id.toString()
+        val wordRepository = WordRepository(applicationContext, null)
+
+        (findViewById(R.id.debug_text) as TextView).text = gameRepository
+            .findAll()
+            .map { "${(it as Game).correctAnswersCount}/${it.allAnswersCount}" }
+            .reduce { a, b -> a + " " + b }
 
 //        var game: Game? = Game()K
 //        game?.type = Game.CARDS_TYPE

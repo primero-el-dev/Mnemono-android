@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.general.TimeUtil
 import com.primeroeldev.mnemono.validation.getErrorsOfGame
 
@@ -26,7 +26,7 @@ class GameStartActivity : AppCompatActivity()
     fun submit(view: View): Unit
     {
         val game = Game()
-        game.type = findViewById<Spinner>(R.id.spinner_game_type).getSelectedItem().toString()
+        game.type = findViewById<Spinner>(R.id.spinner_game_type).selectedItem.toString()
         game.status = Game.NOT_STARTED_STATUS
         game.allAnswersCount = findViewById<EditText>(R.id.edit_text_game_items_count).text.toString().toIntOrNull() ?: 0
         game.includedInStatistics = if (findViewById<CheckBox>(R.id.check_box_game_included_in_statistics).isChecked) 1 else 0
@@ -44,7 +44,7 @@ class GameStartActivity : AppCompatActivity()
         }
 
         for ((_, error) in errors) {
-            Toast.makeText(applicationContext, getResources().getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, resources.getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -57,7 +57,7 @@ class GameStartActivity : AppCompatActivity()
             Game.getTypes()
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.setAdapter(adapter)
+        spinner.adapter = adapter
     }
 
     private fun initDurationPicker(): Unit

@@ -7,9 +7,9 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.game.Game
-import com.primeroeldev.mnemono.game.GameRepository
-import com.primeroeldev.mnemono.general.EntityInterface
+import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.repository.GameRepository
+import com.primeroeldev.mnemono.entity.EntityInterface
 
 
 class GameIndexActivity : AppCompatActivity()
