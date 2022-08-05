@@ -6,7 +6,11 @@
     <string name="title_activity_game_start">GameStartActivity</string>
 
     <!-- GameIndexActivity -->
-    <string name="game_index_header">Games</string>
+    <string name="game_index_header">Games played</string>
+    <string name="game_index_text_view_game_started_from">From date</string>
+    <string name="game_index_text_view_game_started_to">To date</string>
+    <string name="game_index_text_view_game_type">Game type</string>
+    <string name="game_index_text_view_game_list">Games</string>
 
     <!-- GameStartActivity -->
     <string name="game_start_header">Start game</string>

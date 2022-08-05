@@ -29,7 +29,6 @@ class GameStatisticsActivity : AppCompatActivity()
     private lateinit var startedToDatePicker: DatePicker
     private lateinit var groupByDateSpinner: Spinner
 
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -98,7 +97,7 @@ class GameStatisticsActivity : AppCompatActivity()
     {
         val startedFrom = this.getFormattedDatePickerValue(this.startedFromDatePicker)
         val startedTo = this.getFormattedDatePickerValue(this.startedToDatePicker)
-        val groupBy = findViewById<Spinner>(R.id.spinner_game_group_by).selectedItem.toString()
+        val groupBy = this.groupByDateSpinner.selectedItem.toString()
 
         // Get needed games data
         val where: ArrayList<Pair<String, Any?>> = ArrayList()

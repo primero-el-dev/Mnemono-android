@@ -35,5 +35,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:fillViewport">true</item>
+        <item name="android:layout_marginTop">@dimen/vertical_margin_big</item>
+        <item name="android:layout_marginBottom">@dimen/vertical_margin_big</item>
     </style>
 </resources>

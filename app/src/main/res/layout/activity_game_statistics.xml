@@ -12,24 +12,6 @@
             style="@style/Header"
             android:text="@string/game_statistics_header" />
 
-        <TextView
-            android:id="@+id/test"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_big" />
-
-
-<!--        <HorizontalScrollView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content" >-->
-
-<!--            <TextView-->
-<!--                android:layout_width="1700dp"-->
-<!--                android:layout_height="300dp"-->
-<!--                android:textSize="50dp"-->
-<!--                android:text="Some dummy text here to check if works" />-->
-
-<!--        </HorizontalScrollView>-->
-
         <LinearLayout style="@style/InnerLinearLayout">
 
             <TextView
