@@ -1,19 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MainLayout"
-    android:layout_marginBottom="20dp"
-    tools:context=".activity.GameIndexActivity">
+    style="@style/ScrollableLayout"
+    android:fillViewport="true" >
 
-    <TextView
-        style="@style/Header"
-        android:text="@string/game_index_header" />
+    <LinearLayout
+        style="@style/MainLayout"
+        tools:context=".activity.GameIndexActivity">
 
-    <ListView android:id="@+id/game_index_list"
-        style="@style/InnerLinearLayout"
-        android:dividerHeight="1dp"
-        android:divider="?android:colorPrimary"
-        ></ListView>
+        <TextView
+            style="@style/Header"
+            android:text="@string/game_index_header" />
 
-</LinearLayout>
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_index_text_view_game_started_from" />
+
+            <DatePicker
+                android:id="@+id/date_picker_game_started_from"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_index_text_view_game_started_to" />
+
+            <DatePicker
+                android:id="@+id/date_picker_game_started_to"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_index_text_view_game_type" />
+
+            <Spinner
+                android:id="@+id/spinner_game_type"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:drawSelectorOnTop="true" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_index_text_view_game_list" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_index_list_height"
+                android:orientation="vertical" >
+
+                <ListView
+                    android:id="@+id/game_index_list"
+                    android:layout_marginTop="@dimen/vertical_margin_big"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:dividerHeight="1dp"
+                    android:stackFromBottom="false"
+                    android:divider="?android:colorPrimary"
+                    android:scrollbars="vertical"
+                    android:scrollingCache="true"
+                    android:smoothScrollbar="true"
+                    android:nestedScrollingEnabled="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
