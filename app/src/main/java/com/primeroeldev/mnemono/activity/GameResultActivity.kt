@@ -37,7 +37,7 @@ class GameResultActivity : AppCompatActivity()
 
     private fun prepareDisplay(checkedAnswers: String, game: Game): Unit
     {
-        val time = TimeUtil.longToTimeString(game.durationInSeconds.toLong())
+        val time = TimeUtil.intToTimeString(game.durationInSeconds)
 
         findViewById<TextView>(R.id.game_result_checked_answers).text = Html.fromHtml(checkedAnswers)
         findViewById<TextView>(R.id.game_result_correct_count).text = "${game.correctAnswersCount} / ${game.allAnswersCount} in ${time}"

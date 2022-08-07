@@ -7,21 +7,37 @@
 
     <TextView
         style="@style/Header"
+        android:layout_marginBottom="@dimen/vertical_margin_big"
         android:text="@string/game_play_header" />
 
     <LinearLayout style="@style/InnerLinearLayout"
         android:layout_height="wrap_content" >
 
         <ScrollView
+            android:id="@+id/game_play_text_scroll_correct_answers"
             style="@style/DefaultElement"
-            android:layout_height="@dimen/game_answers_view_height">
+            android:layout_height="@dimen/game_answers_view_height"
+            android:visibility="gone" >
 
             <TextView
-                android:id="@+id/game_play_correct_answers"
-                style="@style/DefaultElement"
-                android:layout_marginTop="@dimen/vertical_margin_big" />
+                android:id="@+id/game_play_text_correct_answers"
+                style="@style/DefaultElement" />
 
         </ScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/game_play_image_scroll_correct_answers"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/game_answers_view_height"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/game_play_image_correct_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Items" />
+
+        </HorizontalScrollView>
 
     </LinearLayout>
 

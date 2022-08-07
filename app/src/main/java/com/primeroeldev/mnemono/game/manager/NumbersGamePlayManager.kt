@@ -17,7 +17,7 @@ class NumbersGamePlayManager : GamePlayManager
         return result
     }
 
-    override fun presentAnswers(answers: String): String
+    override fun presentAnswersText(answers: String): String
     {
         return answers.chunked(10).joinToString(" ")
     }
@@ -51,6 +51,6 @@ class NumbersGamePlayManager : GamePlayManager
 
     override fun getAnswerInputHint(): String
     {
-        return "All white chars will be trimmed"
+        return "All white chars will be trimmed."
     }
 }

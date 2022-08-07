@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
+import com.primeroeldev.mnemono.general.TimeUtil
 import com.primeroeldev.mnemono.general.safeSubstring
 import com.primeroeldev.mnemono.repository.GameRepository
 import kotlin.math.roundToInt
@@ -60,11 +61,6 @@ class GameStatisticsActivity : AppCompatActivity()
         }
     }
 
-    private fun getFormattedDatePickerValue(picker: DatePicker): String
-    {
-        return "${picker.year}-${(picker.month + 1)}-${picker.dayOfMonth}"
-    }
-
     private fun initGroupByDateSpinner(): Unit
     {
         val adapter = ArrayAdapter(
@@ -95,16 +91,18 @@ class GameStatisticsActivity : AppCompatActivity()
 
     private fun initCharts(): Unit
     {
-        val startedFrom = this.getFormattedDatePickerValue(this.startedFromDatePicker)
-        val startedTo = this.getFormattedDatePickerValue(this.startedToDatePicker)
+        val startedFrom = TimeUtil.getFormattedDatePickerValue(this.startedFromDatePicker)
+        val startedTo = TimeUtil.getFormattedDatePickerValue(this.startedToDatePicker)
         val groupBy = this.groupByDateSpinner.selectedItem.toString()
 
         // Get needed games data
         val where: ArrayList<Pair<String, Any?>> = ArrayList()
-        where.add(Pair("createdAt >= ?", startedFrom))
-        where.add(Pair("createdAt <= ?", startedTo))
+        where.add(Pair("createdAt >= ?", "$startedFrom 00:00:00"))
+        where.add(Pair("createdAt <= ?", "$startedTo 23:59:59"))
         where.add(Pair("includedInStatistics = ?", 1))
         where.add(Pair("status = ?", Game.FINISHED_STATUS))
+
+        findViewById<TextView>(R.id.test).text = startedFrom
 
         val games = this.gameRepository
             .findBy(where)
@@ -112,6 +110,7 @@ class GameStatisticsActivity : AppCompatActivity()
 
         val wordsGames = this.groupGames(games.filter { it.type == Game.WORDS_TYPE } as ArrayList, groupBy)
         val numbersGames = this.groupGames(games.filter { it.type == Game.NUMBERS_TYPE } as ArrayList, groupBy)
+        val cardsGames = this.groupGames(games.filter { it.type == Game.CARDS_TYPE } as ArrayList, groupBy)
 
         // Init charts
         findViewById<TextView>(R.id.words_percent_correct_header).text = "Words games percent win"
@@ -126,16 +125,28 @@ class GameStatisticsActivity : AppCompatActivity()
             numbersGames
         )
 
-        findViewById<TextView>(R.id.words_answer_period_header).text = "Time per answer in words game"
+        findViewById<TextView>(R.id.cards_percent_correct_header).text = "Cards games percent win"
+        this.initCorrectAnswersPercentChart(
+            R.id.cards_percent_correct_chart,
+            cardsGames
+        )
+
+        findViewById<TextView>(R.id.words_answer_period_header).text = "Seconds per correct answer in words game"
         this.initCorrectAnswersTimePeriodChart(
             R.id.words_answer_period_chart,
             wordsGames
         )
 
-        findViewById<TextView>(R.id.numbers_answer_period_header).text = "Time per answer in numbers game"
+        findViewById<TextView>(R.id.numbers_answer_period_header).text = "Seconds per correct answer in numbers game"
         this.initCorrectAnswersTimePeriodChart(
             R.id.numbers_answer_period_chart,
             numbersGames
+        )
+
+        findViewById<TextView>(R.id.cards_answer_period_header).text = "Seconds per correct answer in cards game"
+        this.initCorrectAnswersTimePeriodChart(
+            R.id.cards_answer_period_chart,
+            cardsGames
         )
     }
 
@@ -184,8 +195,10 @@ class GameStatisticsActivity : AppCompatActivity()
 
         val lineChart = findViewById<LineChart>(chartId)
         val winPercentMean = calculateCorrectAnswersPercentMean(games.values.toList())
-
         val dataSet = LineDataSet(entries, "Percent correct (${winPercentMean}% mean)")
+
+        lineChart.axisLeft.axisMaximum = 100f
+        lineChart.axisLeft.granularity = 25f
 
         this.initLineChart(lineChart, dataSet)
     }
@@ -194,13 +207,12 @@ class GameStatisticsActivity : AppCompatActivity()
     {
         val entries = this.createEntries(
             games,
-            { game: Game -> game.correctAnswersCount.toFloat() / game.durationInSeconds.toFloat() }
+            { game: Game -> game.durationInSeconds.toFloat() / game.correctAnswersCount.toFloat() }
         )
 
         val lineChart = findViewById<LineChart>(chartId)
-        val winPercentMean = calculateMeanTimePerCorrectAnswers(games.values.toList())
-
-        val dataSet = LineDataSet(entries, "Time per correct answer in seconds (${winPercentMean}s mean)")
+        val secondsPerCorrectMean = calculateMeanTimePerCorrectAnswers(games.values.toList())
+        val dataSet = LineDataSet(entries, String.format("Time in seconds (%.2fs mean)", secondsPerCorrectMean))
 
         this.initLineChart(lineChart, dataSet)
     }
@@ -221,14 +233,14 @@ class GameStatisticsActivity : AppCompatActivity()
 
     private fun initLineChart(lineChart: LineChart, dataSet: LineDataSet): Unit
     {
-        dataSet.lineWidth = 6f
-        dataSet.circleRadius = 8f
-
-        val color = resources.getColor(
+        val chartLineColor = resources.getColor(
             com.google.android.material.R.color.design_default_color_primary,
             theme
         )
-        dataSet.color = color
+
+        dataSet.lineWidth = 6f
+        dataSet.circleRadius = 8f
+        dataSet.color = chartLineColor
         dataSet.valueTextSize = 0f
 
         val lineData = LineData(dataSet)
@@ -241,8 +253,6 @@ class GameStatisticsActivity : AppCompatActivity()
         lineChart.setVisibleXRangeMaximum(5f)
 
         lineChart.axisLeft.axisMinimum = 0f
-        lineChart.axisLeft.axisMaximum = 100f
-        lineChart.axisLeft.granularity = 25f
         lineChart.axisLeft.textSize = this.TEXT_SIZE
         lineChart.axisLeft.axisLineWidth = 2f
         lineChart.axisLeft.xOffset = 10f
@@ -294,7 +304,7 @@ class GameStatisticsActivity : AppCompatActivity()
         }
 
         return games
-            .map { it.correctAnswersCount.toFloat() / it.durationInSeconds.toFloat() }
+            .map { it.durationInSeconds.toFloat() / it.correctAnswersCount.toFloat() }
             .reduce { a, b -> a + b } / games.size
     }
 }
