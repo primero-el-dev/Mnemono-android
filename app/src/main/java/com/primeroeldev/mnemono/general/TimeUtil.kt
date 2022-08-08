@@ -2,8 +2,8 @@ package com.primeroeldev.mnemono.general
 
 import android.widget.DatePicker
 import java.time.Instant
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class TimeUtil
 {
@@ -31,7 +31,7 @@ class TimeUtil
         {
             return DateTimeFormatter
                 .ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(ZoneOffset.UTC)
+                .withZone(TimeZone.getDefault().toZoneId())
                 .format(Instant.now())
         }
 

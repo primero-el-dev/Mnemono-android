@@ -12,10 +12,6 @@
             style="@style/Header"
             android:text="@string/game_statistics_header" />
 
-        <TextView
-            android:id="@+id/test"
-            style="@style/DefaultElement" />
-
         <LinearLayout style="@style/InnerLinearLayout">
 
             <TextView

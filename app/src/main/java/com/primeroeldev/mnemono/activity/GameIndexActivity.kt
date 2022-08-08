@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.repository.GameRepository
-import com.primeroeldev.mnemono.entity.EntityInterface
 import com.primeroeldev.mnemono.general.TimeUtil
 
 

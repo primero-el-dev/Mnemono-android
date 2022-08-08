@@ -1,5 +1,6 @@
 package com.primeroeldev.mnemono.activity
 
+
 sealed class ParamDictionary
 {
     companion object

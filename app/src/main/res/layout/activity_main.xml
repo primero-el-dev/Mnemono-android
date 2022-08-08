@@ -31,13 +31,6 @@
             android:onClick="listGames"
             android:text="@string/button_games_played" />
 
-        <Button
-            android:id="@+id/button_open_debug"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small"
-            android:onClick="goToDebug"
-            android:text="Debug" />
-
     </LinearLayout>
 
 </LinearLayout>

@@ -27,9 +27,6 @@
             android:exported="false"
             android:noHistory="true" />
         <activity
-            android:name=".activity.DebugActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.GamePlayActivity"
             android:exported="false"
             android:noHistory="true" />

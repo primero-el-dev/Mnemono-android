@@ -19,6 +19,7 @@ import com.primeroeldev.mnemono.general.TimeUtil
 import java.time.Clock
 import java.time.ZoneId
 
+
 class GamePlayActivity : AppCompatActivity()
 {
     private lateinit var gameManager: GamePlayManager

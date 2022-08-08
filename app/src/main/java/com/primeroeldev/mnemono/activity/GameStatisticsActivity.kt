@@ -102,8 +102,6 @@ class GameStatisticsActivity : AppCompatActivity()
         where.add(Pair("includedInStatistics = ?", 1))
         where.add(Pair("status = ?", Game.FINISHED_STATUS))
 
-        findViewById<TextView>(R.id.test).text = startedFrom
-
         val games = this.gameRepository
             .findBy(where)
             .map { it as Game } as ArrayList
