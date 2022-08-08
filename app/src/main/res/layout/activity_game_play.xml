@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MainLayout"
+    tools:context=".activity.GamePlayActivity">
+
+    <TextView
+        style="@style/Header"
+        android:layout_marginBottom="@dimen/vertical_margin_big"
+        android:text="@string/game_play_header" />
+
+    <LinearLayout style="@style/InnerLinearLayout"
+        android:layout_height="wrap_content" >
+
+        <ScrollView
+            android:id="@+id/game_play_text_scroll_correct_answers"
+            style="@style/DefaultElement"
+            android:layout_height="@dimen/game_answers_view_height"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/game_play_text_correct_answers"
+                style="@style/DefaultElement" />
+
+        </ScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/game_play_image_scroll_correct_answers"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/game_answers_view_height"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/game_play_image_correct_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Items" />
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout">
+
+        <TextView
+            android:id="@+id/game_play_timer"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_big"
+            android:text="00:00:00" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/InnerLinearLayout" >
+
+        <Button
+            android:id="@+id/button_game_start_submit"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="submit"
+            android:text="@string/button_game_process_to_answer" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -14,7 +14,27 @@
         android:theme="@style/Theme.Mnemono"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.GameStatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GameIndexActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GameResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GameAnswerActivity"
+            android:exported="false"
+            android:noHistory="true" />
+        <activity
+            android:name=".activity.GamePlayActivity"
+            android:exported="false"
+            android:noHistory="true" />
+        <activity
+            android:name=".activity.GameStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

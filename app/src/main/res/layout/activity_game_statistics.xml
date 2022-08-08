@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollableLayout" >
+
+    <LinearLayout
+        style="@style/MainLayout"
+        tools:context=".activity.GameStatisticsActivity">
+
+        <TextView
+            style="@style/Header"
+            android:text="@string/game_statistics_header" />
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_statistics_text_view_date_started_from" />
+
+            <DatePicker
+                android:id="@+id/date_picker_game_started_from"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_statistics_text_view_date_started_to" />
+
+            <DatePicker
+                android:id="@+id/date_picker_game_started_to"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/game_statistics_text_view_group_by" />
+
+            <Spinner
+                android:id="@+id/spinner_game_group_by"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:drawSelectorOnTop="true" />
+
+        </LinearLayout>
+
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                android:id="@+id/words_percent_correct_header"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/words_percent_correct_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_statistics_chart_height" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                android:id="@+id/numbers_percent_correct_header"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:layout_marginBottom="@dimen/vertical_margin_big" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/numbers_percent_correct_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_statistics_chart_height" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                android:id="@+id/cards_percent_correct_header"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:layout_marginBottom="@dimen/vertical_margin_big" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/cards_percent_correct_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_statistics_chart_height" />
+
+        </LinearLayout>
+
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                android:id="@+id/words_answer_period_header"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:layout_marginBottom="@dimen/vertical_margin_big" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/words_answer_period_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_statistics_chart_height" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                android:id="@+id/numbers_answer_period_header"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:layout_marginBottom="@dimen/vertical_margin_big" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/numbers_answer_period_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_statistics_chart_height" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                android:id="@+id/cards_answer_period_header"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:layout_marginBottom="@dimen/vertical_margin_big" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/cards_answer_period_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_statistics_chart_height" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

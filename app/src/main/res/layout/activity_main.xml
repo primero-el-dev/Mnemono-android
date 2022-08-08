@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    style="@style/MainLayout"
+    tools:context=".activity.MainActivity" >
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/Header"
+        android:text="@string/app_name" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout style="@style/InnerLinearLayout" >
+
+        <Button
+            android:id="@+id/button_start_game"
+            style="@style/DefaultElement"
+            android:onClick="startGame"
+            android:text="@string/button_start_game" />
+
+        <Button
+            android:id="@+id/button_statistics"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="statistics"
+            android:text="@string/button_statistics" />
+
+        <Button
+            android:id="@+id/button_games_list"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="listGames"
+            android:text="@string/button_games_played" />
+
+    </LinearLayout>
+
+</LinearLayout>
