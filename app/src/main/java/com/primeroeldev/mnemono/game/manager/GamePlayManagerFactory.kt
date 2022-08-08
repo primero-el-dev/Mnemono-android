@@ -15,6 +15,7 @@ class GamePlayManagerFactory
             return when (game.type) {
                 Game.WORDS_TYPE -> WordsGamePlayManager(context)
                 Game.NUMBERS_TYPE -> NumbersGamePlayManager()
+                Game.CARDS_TYPE -> CardsGamePlayManager(context.resources)
                 else -> throw Exception("Wrong game type ${game.type}")
             }
         }

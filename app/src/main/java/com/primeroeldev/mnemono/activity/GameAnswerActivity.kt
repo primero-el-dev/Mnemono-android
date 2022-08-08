@@ -3,6 +3,7 @@ package com.primeroeldev.mnemono.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
@@ -34,8 +35,6 @@ class GameAnswerActivity : AppCompatActivity()
         }
 
         this.game = game!!
-        this.game.durationInSeconds = this.intent.getIntExtra(ParamDictionary.REAL_GAME_DURATION_KEY, 0)
-        this.gameRepository.update(this.game)
         this.gameManager = GamePlayManagerFactory.dispatch(this.game, applicationContext)
 
         findViewById<TextView>(R.id.game_play_answer_hint).text = this.gameManager.getAnswerInputHint()

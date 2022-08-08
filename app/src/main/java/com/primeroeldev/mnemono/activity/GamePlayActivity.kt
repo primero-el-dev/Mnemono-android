@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
@@ -22,6 +25,7 @@ class GamePlayActivity : AppCompatActivity()
     private lateinit var answers: String
     private lateinit var game: Game
     private lateinit var timer: CountDownTimer
+    private lateinit var gameRepository: GameRepository
     private var timeStarted: Long = 0
     private var gameId: Long = 0
 
@@ -30,9 +34,9 @@ class GamePlayActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_play)
 
-        val gameRepository = GameRepository(applicationContext, null)
+        this.gameRepository = GameRepository(applicationContext, null)
         val gameId = this.intent?.getLongExtra(ParamDictionary.GAME_ID_KEY, 0)!!
-        val game = gameRepository.find(gameId) as? Game
+        val game = this.gameRepository.find(gameId) as? Game
 
         if (gameId == 0L || game == null) {
             val intent = Intent(this, GameStartActivity::class.java)
@@ -42,12 +46,21 @@ class GamePlayActivity : AppCompatActivity()
         this.game = game!!
 
         this.game.status = Game.JUST_STARTED_STATUS
-        gameRepository.update(this.game)
+        this.gameRepository.update(this.game)
 
-        val answersView = findViewById<TextView>(R.id.game_play_correct_answers)
         this.gameManager = GamePlayManagerFactory.dispatch(game, applicationContext)
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
-        answersView.text = this.gameManager.presentAnswers(this.answers)
+
+        if (this.gameManager.getInputType() == GamePlayManager.TEXT_INPUT_TYPE) {
+            findViewById<ScrollView>(R.id.game_play_text_scroll_correct_answers).visibility = View.VISIBLE
+            val answersView = findViewById<TextView>(R.id.game_play_text_correct_answers)
+            answersView.text = this.gameManager.presentAnswersText(this.answers)
+        }
+        else if (this.gameManager.getInputType() == GamePlayManager.IMAGE_INPUT_TYPE) {
+            findViewById<HorizontalScrollView>(R.id.game_play_image_scroll_correct_answers).visibility = View.VISIBLE
+            val answersView = findViewById<ImageView>(R.id.game_play_image_correct_answers)
+            answersView.setImageBitmap(this.gameManager.presentAnswersImage(this.answers))
+        }
 
         this.timeStarted = Clock.system(ZoneId.systemDefault()).millis()
 
@@ -74,10 +87,12 @@ class GamePlayActivity : AppCompatActivity()
     {
         this.timer.cancel()
 
+        this.game.durationInSeconds = this.getGameRealDuration()
+        this.gameRepository.update(this.game)
+
         val intent = Intent(this, GameAnswerActivity::class.java)
         intent.putExtra(ParamDictionary.CORRECT_ANSWERS_KEY, this.answers)
         intent.putExtra(ParamDictionary.GAME_ID_KEY, this.game._id)
-        intent.putExtra(ParamDictionary.REAL_GAME_DURATION_KEY, this.getGameRealDuration())
         startActivity(intent)
     }
 
@@ -108,11 +123,15 @@ class GamePlayActivity : AppCompatActivity()
 
     private fun timeHasPassed(): Boolean
     {
-        return (Clock.system(ZoneId.systemDefault()).millis() - timeStarted) >= (this.game.durationInSeconds * 1000)
+        return (Clock.system(ZoneId.systemDefault()).millis() - timeStarted) >=
+            (this.game.durationInSeconds * 1000)
     }
 
     private fun getGameRealDuration(): Int
     {
-        return minOf(((Clock.system(ZoneId.systemDefault()).millis() - timeStarted) / 1000).toInt(), this.game.durationInSeconds)
+        return minOf(
+            ((Clock.system(ZoneId.systemDefault()).millis() - timeStarted) / 1000).toInt(),
+            this.game.durationInSeconds
+        )
     }
 }

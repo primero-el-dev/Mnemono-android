@@ -16,14 +16,14 @@ class WordsGamePlayManager(private val context: Context) : GamePlayManager
             .joinToString(",\n")
     }
 
-    override fun presentAnswers(answers: String): String
+    override fun presentAnswersText(answers: String): String
     {
         return answers
     }
 
     override fun checkAnswers(correct: String, provided: String): Pair<String, Int>
     {
-        val providedWords = provided.replace("(\\s)+".toRegex(), "").split(",")
+        val providedWords = provided.replace("(\\s|)+".toRegex(), "").split(",")
         val correctWords = correct.replace("(\\s)+".toRegex(), "").split(",")
         var answers = ""
         var correctCount = 0
@@ -48,6 +48,7 @@ class WordsGamePlayManager(private val context: Context) : GamePlayManager
 
     override fun getAnswerInputHint(): String
     {
-        return "All white chars will be trimmed.\nDivide words with commas."
+        return "Divide words with commas. " +
+            "All white chars will be trimmed."
     }
 }

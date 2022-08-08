@@ -7,6 +7,5 @@ sealed class ParamDictionary
         const val GAME_ID_KEY = "gameId"
         const val CHECKED_ANSWERS_KEY = "checkedAnswers"
         const val CORRECT_ANSWERS_KEY = "correctAnswers"
-        const val REAL_GAME_DURATION_KEY = "realGameDuration"
     }
 }

@@ -9,6 +9,7 @@ import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.entity.EntityInterface
+import com.primeroeldev.mnemono.general.TimeUtil
 
 
 class GameIndexActivity : AppCompatActivity()
@@ -76,14 +77,14 @@ class GameIndexActivity : AppCompatActivity()
 
     private fun initGameList(): Unit
     {
-        val startedFrom = this.getFormattedDatePickerValue(this.startedFromDatePicker)
-        val startedTo = this.getFormattedDatePickerValue(this.startedToDatePicker)
+        val startedFrom = TimeUtil.getFormattedDatePickerValue(this.startedFromDatePicker)
+        val startedTo = TimeUtil.getFormattedDatePickerValue(this.startedToDatePicker)
         val type = this.typeSpinner.selectedItem.toString()
 
         // Get needed games data
         val where: ArrayList<Pair<String, Any?>> = ArrayList()
-        where.add(Pair("createdAt >= ?", startedFrom))
-        where.add(Pair("createdAt <= ?", startedTo))
+        where.add(Pair("createdAt >= ?", "$startedFrom 00:00:00"))
+        where.add(Pair("createdAt <= ?", "$startedTo 23:59:59"))
         where.add(Pair("type = ?", type))
         where.add(Pair("status = ?", Game.FINISHED_STATUS))
 
