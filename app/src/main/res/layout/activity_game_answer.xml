@@ -35,7 +35,8 @@
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:onClick="submit"
-            android:text="@string/button_game_check" />
+            android:text="@string/button_game_check"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 

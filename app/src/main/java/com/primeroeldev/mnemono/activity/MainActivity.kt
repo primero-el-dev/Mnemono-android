@@ -35,4 +35,11 @@ class MainActivity : AppCompatActivity()
 
         startActivity(intent)
     }
+
+    fun about(view: View): Unit
+    {
+        val intent = Intent(this, AboutActivity::class.java)
+
+        startActivity(intent)
+    }
 }

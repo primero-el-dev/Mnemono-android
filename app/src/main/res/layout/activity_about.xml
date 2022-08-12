@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollableLayout" >
+
+    <LinearLayout
+        style="@style/MainLayout"
+        tools:context=".activity.AboutActivity">
+
+        <TextView
+            style="@style/Header"
+            android:text="@string/about_header" />
+
+        <LinearLayout style="@style/InnerLinearLayout">
+
+            <TextView
+                style="@style/DefaultElement"
+                android:text="@string/about_paragraph_1" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/about_paragraph_2" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/about_paragraph_3" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_big"
+                android:text="@string/about_paragraph_4" />
+
+            <Button
+                style="@style/DefaultElement"
+                android:onClick="sendEmail"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:text="@string/about_contact_me"
+                tools:ignore="UsingOnClickInXml" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -61,7 +61,8 @@
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:onClick="goBack"
-            android:text="@string/button_game_result_go_back" />
+            android:text="@string/button_game_result_go_back"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 
