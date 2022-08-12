@@ -3,6 +3,7 @@
     <string name="button_start_game">Start new game</string>
     <string name="button_statistics">Statistics</string>
     <string name="button_games_played">Games played</string>
+    <string name="button_about">About</string>
     <string name="title_activity_game_start">GameStartActivity</string>
 
     <!-- GameIndexActivity -->
@@ -45,4 +46,12 @@
     <string name="game_statistics_text_view_date_started_from">From date</string>
     <string name="game_statistics_text_view_date_started_to">To date</string>
     <string name="game_statistics_text_view_group_by">Group by</string>
+
+    <!-- AboutActivity -->
+    <string name="about_header">About</string>
+    <string name="about_paragraph_1">This app was provided to you by primero.el.dev, Polish developer. It comes with no warranty.</string>
+    <string name="about_paragraph_2">There are no ads, no premium content and never will be.</string>
+    <string name="about_paragraph_3">Almost all data is backuped automatically with rules for backups specifis for your Android version (see documentation).</string>
+    <string name="about_paragraph_4">Have any questions? Want provide a feedback?</string>
+    <string name="about_contact_me">Contact me!</string>
 </resources>

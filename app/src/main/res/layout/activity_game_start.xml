@@ -90,7 +90,8 @@
                 style="@style/DefaultElement"
                 android:layout_marginTop="@dimen/vertical_margin_small"
                 android:onClick="submit"
-                android:text="@string/button_game_play" />
+                android:text="@string/button_game_play"
+                tools:ignore="UsingOnClickInXml" />
 
         </LinearLayout>
 

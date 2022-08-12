@@ -15,21 +15,32 @@
             android:id="@+id/button_start_game"
             style="@style/DefaultElement"
             android:onClick="startGame"
-            android:text="@string/button_start_game" />
+            android:text="@string/button_start_game"
+            tools:ignore="UsingOnClickInXml" />
 
         <Button
             android:id="@+id/button_statistics"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:onClick="statistics"
-            android:text="@string/button_statistics" />
+            android:text="@string/button_statistics"
+            tools:ignore="UsingOnClickInXml" />
 
         <Button
             android:id="@+id/button_games_list"
             style="@style/DefaultElement"
             android:layout_marginTop="@dimen/vertical_margin_small"
             android:onClick="listGames"
-            android:text="@string/button_games_played" />
+            android:text="@string/button_games_played"
+            tools:ignore="UsingOnClickInXml" />
+
+        <Button
+            android:id="@+id/button_about"
+            style="@style/DefaultElement"
+            android:layout_marginTop="@dimen/vertical_margin_small"
+            android:onClick="about"
+            android:text="@string/button_about"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 
