@@ -10,6 +10,7 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.repository.GameRepository
@@ -53,7 +54,7 @@ class GamePlayActivity : AppCompatActivity()
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
 
         if (this.gameManager.getInputType() == GamePlayManager.TEXT_INPUT_TYPE) {
-            findViewById<ScrollView>(R.id.game_play_text_scroll_correct_answers).visibility = View.VISIBLE
+            findViewById<NestedScrollView>(R.id.game_play_text_scroll_correct_answers).visibility = View.VISIBLE
             val answersView = findViewById<TextView>(R.id.game_play_text_correct_answers)
             answersView.text = this.gameManager.presentAnswersText(this.answers)
         }
@@ -63,7 +64,7 @@ class GamePlayActivity : AppCompatActivity()
             answersView.setImageBitmap(this.gameManager.presentAnswersImage(this.answers))
         }
 
-        this.timeStarted = Clock.system(ZoneId.systemDefault()).millis()
+        this.timeStarted = System.currentTimeMillis()
 
         val timerView = findViewById<TextView>(R.id.game_play_timer)
         this.initTimer(game, timerView)
@@ -124,14 +125,14 @@ class GamePlayActivity : AppCompatActivity()
 
     private fun timeHasPassed(): Boolean
     {
-        return (Clock.system(ZoneId.systemDefault()).millis() - timeStarted) >=
+        return (System.currentTimeMillis() - timeStarted) >=
             (this.game.durationInSeconds * 1000)
     }
 
     private fun getGameRealDuration(): Int
     {
         return minOf(
-            ((Clock.system(ZoneId.systemDefault()).millis() - timeStarted) / 1000).toInt(),
+            ((System.currentTimeMillis() - timeStarted) / 1000).toInt(),
             this.game.durationInSeconds
         )
     }
