@@ -12,7 +12,6 @@ import com.primeroeldev.mnemono.annotation.DatabaseTable
 import com.primeroeldev.mnemono.entity.EntityInterface
 import com.primeroeldev.mnemono.general.readInstanceProperty
 import com.primeroeldev.mnemono.general.writeInstanceProperty
-import com.primeroeldev.mnemono.validation.notEmpty
 import kotlin.collections.ArrayList
 
 
@@ -246,6 +245,13 @@ abstract class Repository (
         }
 
         return contentValues
+    }
+
+    protected fun notEmpty(value: Any): Boolean
+    {
+        return value !== null
+            || (value is String && value !== "")
+            || (value is Int && value !== 0)
     }
 
     protected fun getEntitiesFromCursor(cursor: Cursor): ArrayList<EntityInterface>
