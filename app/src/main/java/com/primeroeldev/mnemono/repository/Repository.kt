@@ -27,6 +27,12 @@ abstract class Repository (
         protected const val DATABASE_NAME = "mnemono.db"
     }
 
+    fun reset()
+    {
+//        this.onUpgrade(this.writableDatabase, DATABASE_VERSION, DATABASE_VERSION)
+        this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${this.getTableName()}")
+    }
+
     open fun loadFixtures(): Unit
     {
 

@@ -1,19 +1,35 @@
 package com.primeroeldev.mnemono.game.manager
 
 import android.content.Context
-import com.primeroeldev.mnemono.entity.Word
+import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.general.toInt
-import com.primeroeldev.mnemono.repository.WordRepository
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.ArrayList
+import kotlin.random.Random
 
 
 class WordsGamePlayManager(private val context: Context) : GamePlayManager
 {
     override fun generateAnswers(count: Int): String
     {
-        return WordRepository(this.context, null)
-            .findRandom(count)
-            .map { (it as Word).name }
-            .joinToString(",\n")
+        val file = BufferedReader(InputStreamReader(this.context.resources.openRawResource(R.raw.words)))
+        val words: ArrayList<String> = ArrayList()
+
+        while (true) {
+            val line = file.readLine() ?: break
+            words.add(line)
+        }
+        val length = words.size
+
+        val choosen: ArrayList<String> = ArrayList()
+        var i = 0
+        while (i < count) {
+            choosen.add(words[Random.nextInt(length)])
+            i++
+        }
+
+        return choosen.joinToString(",\n")
     }
 
     override fun presentAnswersText(answers: String): String

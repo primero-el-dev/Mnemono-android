@@ -36,7 +36,6 @@ class GameStartActivity : AppCompatActivity()
 
         if (errors.isEmpty()) {
             val gameId = GameRepository(applicationContext, null).insert(game)
-
             val intent = Intent(this, GamePlayActivity::class.java)
             intent.putExtra(ParamDictionary.GAME_ID_KEY, gameId)
             startActivity(intent)
@@ -90,7 +89,7 @@ class GameStartActivity : AppCompatActivity()
 
         val itemsCountLimit = when (game.type) {
             Game.NUMBERS_TYPE -> 99999
-            Game.WORDS_TYPE -> 99999
+            Game.WORDS_TYPE -> 15000
             Game.CARDS_TYPE -> 340
             else -> 0
         }
@@ -103,7 +102,7 @@ class GameStartActivity : AppCompatActivity()
             errors.put("allAnswersCount", error)
         }
 
-        if (game.durationInSeconds < 10) {
+        if (game.durationInSeconds < 5) {
             errors.put("durationInSeconds", resources.getString(R.string.game_validation_durationInSeconds_min))
         }
         else if (game.durationInSeconds > Game.MAX_DURATION) {
