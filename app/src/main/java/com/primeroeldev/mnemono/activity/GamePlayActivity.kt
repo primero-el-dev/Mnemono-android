@@ -2,23 +2,20 @@ package com.primeroeldev.mnemono.activity
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
-import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 import com.primeroeldev.mnemono.general.TimeUtil
-import java.time.Clock
-import java.time.ZoneId
+import com.primeroeldev.mnemono.repository.GameRepository
 
 
 class GamePlayActivity : AppCompatActivity()
@@ -78,6 +75,16 @@ class GamePlayActivity : AppCompatActivity()
         if (this.timeHasPassed()) {
             this.processToAnswer()
         }
+    }
+
+    override fun onBackPressed(): Unit
+    {
+        this.timer.cancel()
+
+        this.game.durationInSeconds = this.getGameRealDuration()
+        this.gameRepository.update(this.game)
+
+        this.finish()
     }
 
     fun submit(view: View): Unit
