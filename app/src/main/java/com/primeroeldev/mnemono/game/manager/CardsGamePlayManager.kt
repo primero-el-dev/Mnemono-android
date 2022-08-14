@@ -45,11 +45,7 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
         val cards = answers.split(",")
         val count = cards.size
 
-        val mainBitmap = Bitmap.createBitmap(
-            CARD_WIDTH.toInt() * count,
-            CARD_HEIGHT.toInt(),
-            Bitmap.Config.RGB_565
-        )
+        val mainBitmap = Bitmap.createBitmap(CARD_WIDTH * count, CARD_HEIGHT, Bitmap.Config.RGB_565)
         val canvas = Canvas(mainBitmap)
 
         var i = 0
@@ -121,17 +117,7 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
         val x = this.getXOffset(number)
         val y = this.getYOffset(suit)
 
-        try {
-            return Bitmap.createBitmap(
-                this.bitmap,
-                x,
-                y,
-                CARD_WIDTH.toInt(),
-                CARD_HEIGHT.toInt()
-            )
-        } catch (e: Exception) {
-            throw Exception(e.message + "\n   Bitmap height: ${this.bitmap.height}, y: ${y}, CARD_HEIGHT: ${CARD_HEIGHT.toInt()}")
-        }
+        return Bitmap.createBitmap(this.bitmap, x, y, CARD_WIDTH, CARD_HEIGHT)
     }
 
     private fun getXOffset(number: String): Int
@@ -153,7 +139,7 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
             else -> 0
         }
 
-        return xOffset * CARD_WIDTH.toInt()
+        return xOffset * CARD_WIDTH
     }
 
     private fun getYOffset(suit: String): Int
@@ -166,6 +152,6 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
             else -> 0
         }
 
-        return yOffset * CARD_HEIGHT.toInt()
+        return yOffset * CARD_HEIGHT
     }
 }
