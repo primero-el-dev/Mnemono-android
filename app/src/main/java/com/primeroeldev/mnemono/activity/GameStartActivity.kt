@@ -9,7 +9,6 @@ import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.general.TimeUtil
-import com.primeroeldev.mnemono.validation.getErrorsOfGame
 
 
 class GameStartActivity : AppCompatActivity()
@@ -33,7 +32,7 @@ class GameStartActivity : AppCompatActivity()
         game.durationInSeconds = this.getDurationInSeconds()
         game.createdAt = TimeUtil.getCurrentDateTimeFormated()
 
-        val errors = getErrorsOfGame(game)
+        val errors = this.getErrorsFor(game)
 
         if (errors.isEmpty()) {
             val gameId = GameRepository(applicationContext, null).insert(game)
@@ -44,7 +43,7 @@ class GameStartActivity : AppCompatActivity()
         }
 
         for ((_, error) in errors) {
-            Toast.makeText(applicationContext, resources.getIdentifier(error, "string", packageName), Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -79,5 +78,38 @@ class GameStartActivity : AppCompatActivity()
         return (findViewById<NumberPicker>(R.id.number_picker_game_duration_hours).value * 3600
             + findViewById<NumberPicker>(R.id.number_picker_game_duration_minutes).value * 60
             + findViewById<NumberPicker>(R.id.number_picker_game_duration_seconds).value)
+    }
+
+    private fun getErrorsFor(game: Game): Map<String, String>
+    {
+        val errors: MutableMap<String, String> = mutableMapOf()
+
+        if (!Game.getTypes().contains(game.type)) {
+            errors.put("type", resources.getString(R.string.game_validation_type_inArray))
+        }
+
+        val itemsCountLimit = when (game.type) {
+            Game.NUMBERS_TYPE -> 99999
+            Game.WORDS_TYPE -> 99999
+            Game.CARDS_TYPE -> 340
+            else -> 0
+        }
+
+        if (game.allAnswersCount < 1) {
+            errors.put("allAnswersCount", resources.getString(R.string.game_validation_allAnswersCount_min))
+        }
+        else if (game.allAnswersCount > itemsCountLimit) {
+            val error = String.format(resources.getString(R.string.game_validation_allAnswersCount_max), itemsCountLimit, game.type)
+            errors.put("allAnswersCount", error)
+        }
+
+        if (game.durationInSeconds < 10) {
+            errors.put("durationInSeconds", resources.getString(R.string.game_validation_durationInSeconds_min))
+        }
+        else if (game.durationInSeconds > Game.MAX_DURATION) {
+            errors.put("durationInSeconds", resources.getString(R.string.game_validation_durationInSeconds_max))
+        }
+
+        return errors
     }
 }
