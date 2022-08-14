@@ -28,6 +28,11 @@ abstract class Repository (
         protected const val DATABASE_NAME = "mnemono.db"
     }
 
+    open fun loadFixtures(): Unit
+    {
+
+    }
+
     override fun onCreate(db: SQLiteDatabase?): Unit
     {
         val sqlParts: ArrayList<String> = ArrayList()
@@ -51,8 +56,6 @@ abstract class Repository (
         val query = "CREATE TABLE ${this.getTableName()} (${sqlParts.toArray().joinToString(", ")})"
 
         db?.execSQL(query)
-
-        this.loadFixtures()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int): Unit
@@ -62,9 +65,18 @@ abstract class Repository (
         this.onCreate(db)
     }
 
-    open fun loadFixtures(): Unit
+    fun bootstrap(): Unit
     {
+        val db = this.readableDatabase
+        val queryCheck = "SELECT name FROM sqlite_master WHERE type='table' AND name='${this.getTableName()}'"
 
+        val cursor = db.rawQuery(queryCheck, null)
+        if (!cursor.moveToFirst()) {
+            this.onCreate(this.writableDatabase)
+            this.loadFixtures()
+        }
+        cursor.close()
+        db.close()
     }
 
     fun findAll(): ArrayList<EntityInterface>

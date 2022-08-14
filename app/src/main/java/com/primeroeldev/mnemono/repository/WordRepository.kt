@@ -16,33 +16,6 @@ class WordRepository(
     factory: SQLiteDatabase.CursorFactory?,
 ) : Repository(context, factory, Game::class.java.toString())
 {
-    companion object
-    {
-        const val FIXTURES_PATH = ""
-    }
-
-    fun reset()
-    {
-        val db = this.writableDatabase
-        db?.execSQL("DROP TABLE IF EXISTS ${this.getTableName()}")
-
-        this.onCreate(db)
-    }
-
-    fun findRandom(count: Int): ArrayList<EntityInterface>
-    {
-        val db = this.readableDatabase
-        val query = "SELECT * FROM ${this.getTableName()} ORDER BY RANDOM() LIMIT ${count}"
-        val cursor = db.rawQuery(query, null)
-
-        return this.getEntitiesFromCursor(cursor)
-    }
-
-    override fun getClassInstance(): EntityInterface
-    {
-        return Word()
-    }
-
     override fun loadFixtures(): Unit
     {
         val file = BufferedReader(InputStreamReader(this.context?.resources?.openRawResource(R.raw.words)))
@@ -55,7 +28,7 @@ class WordRepository(
 
             portion.add(line)
             newToInsert++
-            if (newToInsert == 100) {
+            if (newToInsert == 30) {
                 val query = "INSERT INTO ${this.getTableName()} ('name') VALUES ('${portion.joinToString("'),('")}')"
                 db.execSQL(query)
                 portion = ArrayList()
@@ -66,5 +39,20 @@ class WordRepository(
             val query = "INSERT INTO ${this.getTableName()} (name) VALUES ('${portion.joinToString("'),('")}')"
             db.execSQL(query)
         }
+    }
+
+    fun findRandom(count: Int): ArrayList<EntityInterface>
+    {
+        // TODO: Check if works properly
+        val db = this.readableDatabase
+        val query = "SELECT * FROM ${this.getTableName()} ORDER BY RANDOM() LIMIT ${count}"
+        val cursor = db.rawQuery(query, null)
+
+        return this.getEntitiesFromCursor(cursor)
+    }
+
+    protected override fun getClassInstance(): EntityInterface
+    {
+        return Word()
     }
 }

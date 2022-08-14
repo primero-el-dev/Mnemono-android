@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
+import com.primeroeldev.mnemono.repository.GameRepository
+import com.primeroeldev.mnemono.repository.WordRepository
 import java.util.*
 
 
@@ -16,24 +18,8 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val timestamp = System.currentTimeMillis()
-//        val calendar = Calendar.getInstance()
-////        val offset = calendar.getTimeZone().getOffset(timestamp)
-////        val date = Date(timestamp + offset)
-////        val df: DateFormat = DateFormat.getTimeInstance()
-////        df.setTimeZone(TimeZone.getTimeZone("gmt"))
-////        val gmtTime: String = df.format(Date())
-//
-//        val time = String.format(
-//            "%d-%s-%s %s:%s:%s",
-//            calendar.get(Calendar.YEAR),
-//            calendar.get(Calendar.MONTH).toString().padStart(2, '0'),
-//            calendar.get(Calendar.DAY_OF_MONTH).toString().padStart(2, '0'),
-//            calendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, '0'),
-//            calendar.get(Calendar.MINUTE).toString().padStart(2, '0'),
-//            calendar.get(Calendar.SECOND).toString().padStart(2, '0')
-//        )
-//        findViewById<TextView>(R.id.test).text = time
+        GameRepository(applicationContext, null).bootstrap()
+        WordRepository(applicationContext, null).bootstrap()
     }
 
     fun startGame(view: View): Unit
