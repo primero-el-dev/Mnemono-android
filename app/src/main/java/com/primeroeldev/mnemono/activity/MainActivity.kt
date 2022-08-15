@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
+import com.primeroeldev.mnemono.repository.GameRepository
 
 
 class MainActivity : AppCompatActivity()
@@ -13,6 +14,9 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Create database if wasn't created
+        GameRepository(applicationContext, null).bootstrap()
     }
 
     fun startGame(view: View): Unit

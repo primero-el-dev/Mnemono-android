@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.general.CardAssetManager
 import com.primeroeldev.mnemono.general.safeSubstring
 import com.primeroeldev.mnemono.general.toInt
 import kotlin.random.Random
@@ -19,8 +18,8 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
 
     companion object
     {
-        const val CARD_WIDTH = 190*2.75
-        const val CARD_HEIGHT = 270*2.75
+        const val CARD_WIDTH = 190
+        const val CARD_HEIGHT = 270
     }
 
     override fun generateAnswers(count: Int): String
@@ -46,17 +45,13 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
         val cards = answers.split(",")
         val count = cards.size
 
-        val mainBitmap = Bitmap.createBitmap(
-            CARD_WIDTH.toInt() * count,
-            CARD_HEIGHT.toInt(),
-            Bitmap.Config.RGB_565
-        )
+        val mainBitmap = Bitmap.createBitmap(CARD_WIDTH * count, CARD_HEIGHT, Bitmap.Config.RGB_565)
         val canvas = Canvas(mainBitmap)
 
         var i = 0
         while (i < count) {
             val card = this.getCard(cards[i])
-            canvas.drawBitmap(card, i * CardAssetManager.CARD_WIDTH.toFloat(), 0f, Paint())
+            canvas.drawBitmap(card, i * CARD_WIDTH.toFloat(), 0f, Paint())
             i++
         }
 
@@ -122,13 +117,7 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
         val x = this.getXOffset(number)
         val y = this.getYOffset(suit)
 
-        return Bitmap.createBitmap(
-            this.bitmap,
-            x,
-            y,
-            CardAssetManager.CARD_WIDTH.toInt(),
-            CardAssetManager.CARD_HEIGHT.toInt()
-        )
+        return Bitmap.createBitmap(this.bitmap, x, y, CARD_WIDTH, CARD_HEIGHT)
     }
 
     private fun getXOffset(number: String): Int
@@ -150,7 +139,7 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
             else -> 0
         }
 
-        return xOffset * CardAssetManager.CARD_WIDTH.toInt()
+        return xOffset * CARD_WIDTH
     }
 
     private fun getYOffset(suit: String): Int
@@ -163,6 +152,6 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
             else -> 0
         }
 
-        return yOffset * CardAssetManager.CARD_HEIGHT.toInt()
+        return yOffset * CARD_HEIGHT
     }
 }

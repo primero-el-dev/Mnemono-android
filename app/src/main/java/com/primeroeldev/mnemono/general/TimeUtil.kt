@@ -1,8 +1,6 @@
 package com.primeroeldev.mnemono.general
 
 import android.widget.DatePicker
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TimeUtil
@@ -29,10 +27,17 @@ class TimeUtil
 
         fun getCurrentDateTimeFormated(): String
         {
-            return DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(TimeZone.getDefault().toZoneId())
-                .format(Instant.now())
+            val calendar = Calendar.getInstance()
+
+            return String.format(
+                "%d-%s-%s %s:%s:%s",
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH).toString().padStart(2, '0'),
+                calendar.get(Calendar.DAY_OF_MONTH).toString().padStart(2, '0'),
+                calendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, '0'),
+                calendar.get(Calendar.MINUTE).toString().padStart(2, '0'),
+                calendar.get(Calendar.SECOND).toString().padStart(2, '0')
+            )
         }
 
         fun getFormattedDatePickerValue(picker: DatePicker): String

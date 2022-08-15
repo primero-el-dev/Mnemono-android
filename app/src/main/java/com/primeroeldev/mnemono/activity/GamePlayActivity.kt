@@ -2,22 +2,20 @@ package com.primeroeldev.mnemono.activity
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
-import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 import com.primeroeldev.mnemono.general.TimeUtil
-import java.time.Clock
-import java.time.ZoneId
+import com.primeroeldev.mnemono.repository.GameRepository
 
 
 class GamePlayActivity : AppCompatActivity()
@@ -53,7 +51,7 @@ class GamePlayActivity : AppCompatActivity()
         this.answers = this.gameManager.generateAnswers(game.allAnswersCount)
 
         if (this.gameManager.getInputType() == GamePlayManager.TEXT_INPUT_TYPE) {
-            findViewById<ScrollView>(R.id.game_play_text_scroll_correct_answers).visibility = View.VISIBLE
+            findViewById<NestedScrollView>(R.id.game_play_text_scroll_correct_answers).visibility = View.VISIBLE
             val answersView = findViewById<TextView>(R.id.game_play_text_correct_answers)
             answersView.text = this.gameManager.presentAnswersText(this.answers)
         }
@@ -63,7 +61,7 @@ class GamePlayActivity : AppCompatActivity()
             answersView.setImageBitmap(this.gameManager.presentAnswersImage(this.answers))
         }
 
-        this.timeStarted = Clock.system(ZoneId.systemDefault()).millis()
+        this.timeStarted = System.currentTimeMillis()
 
         val timerView = findViewById<TextView>(R.id.game_play_timer)
         this.initTimer(game, timerView)
@@ -79,6 +77,16 @@ class GamePlayActivity : AppCompatActivity()
         }
     }
 
+    override fun onBackPressed(): Unit
+    {
+        this.timer.cancel()
+
+        this.game.durationInSeconds = this.getGameRealDuration()
+        this.gameRepository.update(this.game)
+
+        super.onBackPressed()
+    }
+
     fun submit(view: View): Unit
     {
         this.processToAnswer()
@@ -90,6 +98,8 @@ class GamePlayActivity : AppCompatActivity()
 
         this.game.durationInSeconds = this.getGameRealDuration()
         this.gameRepository.update(this.game)
+
+        this.finish()
 
         val intent = Intent(this, GameAnswerActivity::class.java)
         intent.putExtra(ParamDictionary.CORRECT_ANSWERS_KEY, this.answers)
@@ -124,14 +134,13 @@ class GamePlayActivity : AppCompatActivity()
 
     private fun timeHasPassed(): Boolean
     {
-        return (Clock.system(ZoneId.systemDefault()).millis() - timeStarted) >=
-            (this.game.durationInSeconds * 1000)
+        return (System.currentTimeMillis() - timeStarted) >= (this.game.durationInSeconds * 1000)
     }
 
     private fun getGameRealDuration(): Int
     {
         return minOf(
-            ((Clock.system(ZoneId.systemDefault()).millis() - timeStarted) / 1000).toInt(),
+            ((System.currentTimeMillis() - timeStarted) / 1000).toInt(),
             this.game.durationInSeconds
         )
     }

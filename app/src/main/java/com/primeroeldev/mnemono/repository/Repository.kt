@@ -12,7 +12,6 @@ import com.primeroeldev.mnemono.annotation.DatabaseTable
 import com.primeroeldev.mnemono.entity.EntityInterface
 import com.primeroeldev.mnemono.general.readInstanceProperty
 import com.primeroeldev.mnemono.general.writeInstanceProperty
-import com.primeroeldev.mnemono.validation.notEmpty
 import kotlin.collections.ArrayList
 
 
@@ -26,6 +25,17 @@ abstract class Repository (
     {
         protected const val DATABASE_VERSION = 1
         protected const val DATABASE_NAME = "mnemono.db"
+    }
+
+    fun reset()
+    {
+//        this.onUpgrade(this.writableDatabase, DATABASE_VERSION, DATABASE_VERSION)
+        this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${this.getTableName()}")
+    }
+
+    open fun loadFixtures(): Unit
+    {
+
     }
 
     override fun onCreate(db: SQLiteDatabase?): Unit
@@ -51,8 +61,6 @@ abstract class Repository (
         val query = "CREATE TABLE ${this.getTableName()} (${sqlParts.toArray().joinToString(", ")})"
 
         db?.execSQL(query)
-
-        this.loadFixtures()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int): Unit
@@ -62,9 +70,18 @@ abstract class Repository (
         this.onCreate(db)
     }
 
-    open fun loadFixtures(): Unit
+    fun bootstrap(): Unit
     {
+        val db = this.readableDatabase
+        val queryCheck = "SELECT name FROM sqlite_master WHERE type='table' AND name='${this.getTableName()}'"
 
+        val cursor = db.rawQuery(queryCheck, null)
+        if (!cursor.moveToFirst()) {
+            this.onCreate(this.writableDatabase)
+            this.loadFixtures()
+        }
+        cursor.close()
+        db.close()
     }
 
     fun findAll(): ArrayList<EntityInterface>
@@ -234,6 +251,13 @@ abstract class Repository (
         }
 
         return contentValues
+    }
+
+    protected fun notEmpty(value: Any): Boolean
+    {
+        return value !== null
+            || (value is String && value !== "")
+            || (value is Int && value !== 0)
     }
 
     protected fun getEntitiesFromCursor(cursor: Cursor): ArrayList<EntityInterface>
