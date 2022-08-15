@@ -2,27 +2,27 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
+    android:viewportWidth="144"
+    android:viewportHeight="144">
 
     <path
         android:fillColor="#F8861C"
         android:fillType="nonZero"
         android:pathData="
-        M 54 54
-        L 51 29
-        L 27 29
-        L 15 79
-        L 39 79
-        L 40.5 66.5
-        L 42 79
-        L 66 79
-        L 67.5 66.5
-        L 69 79
-        L 93 79
-        L 81 29
-        L 57 29
-        L 54 54
+        M 72 72
+        L 69 47
+        L 45 47
+        L 33 97
+        L 57 97
+        L 58.5 84.5
+        L 60 97
+        L 84 97
+        L 85.5 84.5
+        L 87 97
+        L 111 97
+        L 99 47
+        L 75 47
+        L 72 72
         "
         android:strokeWidth="1.5"
         android:strokeColor="#ffffff" />

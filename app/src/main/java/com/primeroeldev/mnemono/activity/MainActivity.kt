@@ -19,6 +19,13 @@ class MainActivity : AppCompatActivity()
         GameRepository(applicationContext, null).bootstrap()
     }
 
+    fun debug(view: View): Unit
+    {
+        val intent = Intent(this, DebugActivity::class.java)
+
+        startActivity(intent)
+    }
+
     fun startGame(view: View): Unit
     {
         val intent = Intent(this, GameStartActivity::class.java)
