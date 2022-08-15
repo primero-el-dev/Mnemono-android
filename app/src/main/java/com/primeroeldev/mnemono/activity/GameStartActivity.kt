@@ -35,8 +35,6 @@ class GameStartActivity : AppCompatActivity()
         val errors = this.getErrorsFor(game)
 
         if (errors.isEmpty()) {
-            this.finish()
-
             val gameId = GameRepository(applicationContext, null).insert(game)
             val intent = Intent(this, GamePlayActivity::class.java)
             intent.putExtra(ParamDictionary.GAME_ID_KEY, gameId)

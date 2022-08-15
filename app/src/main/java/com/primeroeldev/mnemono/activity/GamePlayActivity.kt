@@ -33,14 +33,6 @@ class GamePlayActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_play)
 
-//        if (!this.isTaskRoot()) {
-//        val justInitiated = this.intent.getBooleanExtra("init")
-//        if (!this.intent.getBooleanExtra("init", false)) {
-//        if (this.intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY > 0) {
-//            val intent = Intent(this, GameStartActivity::class.java)
-//            startActivity(intent)
-//        }
-
         this.gameRepository = GameRepository(applicationContext, null)
         val gameId = this.intent?.getLongExtra(ParamDictionary.GAME_ID_KEY, 0)!!
         val game = this.gameRepository.find(gameId) as? Game
@@ -85,20 +77,14 @@ class GamePlayActivity : AppCompatActivity()
         }
     }
 
-    override fun onPause() {
-        //
-    }
-
     override fun onBackPressed(): Unit
     {
-        super.onBackPressed()
-
         this.timer.cancel()
 
         this.game.durationInSeconds = this.getGameRealDuration()
         this.gameRepository.update(this.game)
 
-        this.finish()
+        super.onBackPressed()
     }
 
     fun submit(view: View): Unit
@@ -113,7 +99,7 @@ class GamePlayActivity : AppCompatActivity()
         this.game.durationInSeconds = this.getGameRealDuration()
         this.gameRepository.update(this.game)
 
-//        this.finish()
+        this.finish()
 
         val intent = Intent(this, GameAnswerActivity::class.java)
         intent.putExtra(ParamDictionary.CORRECT_ANSWERS_KEY, this.answers)
