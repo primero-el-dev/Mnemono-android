@@ -22,13 +22,6 @@
                 tools:ignore="UsingOnClickInXml" />
 
             <Button
-                android:id="@+id/debug"
-                style="@style/DefaultElement"
-                android:onClick="debug"
-                android:text="Debug"
-                tools:ignore="UsingOnClickInXml" />
-
-            <Button
                 android:id="@+id/button_statistics"
                 style="@style/DefaultElement"
                 android:layout_marginTop="@dimen/vertical_margin_small"
