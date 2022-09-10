@@ -12,7 +12,7 @@ import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
 
 
-class GameAnswerActivity : AppCompatActivity()
+class GameAnswerActivity : AppActivity()
 {
     private lateinit var correctAnswers: String
     private lateinit var gameRepository: GameRepository

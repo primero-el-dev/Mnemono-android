@@ -22,7 +22,7 @@ import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 
-class GameStatisticsActivity : AppCompatActivity()
+class GameStatisticsActivity : AppActivity()
 {
     private val GROUP_BY_NONE = "None"
     private val GROUP_BY_YEAR = "Year"

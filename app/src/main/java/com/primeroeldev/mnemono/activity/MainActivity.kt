@@ -2,13 +2,15 @@ package com.primeroeldev.mnemono.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.repository.GameRepository
 
 
-class MainActivity : AppCompatActivity()
+class MainActivity : AppActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {

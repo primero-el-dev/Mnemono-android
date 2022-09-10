@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
 
-class DebugActivity : AppCompatActivity()
+class DebugActivity : AppActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {

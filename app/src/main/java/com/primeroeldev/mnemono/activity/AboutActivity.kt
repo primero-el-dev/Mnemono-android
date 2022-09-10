@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 
 
-class AboutActivity : AppCompatActivity()
+class AboutActivity : AppActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {
