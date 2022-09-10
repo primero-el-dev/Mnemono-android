@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game

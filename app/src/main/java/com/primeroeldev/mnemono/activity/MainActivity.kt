@@ -2,10 +2,7 @@ package com.primeroeldev.mnemono.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.repository.GameRepository
 
@@ -45,6 +42,13 @@ class MainActivity : AppActivity()
     fun about(view: View): Unit
     {
         val intent = Intent(this, AboutActivity::class.java)
+
+        startActivity(intent)
+    }
+
+    fun tutorial(view: View): Unit
+    {
+        val intent = Intent(this, TutorialActivity::class.java)
 
         startActivity(intent)
     }

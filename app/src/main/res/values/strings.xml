@@ -4,6 +4,7 @@
     <string name="navigation_game_start_activity">Start game</string>
     <string name="navigation_game_index_activity">Games played</string>
     <string name="navigation_game_statistics_activity">Statistics</string>
+    <string name="navigation_tutorial_activity">Tutorial</string>
 
     <!-- MainActivity -->
     <string name="app_name">Mnemono</string>
@@ -11,6 +12,7 @@
     <string name="button_statistics">Statistics</string>
     <string name="button_games_played">Games played</string>
     <string name="button_about">About</string>
+    <string name="button_tutorial">Tutorial</string>
     <string name="title_activity_game_start">GameStartActivity</string>
 
     <!-- GameIndexActivity -->
@@ -65,4 +67,8 @@
     <string name="about_paragraph_4">Have any questions? Want provide a feedback? Send email to primero.el.dev.feedback@gmail.com</string>
     <string name="about_contact_me">Contact me!</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+
+    <!-- TutorialActivity -->
+    <string name="tutorial_header">Tutorial</string>
 </resources>
