@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MainLayout"
-    tools:context=".activity.MainActivity" >
+    style="@style/ScrollableLayout" >
 
-    <TextView
-        style="@style/Header"
-        android:text="@string/app_name" />
+    <LinearLayout
+        style="@style/MainLayout"
+        tools:context=".activity.MainActivity" >
 
-    <LinearLayout style="@style/InnerLinearLayout" >
+        <TextView
+            style="@style/Header"
+            android:text="@string/app_name" />
 
-        <Button
-            android:id="@+id/button_start_game"
-            style="@style/DefaultElement"
-            android:onClick="startGame"
-            android:text="@string/button_start_game" />
+        <LinearLayout style="@style/InnerLinearLayout" >
 
-        <Button
-            android:id="@+id/button_statistics"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small"
-            android:onClick="statistics"
-            android:text="@string/button_statistics" />
+            <Button
+                android:id="@+id/button_start_game"
+                style="@style/DefaultElement"
+                android:onClick="startGame"
+                android:text="@string/button_start_game"
+                tools:ignore="UsingOnClickInXml" />
 
-        <Button
-            android:id="@+id/button_games_list"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small"
-            android:onClick="listGames"
-            android:text="@string/button_games_played" />
+            <Button
+                android:id="@+id/button_statistics"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:onClick="statistics"
+                android:text="@string/button_statistics"
+                tools:ignore="UsingOnClickInXml" />
 
-        <Button
-            android:id="@+id/button_open_debug"
-            style="@style/DefaultElement"
-            android:layout_marginTop="@dimen/vertical_margin_small"
-            android:onClick="goToDebug"
-            android:text="Debug" />
+            <Button
+                android:id="@+id/button_games_list"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:onClick="listGames"
+                android:text="@string/button_games_played"
+                tools:ignore="UsingOnClickInXml" />
+
+            <Button
+                android:id="@+id/button_about"
+                style="@style/DefaultElement"
+                android:layout_marginTop="@dimen/vertical_margin_small"
+                android:onClick="about"
+                android:text="@string/button_about"
+                tools:ignore="UsingOnClickInXml" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

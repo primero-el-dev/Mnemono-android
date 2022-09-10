@@ -1,26 +1,11 @@
 package com.primeroeldev.mnemono.activity
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.drawable.BitmapDrawable
-import android.media.ImageReader
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
-import com.primeroeldev.mnemono.entity.Game
-import com.primeroeldev.mnemono.general.CardAssetManager
-import com.primeroeldev.mnemono.general.TimeUtil
 import com.primeroeldev.mnemono.repository.GameRepository
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 
 class MainActivity : AppCompatActivity()
@@ -29,6 +14,9 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Create database if wasn't created
+        GameRepository(applicationContext, null).bootstrap()
     }
 
     fun startGame(view: View): Unit
@@ -52,9 +40,9 @@ class MainActivity : AppCompatActivity()
         startActivity(intent)
     }
 
-    fun goToDebug(view: View): Unit
+    fun about(view: View): Unit
     {
-        val intent = Intent(this, DebugActivity::class.java)
+        val intent = Intent(this, AboutActivity::class.java)
 
         startActivity(intent)
     }

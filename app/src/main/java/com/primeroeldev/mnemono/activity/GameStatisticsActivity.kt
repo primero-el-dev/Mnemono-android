@@ -1,5 +1,6 @@
 package com.primeroeldev.mnemono.activity
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -15,6 +16,9 @@ import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.general.TimeUtil
 import com.primeroeldev.mnemono.general.safeSubstring
 import com.primeroeldev.mnemono.repository.GameRepository
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 
@@ -53,12 +57,21 @@ class GameStatisticsActivity : AppCompatActivity()
 
     private fun initDatePickers(): Unit
     {
-        this.startedFromDatePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
-            this.onFiltersChange(view)
-        }
-        this.startedToDatePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
-            this.onFiltersChange(view)
-        }
+        val calendar = Calendar.getInstance()
+
+        this.startedFromDatePicker.init(
+            calendar.get(Calendar.YEAR) - 1,
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH),
+            { view, _, _, _ -> this.onFiltersChange(view) }
+        )
+
+        this.startedToDatePicker.init(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH),
+            { view, _, _, _ -> this.onFiltersChange(view) }
+        )
     }
 
     private fun initGroupByDateSpinner(): Unit
@@ -102,14 +115,12 @@ class GameStatisticsActivity : AppCompatActivity()
         where.add(Pair("includedInStatistics = ?", 1))
         where.add(Pair("status = ?", Game.FINISHED_STATUS))
 
-        findViewById<TextView>(R.id.test).text = startedFrom
-
         val games = this.gameRepository
             .findBy(where)
             .map { it as Game } as ArrayList
 
         val wordsGames = this.groupGames(games.filter { it.type == Game.WORDS_TYPE } as ArrayList, groupBy)
-        val numbersGames = this.groupGames(games.filter { it.type == Game.NUMBERS_TYPE } as ArrayList, groupBy)
+        val numbersGames = this.groupGames(games.filter { it.type == Game.DIGITS_TYPE } as ArrayList, groupBy)
         val cardsGames = this.groupGames(games.filter { it.type == Game.CARDS_TYPE } as ArrayList, groupBy)
 
         // Init charts
@@ -233,14 +244,14 @@ class GameStatisticsActivity : AppCompatActivity()
 
     private fun initLineChart(lineChart: LineChart, dataSet: LineDataSet): Unit
     {
-        val chartLineColor = resources.getColor(
-            com.google.android.material.R.color.design_default_color_primary,
-            theme
-        )
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            dataSet.color = resources.getColor(
+                com.google.android.material.R.color.design_default_color_primary,
+                theme
+            )
+        }
         dataSet.lineWidth = 6f
         dataSet.circleRadius = 8f
-        dataSet.color = chartLineColor
         dataSet.valueTextSize = 0f
 
         val lineData = LineData(dataSet)

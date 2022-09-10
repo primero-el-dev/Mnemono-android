@@ -27,6 +27,8 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginStart">@dimen/horizontal_margin_big</item>
         <item name="android:layout_marginEnd">@dimen/horizontal_margin_big</item>
+        <item name="android:layout_marginTop">@dimen/vertical_margin_big</item>
+        <item name="android:layout_marginBottom">@dimen/vertical_margin_big</item>
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
     </style>
@@ -35,7 +37,5 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:fillViewport">true</item>
-        <item name="android:layout_marginTop">@dimen/vertical_margin_big</item>
-        <item name="android:layout_marginBottom">@dimen/vertical_margin_big</item>
     </style>
 </resources>

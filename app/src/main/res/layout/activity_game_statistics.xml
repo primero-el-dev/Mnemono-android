@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ScrollableLayout" >
@@ -11,10 +11,6 @@
         <TextView
             style="@style/Header"
             android:text="@string/game_statistics_header" />
-
-        <TextView
-            android:id="@+id/test"
-            style="@style/DefaultElement" />
 
         <LinearLayout style="@style/InnerLinearLayout">
 
@@ -156,4 +152,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

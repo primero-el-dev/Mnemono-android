@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.repository.GameRepository
-import com.primeroeldev.mnemono.entity.EntityInterface
 import com.primeroeldev.mnemono.general.TimeUtil
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class GameIndexActivity : AppCompatActivity()
@@ -31,20 +32,33 @@ class GameIndexActivity : AppCompatActivity()
         this.startedToDatePicker = findViewById(R.id.date_picker_game_started_to)
         this.typeSpinner = findViewById(R.id.spinner_game_type)
 
-        this.startedFromDatePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
-            this.onFiltersChange(view)
-        }
-        this.startedToDatePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
-            this.onFiltersChange(view)
-        }
+        this.initDatePickers()
         this.initGameTypeSpinner()
-
         this.initGameList()
     }
 
     fun onFiltersChange(view: View): Unit
     {
         this.initGameList()
+    }
+
+    private fun initDatePickers(): Unit
+    {
+        val calendar = Calendar.getInstance()
+
+        this.startedFromDatePicker.init(
+            calendar.get(Calendar.YEAR) - 1,
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH),
+            { view, _, _, _ -> this.onFiltersChange(view) }
+        )
+
+        this.startedToDatePicker.init(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH),
+            { view, _, _, _ -> this.onFiltersChange(view) }
+        )
     }
 
     private fun initGameTypeSpinner(): Unit
@@ -107,10 +121,5 @@ class GameIndexActivity : AppCompatActivity()
             intent.putExtra(ParamDictionary.GAME_ID_KEY, games[position]._id)
             startActivity(intent)
         }
-    }
-
-    private fun getFormattedDatePickerValue(picker: DatePicker): String
-    {
-        return "${picker.year}-${(picker.month + 1)}-${picker.dayOfMonth}"
     }
 }

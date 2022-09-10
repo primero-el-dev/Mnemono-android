@@ -3,7 +3,6 @@ package com.primeroeldev.mnemono.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
@@ -11,6 +10,7 @@ import com.primeroeldev.mnemono.entity.Game
 import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.game.manager.GamePlayManager
 import com.primeroeldev.mnemono.game.manager.GamePlayManagerFactory
+
 
 class GameAnswerActivity : AppCompatActivity()
 {

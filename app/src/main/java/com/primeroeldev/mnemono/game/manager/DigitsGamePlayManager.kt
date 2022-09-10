@@ -3,7 +3,7 @@ package com.primeroeldev.mnemono.game.manager
 import com.primeroeldev.mnemono.general.toInt
 import kotlin.random.Random
 
-class NumbersGamePlayManager : GamePlayManager
+class DigitsGamePlayManager : GamePlayManager
 {
     override fun generateAnswers(count: Int): String
     {
