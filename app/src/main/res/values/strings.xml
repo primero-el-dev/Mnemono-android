@@ -18,7 +18,7 @@
     <string name="spinner_game_type_header">Select type</string>
     <string name="edit_text_game_items_count_header">Items count</string>
     <string name="edit_text_game_items_count_hint">Items count</string>
-    <string name="edit_text_game_duration_header">Duration</string>
+    <string name="edit_text_game_duration_header">Duration (hours, minutes, seconds)</string>
     <string name="edit_text_game_duration_hours_hint">Duration in hours</string>
     <string name="edit_text_game_duration_minutes_hint">Duration in minutes</string>
     <string name="edit_text_game_duration_seconds_hint">Duration in seconds</string>
