@@ -15,7 +15,7 @@ class Game : EntityInterface
         /** 1 day minus 1 second */
         const val MAX_DURATION = 86399
 
-        const val NUMBERS_TYPE = "numbers"
+        const val DIGITS_TYPE = "digits"
         const val WORDS_TYPE = "words"
         const val CARDS_TYPE = "cards"
 
@@ -24,7 +24,7 @@ class Game : EntityInterface
         const val FINISHED_STATUS = "finished"
 
         fun getTypes(): Array<String> = arrayOf(
-            NUMBERS_TYPE,
+            DIGITS_TYPE,
             WORDS_TYPE,
             CARDS_TYPE,
         )

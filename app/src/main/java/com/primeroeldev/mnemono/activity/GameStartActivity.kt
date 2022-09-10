@@ -89,7 +89,7 @@ class GameStartActivity : AppCompatActivity()
         }
 
         val itemsCountLimit = when (game.type) {
-            Game.NUMBERS_TYPE -> 99999
+            Game.DIGITS_TYPE -> 99999
             Game.WORDS_TYPE -> 15000
             Game.CARDS_TYPE -> 340
             else -> 0

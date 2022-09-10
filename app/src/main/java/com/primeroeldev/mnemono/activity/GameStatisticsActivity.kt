@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -121,7 +120,7 @@ class GameStatisticsActivity : AppCompatActivity()
             .map { it as Game } as ArrayList
 
         val wordsGames = this.groupGames(games.filter { it.type == Game.WORDS_TYPE } as ArrayList, groupBy)
-        val numbersGames = this.groupGames(games.filter { it.type == Game.NUMBERS_TYPE } as ArrayList, groupBy)
+        val numbersGames = this.groupGames(games.filter { it.type == Game.DIGITS_TYPE } as ArrayList, groupBy)
         val cardsGames = this.groupGames(games.filter { it.type == Game.CARDS_TYPE } as ArrayList, groupBy)
 
         // Init charts
