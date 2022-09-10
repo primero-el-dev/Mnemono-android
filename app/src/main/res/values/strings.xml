@@ -34,7 +34,7 @@
     <!-- GamePlayActivity -->
     <string name="game_play_header">Remember</string>
     <string name="button_game_process_to_answer">I\'m ready</string>
-    <string name="game_play_provide_answers_hint">Write your answer here</string>
+    <string name="game_play_provide_answers_hint">Write here what you\'ve remembered on previous view…</string>
 
     <!-- GameAnswerActivity -->
     <string name="game_answer_header">Answer</string>
