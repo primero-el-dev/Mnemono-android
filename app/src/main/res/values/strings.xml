@@ -1,4 +1,11 @@
 <resources>
+    <!-- Navigation -->
+    <string name="navigation_main_activity">Main menu</string>
+    <string name="navigation_game_start_activity">Start game</string>
+    <string name="navigation_game_index_activity">Games played</string>
+    <string name="navigation_game_statistics_activity">Statistics</string>
+
+    <!-- MainActivity -->
     <string name="app_name">Mnemono</string>
     <string name="button_start_game">Start new game</string>
     <string name="button_statistics">Statistics</string>
@@ -57,4 +64,5 @@
     <string name="about_paragraph_3">Almost all app data is stored automatically in cloud with rules for backups specifics for your Android version (see documentation, default auto backup settings).</string>
     <string name="about_paragraph_4">Have any questions? Want provide a feedback? Send email to primero.el.dev.feedback@gmail.com</string>
     <string name="about_contact_me">Contact me!</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>

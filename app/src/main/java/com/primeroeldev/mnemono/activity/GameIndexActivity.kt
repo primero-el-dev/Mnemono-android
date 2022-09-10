@@ -13,7 +13,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class GameIndexActivity : AppCompatActivity()
+class GameIndexActivity : AppActivity()
 {
     private lateinit var gamesList: ListView
     private lateinit var gameRepository: GameRepository

@@ -12,7 +12,7 @@ import com.primeroeldev.mnemono.repository.GameRepository
 import com.primeroeldev.mnemono.general.TimeUtil
 
 
-class GameResultActivity : AppCompatActivity()
+class GameResultActivity : AppActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {

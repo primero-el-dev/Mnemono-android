@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.MenuItem
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
@@ -18,7 +19,7 @@ import com.primeroeldev.mnemono.general.TimeUtil
 import com.primeroeldev.mnemono.repository.GameRepository
 
 
-class GamePlayActivity : AppCompatActivity()
+class GamePlayActivity : AppActivity()
 {
     private lateinit var gameManager: GamePlayManager
     private lateinit var answers: String
@@ -85,6 +86,16 @@ class GamePlayActivity : AppCompatActivity()
         this.gameRepository.update(this.game)
 
         super.onBackPressed()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        this.timer.cancel()
+
+        this.game.durationInSeconds = this.getGameRealDuration()
+        this.gameRepository.update(this.game)
+
+        return super.onOptionsItemSelected(item)
     }
 
     fun submit(view: View): Unit
