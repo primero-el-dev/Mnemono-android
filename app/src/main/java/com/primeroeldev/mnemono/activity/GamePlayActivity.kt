@@ -27,7 +27,6 @@ class GamePlayActivity : AppActivity()
     private lateinit var timer: CountDownTimer
     private lateinit var gameRepository: GameRepository
     private var timeStarted: Long = 0
-    private var gameId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?): Unit
     {
