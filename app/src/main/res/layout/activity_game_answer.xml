@@ -19,6 +19,16 @@
                 android:id="@+id/game_play_answer_hint"
                 style="@style/DefaultElement" />
 
+            <TextView
+                android:id="@+id/game_play_answer_poker_notation_help"
+                style="@style/DefaultElement"
+                android:onClick="showPokerNotationHelp"
+                android:clickable="true"
+                android:focusable="true"
+                android:textColor="?colorPrimary"
+                android:text="@string/game_play_answer_poker_notation_help"
+                tools:ignore="UsingOnClickInXml" />
+
             <EditText
                 android:id="@+id/game_play_provide_answers"
                 style="@style/DefaultElement"

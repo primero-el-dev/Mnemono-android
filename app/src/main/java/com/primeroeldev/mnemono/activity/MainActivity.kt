@@ -2,7 +2,11 @@ package com.primeroeldev.mnemono.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.repository.GameRepository
 

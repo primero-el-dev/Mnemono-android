@@ -1,9 +1,12 @@
 package com.primeroeldev.mnemono.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import com.primeroeldev.mnemono.R
 import com.primeroeldev.mnemono.entity.Game
@@ -38,6 +41,10 @@ class GameAnswerActivity : AppActivity()
         this.gameManager = GamePlayManagerFactory.dispatch(this.game, applicationContext)
 
         findViewById<TextView>(R.id.game_play_answer_hint).text = this.gameManager.getAnswerInputHint()
+
+        if (this.game.type != Game.CARDS_TYPE) {
+            findViewById<TextView>(R.id.game_play_answer_poker_notation_help).visibility = View.INVISIBLE
+        }
     }
 
     fun submit(view: View): Unit
@@ -53,5 +60,23 @@ class GameAnswerActivity : AppActivity()
         intent.putExtra(ParamDictionary.CHECKED_ANSWERS_KEY, checkedAnswers)
         intent.putExtra(ParamDictionary.GAME_ID_KEY, this.game._id)
         startActivity(intent)
+    }
+
+    fun showPokerNotationHelp(view: View?): Unit
+    {
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val popupView: View = inflater.inflate(R.layout.game_play_popup, null)
+
+        val width = LinearLayout.LayoutParams.WRAP_CONTENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        val focusable = true
+        val popupWindow = PopupWindow(popupView, width, height, focusable)
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+
+        popupView.setOnTouchListener { v, event ->
+            popupWindow.dismiss()
+            true
+        }
     }
 }

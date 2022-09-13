@@ -18,8 +18,4 @@
         android:id="@+id/navigation_game_statistics_activity"
         android:title="@string/navigation_game_statistics_activity" />
 
-    <item
-        android:id="@+id/navigation_tutorial_activity"
-        android:title="@string/navigation_tutorial_activity" />
-
 </menu>

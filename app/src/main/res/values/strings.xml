@@ -8,7 +8,7 @@
 
     <!-- MainActivity -->
     <string name="app_name">Mnemono</string>
-    <string name="button_start_game">Start new game</string>
+    <string name="button_start_game">New memory game</string>
     <string name="button_statistics">Statistics</string>
     <string name="button_games_played">Games played</string>
     <string name="button_about">About</string>
@@ -17,10 +17,10 @@
 
     <!-- GameIndexActivity -->
     <string name="game_index_header">Games played</string>
-    <string name="game_index_text_view_game_started_from">From date</string>
-    <string name="game_index_text_view_game_started_to">To date</string>
+    <string name="game_index_text_view_game_started_from">Started from date</string>
+    <string name="game_index_text_view_game_started_to">Started to date</string>
     <string name="game_index_text_view_game_type">Game type</string>
-    <string name="game_index_text_view_game_list">Games</string>
+    <string name="game_index_text_view_game_list">Games played</string>
 
     <!-- GameStartActivity -->
     <string name="game_start_header">Start game</string>
@@ -48,6 +48,8 @@
     <!-- GameAnswerActivity -->
     <string name="game_answer_header">Answer</string>
     <string name="button_game_check">Check</string>
+    <string name="game_play_answer_poker_notation_help">Help</string>
+    <string name="game_play_answer_poker_notation_popup">Poker notation\n\nAll cards are represented in form SignSuit\nSigns are from ace to king: A, 1, 2, 3, 4, 5, 6, 7, 8, 9, T, J, Q, K\nSuits are made of first lowercase letter of hearts, diamonds, clubs and spades\n\nClick outside to close</string>
 
     <!-- GameResultActivity -->
     <string name="game_result_header">Result</string>
@@ -55,9 +57,9 @@
 
     <!-- GameStatisticsActivity -->
     <string name="game_statistics_header">Statistics</string>
-    <string name="game_statistics_text_view_date_started_from">From date</string>
-    <string name="game_statistics_text_view_date_started_to">To date</string>
-    <string name="game_statistics_text_view_group_by">Group by</string>
+    <string name="game_statistics_text_view_date_started_from">Started from date</string>
+    <string name="game_statistics_text_view_date_started_to">Started to date</string>
+    <string name="game_statistics_text_view_group_by">Group games by</string>
 
     <!-- AboutActivity -->
     <string name="about_header">About</string>
@@ -68,7 +70,4 @@
     <string name="about_contact_me">Contact me!</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
-
-    <!-- TutorialActivity -->
-    <string name="tutorial_header">Tutorial</string>
 </resources>

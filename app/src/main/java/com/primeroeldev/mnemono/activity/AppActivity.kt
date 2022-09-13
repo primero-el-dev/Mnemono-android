@@ -43,12 +43,6 @@ open class AppActivity : AppCompatActivity()
 
                 return true
             }
-            R.id.navigation_tutorial_activity -> {
-                val intent = Intent(this, TutorialActivity::class.java)
-                startActivity(intent)
-
-                return true
-            }
             else -> false
         }
     }
