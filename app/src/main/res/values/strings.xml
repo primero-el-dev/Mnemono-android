@@ -70,4 +70,15 @@
     <string name="about_contact_me">Contact me!</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
+
+    <!-- TutorialActivity -->
+    <string name="tutorial_header">Tutorial</string>
+    <string name="tutorial_header_1">General tips</string>
+    <string name="tutorial_paragraph_1">You could navigate through app using menu in right upper corner of the screen\n(3 vertically aligned dots).</string>
+    <string name="tutorial_header_2">How to start memory game</string>
+    <string name="tutorial_paragraph_2">If you want to start new memory game, click corresponding button on a main menu.\nYou\'ll see start game screen where you could choose details of a game.\nWhile you\'re done, you may click process to the next screen and start remembering.</string>
+    <string name="tutorial_header_3">Gameplay</string>
+    <string name="tutorial_paragraph_3">If you exit game play screen, it\'s equal to resign. You may switch to other tab, but if you try to switch to other tab in the app, game will end.\nAlso if you finish remembering earlier than the time you\'ve reserved, it\'l be saved as a real time of remembering. That\'s why you could give yourself much more time to remember to feel more secure and eventually finish earlier.</string>
+    <string name="tutorial_header_4">Insight into progress</string>
+    <string name="tutorial_paragraph_4">App gives you an option to see your previous games details after clicking "games played" in a main menu.\nYou could also see statistics for previous games, correctness in percents and seconds per correct answer.\nSeeing games in statistics is only possible after selecting this option on game start screen.</string>
 </resources>

@@ -65,6 +65,6 @@ class WordsGamePlayManager(private val context: Context) : GamePlayManager
     override fun getAnswerInputHint(): String
     {
         return "Divide words with commas. " +
-            "All white chars will be trimmed."
+            "All spaces will be ignored."
     }
 }

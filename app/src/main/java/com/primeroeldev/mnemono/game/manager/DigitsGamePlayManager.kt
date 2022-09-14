@@ -51,6 +51,6 @@ class DigitsGamePlayManager : GamePlayManager
 
     override fun getAnswerInputHint(): String
     {
-        return "All white chars will be trimmed."
+        return "All spaces chars will be ignored."
     }
 }

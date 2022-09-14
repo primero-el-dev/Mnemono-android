@@ -86,7 +86,7 @@ class CardsGamePlayManager(private val resources: Resources) : GamePlayManager
     override fun getAnswerInputHint(): String
     {
         return "Write cards divided by commas in poker hand range notation. " +
-            "All white chars will be trimmed."
+            "All spaces will be ignored."
     }
 
     override fun getInputType(): String

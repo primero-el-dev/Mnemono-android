@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollableLayout"
+    tools:context=".activity.TutorialActivity" >
+
+    <LinearLayout
+        style="@style/MainLayout" >
+
+        <TextView
+            style="@style/Header"
+            android:text="@string/tutorial_header" />
+
+        <LinearLayout
+            style="@style/InnerLinearLayout"
+            android:layout_marginBottom="@dimen/horizontal_margin_small" >
+
+            <TextView
+                style="@style/SubHeader"
+                android:layout_marginBottom="@dimen/horizontal_margin_small"
+                android:text="@string/tutorial_header_1" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:text="@string/tutorial_paragraph_1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/InnerLinearLayout"
+            android:layout_marginBottom="@dimen/horizontal_margin_small" >
+
+            <TextView
+                style="@style/SubHeader"
+                android:layout_marginBottom="@dimen/horizontal_margin_small"
+                android:text="@string/tutorial_header_2" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:text="@string/tutorial_paragraph_2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/InnerLinearLayout"
+            android:layout_marginBottom="@dimen/horizontal_margin_small" >
+
+            <TextView
+                style="@style/SubHeader"
+                android:layout_marginBottom="@dimen/horizontal_margin_small"
+                android:text="@string/tutorial_header_3" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:text="@string/tutorial_paragraph_3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/InnerLinearLayout"
+            android:layout_marginBottom="@dimen/horizontal_margin_small" >
+
+            <TextView
+                style="@style/SubHeader"
+                android:layout_marginBottom="@dimen/horizontal_margin_small"
+                android:text="@string/tutorial_header_4" />
+
+            <TextView
+                style="@style/DefaultElement"
+                android:text="@string/tutorial_paragraph_4" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
